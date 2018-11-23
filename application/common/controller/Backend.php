@@ -76,12 +76,12 @@ class Backend extends Controller
     /**
      * 是否开启Validate验证
      */
-    protected $modelValidate = false;
+    protected $modelValidate = true;
 
     /**
      * 是否开启模型场景验证
      */
-    protected $modelSceneValidate = false;
+    protected $modelSceneValidate = true;
 
     /**
      * Multi方法可批量修改的字段

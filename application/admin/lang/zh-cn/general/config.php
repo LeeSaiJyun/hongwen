@@ -13,6 +13,7 @@ return [
     'Dictionary'                  => '字典配置',
     'User'                        => '会员配置',
     'Example'                     => '示例分组',
+    'Cost'                        => '费用配置',
     'Extend'                      => '扩展属性',
     'String'                      => '字符',
     'Text'                        => '文本',
@@ -57,4 +58,9 @@ return [
     'This is a test mail content' => '这是一封来自FastAdmin校验邮件,用于校验邮件配置是否正常!',
     'This is a test mail'         => '这是一封来自FastAdmin的邮件',
     'Please input your email'     => '请输入测试接收者邮箱',
+    'Rebate percent 1'              => '返现比例（一级）',
+    'Rebate percent 2'              => '返现比例（二级）',
+    'Minimum fee'                 => '学费最低交费额度(元)',
+    'Registration fee'            => '报名费用(元)',
+    'Guide of join'               => '入户指南',
 ];

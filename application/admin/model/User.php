@@ -14,12 +14,12 @@ class User extends Model
     // 定义时间戳字段名
     protected $createTime = 'createtime';
     protected $updateTime = 'updatetime';
-    // 追加属性
+    /*// 追加属性
     protected $append = [
         'prevtime_text',
         'logintime_text',
         'jointime_text'
-    ];
+    ];*/
 
     protected static function init()
     {
@@ -48,23 +48,7 @@ class User extends Model
         return ['normal' => __('Normal'), 'hidden' => __('Hidden')];
     }
 
-    public function getPrevtimeTextAttr($value, $data)
-    {
-        $value = $value ? $value : $data['prevtime'];
-        return is_numeric($value) ? date("Y-m-d H:i:s", $value) : $value;
-    }
 
-    public function getLogintimeTextAttr($value, $data)
-    {
-        $value = $value ? $value : $data['logintime'];
-        return is_numeric($value) ? date("Y-m-d H:i:s", $value) : $value;
-    }
-
-    public function getJointimeTextAttr($value, $data)
-    {
-        $value = $value ? $value : $data['jointime'];
-        return is_numeric($value) ? date("Y-m-d H:i:s", $value) : $value;
-    }
 
     protected function setPrevtimeAttr($value)
     {

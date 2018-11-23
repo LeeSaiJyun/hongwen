@@ -28,12 +28,13 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {field: 'group.name', title: __('Group')},
                         {field: 'username', title: __('Username'), operate: 'LIKE'},
                         {field: 'nickname', title: __('Nickname'), operate: 'LIKE'},
-                        {field: 'email', title: __('Email'), operate: 'LIKE'},
+                        // {field: 'email', title: __('Email'), operate: 'LIKE'},
                         {field: 'mobile', title: __('Mobile'), operate: 'LIKE'},
                         {field: 'avatar', title: __('Avatar'), formatter: Table.api.formatter.image, operate: false},
-                        {field: 'level', title: __('Level'), operate: 'BETWEEN', sortable: true},
-                        {field: 'gender', title: __('Gender'), visible: false, searchList: {1: __('Male'), 0: __('Female')}},
-                        {field: 'score', title: __('Score'), operate: 'BETWEEN', sortable: true},
+                        // {field: 'level', title: __('Level'), operate: 'BETWEEN', sortable: true},
+                        {field: 'gender', title: __('Gender'),  searchList: {"1": __('Male'), "0": __('Female')}, formatter: Controller.api.formatter.gender },
+
+                        // {field: 'score', title: __('Score'), operate: 'BETWEEN', sortable: true},
                         {field: 'successions', title: __('Successions'), visible: false, operate: 'BETWEEN', sortable: true},
                         {field: 'maxsuccessions', title: __('Maxsuccessions'), visible: false, operate: 'BETWEEN', sortable: true},
                         {field: 'logintime', title: __('Logintime'), formatter: Table.api.formatter.datetime, operate: 'RANGE', addclass: 'datetimerange', sortable: true},
@@ -41,6 +42,40 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {field: 'jointime', title: __('Jointime'), formatter: Table.api.formatter.datetime, operate: 'RANGE', addclass: 'datetimerange', sortable: true},
                         {field: 'joinip', title: __('Joinip'), formatter: Table.api.formatter.search},
                         {field: 'status', title: __('Status'), formatter: Table.api.formatter.status, searchList: {normal: __('Normal'), hidden: __('Hidden')}},
+                        {
+                            field: 'buttons',
+                            width: "120px",
+                            title: __('资料'),
+                            table: table,
+                            events: Table.api.events.operate,
+                            buttons: [
+                                {
+                                    name: 'bank',
+                                    text: __('银行卡'),
+                                    title: __('银行卡'),
+                                    classname: 'btn btn-xs btn-primary btn-dialog',
+                                    icon: 'fa fa-credit-card',
+                                    url: 'user/bank/index?user_id={ids}',
+                                    visible: function (row) {
+                                        //返回true时按钮显示,返回false隐藏
+                                        return true;
+                                    }
+                                },
+                                {
+                                    name: 'address',
+                                    text: __('地址'),
+                                    title: __('地址'),
+                                    classname: 'btn btn-xs btn-primary btn-dialog',
+                                    icon: 'fa fa-map-marker',
+                                    url: 'user/address/index?user_id={ids}',
+                                    visible: function (row) {
+                                        //返回true时按钮显示,返回false隐藏
+                                        return true;
+                                    }
+                                },
+                            ],
+                            formatter: Table.api.formatter.buttons
+                        },
                         {field: 'operate', title: __('Operate'), table: table, events: Table.api.events.operate, formatter: Table.api.formatter.operate}
                     ]
                 ]
@@ -48,6 +83,16 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
 
             // 为表格绑定事件
             Table.api.bindevent(table);
+
+            // 获取选中项
+            $(document).on("click", ".btn-selected", function () {
+                var send_ids = Table.api.selectedids(table);
+                Fast.api.open("user/message/add?ids="+send_ids,"群发消息",{
+                    callback:function (value) {
+                        //Fast.api.close();
+                    }
+                });
+            });
         },
         add: function () {
             Controller.api.bindevent();
@@ -58,7 +103,22 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
         api: {
             bindevent: function () {
                 Form.api.bindevent($("form[role=form]"));
+            },
+            formatter: {
+                gender: function (value, row, index) {
+                    if(value==1){
+                        return '男';
+                    }else if(value==0){
+                        return '女';
+                    }else if(value==-1){
+                        return '保密';
+                    }else{
+                        return value;
+                    }
+
+                }
             }
+
         }
     };
     return Controller;

@@ -1,0 +1,78 @@
+弘文教育管理后台功能:
+
+
+一.管理员登陆(不需要权限管理)
+	1.管理员修改密码
+                             ******* Finish ******
+
+
+
+二.学员管理
+	1.学员列表信息
+	                2.学员上下级查看    ****** wait to  ******
+                    3.学员信息修改
+                        a.学员学籍信息修改
+                        b.学员昵称,收货地址,手机号,银行卡信息修改
+                        c.学员余额修改
+	4.学员站内信发送,可以全体发,可以单独发,可以选中部分学员批量发
+	                    	php think crud -t user_bank -c user/bank -r user -k user_id -f 1
+	                    	->with(['user'=>function($query){
+                                    $query->withField('id,mobile');
+                                }])
+
+	                    	php think crud -t user_address -c user/address -u 1     *******改了好多 不要重写******
+	                    	php think crud -t user_message -c user/message -u 1
+
+
+三.报名管理:
+	1.报名信息列表        index
+	2.报名信息修改        update
+	3.报名信息按指定日期时间段或学校导出为EXCEL表格     export
+	4.教材邮寄信息填写      address update
+
+
+四.分校管理
+	1.分校列表
+	2.分校添加/修改/删除
+
+
+五.系统设置
+	系统名称,系统logo,站点备案信息,返利比例修改,学费最低交费额度,报名费
+                             ******* Finish ******
+
+
+六.提现管理
+	1.提现信息列表
+	2.提现审核,状态修改             ****只能改状态*****
+	                                        php think crud -t withdraw  -u 1
+
+七.交费管理
+	1.充值信息列表
+	    2.充值信息可按时间段,导出为EXCEL表格
+	                                        php think crud -t order  -u 1
+
+八.院校信息管理
+	1.院校列表(添加,修改,删除)
+	2.院校类别表(添加,修改,删除)
+	3.院校专业列表(添加,修改,删除)
+
+
+
+九.技术培训管理
+	1.技术培训列表(添加,修改,删除)
+
+
+十.入户指南管理
+	1.入户指南(修改)
+	                                       111111111111111111111111111
+
+十一.公告管理
+    php think crud -t announcement  -f 1
+    修改admin_id的关联  application\admin\controller\Announcement.php  最后修改的admin_id存入数据库
+
+
+mysql信息
+192.168.1.100:3306
+账户:root
+密码:qweasd123!@#
+数据库名:honwen

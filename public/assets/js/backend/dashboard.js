@@ -69,9 +69,9 @@ define(['jquery', 'bootstrap', 'backend', 'addtabs', 'table', 'echarts', 'echart
             // 使用刚指定的配置项和数据显示图表。
             myChart.setOption(option);
 
-            //动态添加数据，可以通过Ajax获取数据然后填充
+            /*//动态添加数据，可以通过Ajax获取数据然后填充
             setInterval(function () {
-                Orderdata.column.push((new Date()).toLocaleTimeString().replace(/^\D*/, ''));
+                Orderdata.column.push((new Date()).toLocaleTimeString().replace(/^\D*!/, ''));
                 var amount = Math.floor(Math.random() * 200) + 20;
                 Orderdata.createdata.push(amount);
                 Orderdata.paydata.push(Math.floor(Math.random() * amount) + 1);
@@ -102,7 +102,7 @@ define(['jquery', 'bootstrap', 'backend', 'addtabs', 'table', 'echarts', 'echart
             }, 2000);
             $(window).resize(function () {
                 myChart.resize();
-            });
+            });*/
 
             $(document).on("click", ".btn-checkversion", function () {
                 top.window.$("[data-toggle=checkupdate]").trigger("click");
