@@ -24,12 +24,12 @@
 	                    	php think crud -t user_message -c user/message -u 1
 
 
-三.报名管理:
+三.报名管理:     application
 	1.报名信息列表        index
 	2.报名信息修改        update
 	3.报名信息按指定日期时间段或学校导出为EXCEL表格     export
 	4.教材邮寄信息填写      address update
-
+                                    ***** php think crud -t application  -u 1 *****
 
 四.分校管理
 	1.分校列表
@@ -55,16 +55,26 @@
 	1.院校列表(添加,修改,删除)
 	2.院校类别表(添加,修改,删除)
 	3.院校专业列表(添加,修改,删除)
+                                            =======   要修改 view  js 选择类型 cat/index  => school/cat/index  =======
+	                                        php think crud -t school  -c school/school -r school_cat -k cat_id   -p id -f 1
+
+	                                        php think crud -t school_cat  -c school/cat -m schoolcat -u 1
+	                                        php think crud -t school_type -u 1
+	                                        php think crud -t school_major -u 1
+
+
 
 
 
 九.技术培训管理
 	1.技术培训列表(添加,修改,删除)
 
+	                                    php think crud -t
+
 
 十.入户指南管理
 	1.入户指南(修改)
-	                                       111111111111111111111111111
+	                                      ======== finish =======
 
 十一.公告管理
     php think crud -t announcement  -f 1
