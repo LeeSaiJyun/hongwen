@@ -1,0 +1,34 @@
+<form id="edit-form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="">
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('School_id')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-school_id" data-rule="required" data-source="school/index" class="form-control selectpage" name="row[school_id]" type="text" value="{$row.school_id}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Major_ids')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-major_ids" data-rule="required" data-source="major/index" data-multiple="true" class="form-control selectpage" name="row[major_ids]" type="text" value="{$row.major_ids}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Is_del')}:</label>
+        <div class="col-xs-12 col-sm-8">
+                        
+            <select  id="c-is_del" data-rule="required" class="form-control selectpicker" name="row[is_del]">
+                {foreach name="isDelList" item="vo"}
+                    <option value="{$key}" {in name="key" value="$row.is_del"}selected{/in}>{$vo}</option>
+                {/foreach}
+            </select>
+
+        </div>
+    </div>
+    <div class="form-group layer-footer">
+        <label class="control-label col-xs-12 col-sm-2"></label>
+        <div class="col-xs-12 col-sm-8">
+            <button type="submit" class="btn btn-success btn-embossed disabled">{:__('OK')}</button>
+            <button type="reset" class="btn btn-default btn-embossed">{:__('Reset')}</button>
+        </div>
+    </div>
+</form>
