@@ -25,10 +25,8 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                     [
                         {checkbox: true},
                         {field: 'id', title: __('Id')},
-                        {field: 'cat_id', title: __('Cat_id')},
-                        {field: 'title_image', title: __('Title_image'), formatter: Table.api.formatter.image,operate: false},
                         {field: 'name', title: __('Name')},
-                        {field: 'is_del', title: __('Is_del')},
+                        {field: 'title_image', title: __('Title_image'), formatter: Table.api.formatter.image,operate: false},
                         {field: 'schoolcat.name', title: __('Cat.name'), addClass:"selectpage",extend:"data-source='school/cat/index' data-field='name'"},
                         {field: 'operate', title: __('Operate'), table: table, events: Table.api.events.operate, formatter: Table.api.formatter.operate}
                     ]

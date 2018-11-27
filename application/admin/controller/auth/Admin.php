@@ -78,8 +78,10 @@ class Admin extends Backend
                 return $this->selectpage();
             }
             $childrenGroupIds = $this->childrenGroupIds;
+            //查询所有的用户组名称
             $groupName = AuthGroup::where('id', 'in', $childrenGroupIds)
                     ->column('id,name');
+            //查询当前auth下级
             $authGroupList = AuthGroupAccess::where('group_id', 'in', $childrenGroupIds)
                     ->field('uid,group_id')
                     ->select();

@@ -19,7 +19,6 @@ class Announcement extends Model
     // 追加属性
     protected $append = [
         'status_text',
-        'is_del_text'
     ];
     
 
@@ -27,11 +26,6 @@ class Announcement extends Model
     public function getStatusList()
     {
         return ['0' => __('Status 0'),'1' => __('Status 1')];
-    }     
-
-    public function getIsDelList()
-    {
-        return ['0' => __('Is_del 0'),'1' => __('Is_del 1')];
     }     
 
 
@@ -42,13 +36,6 @@ class Announcement extends Model
         return isset($list[$value]) ? $list[$value] : '';
     }
 
-
-    public function getIsDelTextAttr($value, $data)
-    {        
-        $value = $value ? $value : (isset($data['is_del']) ? $data['is_del'] : '');
-        $list = $this->getIsDelList();
-        return isset($list[$value]) ? $list[$value] : '';
-    }
 
 
 

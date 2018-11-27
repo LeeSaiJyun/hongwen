@@ -22,7 +22,6 @@ class Address extends Backend
     {
         parent::_initialize();
         $this->model = new \app\admin\model\user\Address;
-        $this->view->assign("isDelList", $this->model->getIsDelList());
         $this->view->assign("isDefaultList", $this->model->getIsDefaultList());
     }
     

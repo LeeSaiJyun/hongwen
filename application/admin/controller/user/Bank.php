@@ -24,7 +24,6 @@ class Bank extends Backend
     {
         parent::_initialize();
         $this->model = new \app\admin\model\Bank();
-        $this->view->assign("isDelList", $this->model->getIsDelList());
     }
     
     /**

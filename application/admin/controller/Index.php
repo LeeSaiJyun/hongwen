@@ -33,6 +33,10 @@ class Index extends Backend
         list($menulist, $navlist, $fixedmenu, $referermenu) = $this->auth->getSidebar([
 //            'dashboard' => 'hot',
             'auth/rule' => __('Menu'),
+            'withdraw' => __('未完成'),
+            'application' => __('未完成'),
+
+
         ], $this->view->site['fixedpage']);
         $action = $this->request->request('action');
         if ($this->request->isPost()) {

@@ -28,12 +28,19 @@ class Dashboard extends Backend
         $sql = "select count(id) as total, FROM_UNIXTIME(createtime, '%Y-%m-%d') as time
                     from fa_order where createtime>= '" . $seventtime . "' and createtime < '" . time() . "' group by time;  ";
         $dataList = Db::query($sql);
-        $sendlist = array_reduce($dataList, create_function('$v,$w', '$v[$w["time"]]=$w["total"];return $v;'));
+        $sendlist = array_reduce($dataList, function($v,$w) use ($dataList) {
+            $v[$w["time"]]=$w["total"];
+            return $v;
+        });
+
 
         $sql = "select count(id) as total, FROM_UNIXTIME(createtime, '%Y-%m-%d') as time
                     from fa_order where createtime>= '" . $seventtime . "' and createtime < '" . time() . "' group by time;";
         $dataList = Db::query($sql);
-        $mobilelist = array_reduce($dataList, create_function('$v,$w', '$v[$w["time"]]=$w["total"];return $v;'));
+        $mobilelist = array_reduce($dataList, function($v,$w) use ($dataList) {
+            $v[$w["time"]]=$w["total"];
+            return $v;
+        });
         /*$sql = "select date(createtime) as time,count(id) as total from (
                     SELECT id,createtime FROM fa_push_log
                     WHERE TO_DAYS(NOW()) - TO_DAYS(createtime) <= $num

@@ -22,7 +22,6 @@ class Schoolmajor extends Backend
     {
         parent::_initialize();
         $this->model = new \app\admin\model\Schoolmajor;
-        $this->view->assign("isDelList", $this->model->getIsDelList());
     }
     
     /**
@@ -62,13 +61,25 @@ class Schoolmajor extends Backend
                     ->limit($offset, $limit)
                     ->select();
 
+
+            //查询所有major
+            $majorList = \app\admin\model\Major::field('id,name')->select();
+            $majorList = collection($majorList)->toArray();
+            //转换
+            $majorList = array_column($majorList, 'name', 'id');
+
+            $list = collection($list)->toArray();
+
             foreach ($list as $k => &$v)
             {
-                $groups = isset($adminGroupName[$v['id']]) ? $adminGroupName[$v['id']] : [];
-                $v['major_ids'] = implode(',', array_keys($groups));
-                $v['major_ids_text'] = implode(',', array_values($groups));
+                //major['id']转换成major['name']
+                $major_ids = explode(',',$v['major_ids']);
+                $majorNameList = [];
+                foreach ($major_ids as $major_id ){
+                    array_push($majorNameList, $majorList[$major_id]);
+                }
+                $v['major_text'] = implode(',', $majorNameList);
             }
-            $list = collection($list)->toArray();
             $result = array("total" => $total, "rows" => $list);
 
             return json($result);

@@ -24,18 +24,13 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                 columns: [
                     [
                         {checkbox: true},
-                        {field: 'id', title: __('Id')},
-                        {field: 'school_id', title: __('School_id')},
-                        {field: 'major_ids', title: __('Major_ids')},
-                        {field: 'is_del', title: __('Is_del'), searchList: {"0":__('Is_del 0'),"1":__('Is_del 1')}, formatter: Table.api.formatter.normal},
-                        {field: 'major.id', title: __('Major.id')},
-                        {field: 'major.name', title: __('Major.name')},
-                        {field: 'major.is_del', title: __('Major.is_del')},
-                        {field: 'school.id', title: __('School.id')},
-                        {field: 'school.cat_id', title: __('School.cat_id')},
-                        {field: 'school.title_image', title: __('School.title_image'), formatter: Table.api.formatter.image},
-                        {field: 'school.name', title: __('School.name')},
-                        {field: 'school.is_del', title: __('School.is_del')},
+                        {field: 'id', title: __('Id'),operate:false},
+                        {field: 'school.name', title: __('School.name'),operate: 'LIKE'},
+                        {field: 'school.cat_id', title: __('School.cat_id'), addClass:"selectpage",extend:"data-source='school/cat/index' data-field='name'"},
+                        // {field: 'major_ids', title: __('Major_ids'),operate:false},
+                        {field: 'major_text', title: __('Major.name'), operate:false, formatter: Table.api.formatter.label},
+                        // {field: 'school.id', title: __('School.id')},
+                        {field: 'school.title_image', title: __('School.title_image'), operate:false, formatter: Table.api.formatter.image},
                         {field: 'operate', title: __('Operate'), table: table, events: Table.api.events.operate, formatter: Table.api.formatter.operate}
                     ]
                 ]

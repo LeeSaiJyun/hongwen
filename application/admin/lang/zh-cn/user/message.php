@@ -8,7 +8,4 @@ return [
     'Status 1'  =>  '已读',
     'Createtime'  =>  '创建时间',
     'Updatetime'  =>  '已读时间',
-    'Is_del'  =>  '删除标记',
-    'Is_del 0'  =>  '未删除',
-    'Is_del 1'  =>  '已删除'
 ];

@@ -54,20 +54,20 @@
 八.院校信息管理
 	1.院校列表(添加,修改,删除)
 	2.院校类别表(添加,修改,删除)
-        3.院校专业列表(添加,修改,删除)
-                                            =======   要修改 view  js 选择类型 cat/index  => school/cat/index  =======
-	                                        php think crud -t school  -c school/school -r school_cat -k cat_id   -p id -f 1
+    3.院校专业列表(添加,修改,删除)
+                                        =======   要修改 view  js 选择类型 cat/index  => school/cat/index  =======
+	                                    php think crud -t school  -c school/school -r school_cat -k cat_id   -p id -f 1
 
 
-	                                        php think crud -t school_cat  -c school/cat -m schoolcat -u 1
-	                                        php think crud -t school_type -u 1
+	                                    php think crud -t school_cat  -c school/cat -m schoolcat -u 1
+	                                    php think crud -t school_type -u 1
 
-                                            //专业
-	                                        php think crud -t major -c school/major -u 1
-	                                        php think crud -t school_major -c school/schoolmajor -m schoolmajor  --relation=major --relation=school --relationmodel=major --relationmodel=school --relationforeignkey=major_ids  --relationforeignkey=school_id -u 1
+                                        //专业
+	                                    php think crud -t major -c school/major -u 1
+	                                    php think crud -t school_major -c school/schoolmajor -m schoolmajor  --relation=major --relation=school --relationmodel=major --relationmodel=school --relationforeignkey=major_ids  --relationforeignkey=school_id -u 1
 
-	                                        php think crud -t school_major -u 1
-	                                        php think crud -t school_major -u 1
+	                                    php think crud -t school_major -u 1
+	                                    php think crud -t school_major -u 1
 
 
 
@@ -76,7 +76,7 @@
 九.技术培训管理
 	1.技术培训列表(添加,修改,删除)
 
-	                                    php think crud -t
+
 
 
 十.入户指南管理

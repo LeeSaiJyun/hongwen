@@ -23,7 +23,6 @@ class Message extends Backend
         parent::_initialize();
         $this->model = new \app\admin\model\user\Message;
         $this->view->assign("statusList", $this->model->getStatusList());
-        $this->view->assign("isDelList", $this->model->getIsDelList());
     }
     
     /**
