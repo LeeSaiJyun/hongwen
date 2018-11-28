@@ -24,18 +24,17 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                 columns: [
                     [
                         {checkbox: true},
-                        {field: 'id', title: __('Id')},
-                        {field: 'user_id', title: __('User_id')},
-                        {field: 'tradeno', title: __('Tradeno')},
-                        {field: 'orderno', title: __('Orderno')},
+                        {field: 'id', title: __('Id'),operate:false},
+                        {field: 'user_id', title: __('User_id'),visible:false,operate:false},
+                        {field: 'user.username', title: __('User.username'),operate:false},
+                        {field: 'tradeno', title: __('Tradeno'),operate:'like'},
+                        {field: 'orderno', title: __('Orderno'),operate:'like'},
                         {field: 'paymentdata', title: __('Paymentdata'), searchList: {"normal":__('Normal'),"hidden":__('Hidden')}, formatter: Table.api.formatter.normal},
                         {field: 'money', title: __('Money'), operate:'BETWEEN'},
                         {field: 'balance', title: __('Balance'), operate:'BETWEEN'},
                         {field: 'paytime', title: __('Paytime'), operate:'RANGE', addclass:'datetimerange', formatter: Table.api.formatter.datetime},
                         {field: 'status', title: __('Status')},
-                        {field: 'remark', title: __('Remark')},
-                        {field: 'createtime', title: __('Createtime'), operate:'RANGE', addclass:'datetimerange', formatter: Table.api.formatter.datetime},
-                        {field: 'updatetime', title: __('Updatetime'), operate:'RANGE', addclass:'datetimerange', formatter: Table.api.formatter.datetime},
+                        {field: 'remark', title: __('Remark'),operate:false},
                         {field: 'operate', title: __('Operate'), table: table, events: Table.api.events.operate, formatter: Table.api.formatter.operate}
                     ]
                 ]

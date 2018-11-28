@@ -24,28 +24,31 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                 columns: [
                     [
                         {checkbox: true},
-                        {field: 'id', title: __('Id')},
-                        {field: 'user_id', title: __('User_id')},
-                        {field: 'name', title: __('Name')},
-                        {field: 'school_id', title: __('School_id')},
-                        {field: 'major_id', title: __('Major_id')},
+                        {field: 'id', title: __('Id'),operate:false},
+                        {field: 'user_id', title: __('User_id'),visible:false,operate:false},
+                        {field: 'user.username', title: __('User.username'),operate:false},
+                        {field: 'name', title: __('Name'),operate:'LIKE'},
+                        {field: 'school_id', title: __('School_id'),visible:false,operate:false},
+                        {field: 'school.name', title: __('School.name'),operate:'LIKE'},
+                        {field: 'major_id', title: __('Major_id'),visible:false,operate:false},
+                        {field: 'major.name', title: __('Major.name'),operate:'LIKE'},
                         {field: 'applicationdata', title: __('Applicationdata'), searchList: {"0":__('Applicationdata 0'),"1":__('Applicationdata 1')}, formatter: Table.api.formatter.normal},
-                        {field: 'idcard', title: __('Idcard')},
-                        {field: 'birthday', title: __('Birthday'), operate:'RANGE', addclass:'datetimerange'},
-                        {field: 'age', title: __('Age')},
+                        {field: 'idcard', title: __('Idcard'),operate:'LIKE'},
+                        {field: 'birthday', title: __('Birthday'),operate:false, addclass:'datetimerange'},
+                        {field: 'age', title: __('Age'),operate:false},
                         {field: 'sex', title: __('Sex'), searchList: {"0":__('Sex 0'),"1":__('Sex 1'),"2":__('Sex 2')}, formatter: Table.api.formatter.normal},
-                        {field: 'ethnic', title: __('Ethnic')},
-                        {field: 'graduation', title: __('Graduation')},
+                        {field: 'ethnic', title: __('Ethnic'),operate:false},
+                        {field: 'graduation', title: __('Graduation'),operate:'LIKE'},
                         {field: 'certificate', title: __('Certificate')},
-                        {field: 'graduationdate', title: __('Graduationdate'), operate:'RANGE', addclass:'datetimerange'},
-                        {field: 'graduationmajor', title: __('Graduationmajor')},
-                        {field: 'idcard_positive_image', title: __('Idcard_positive_image'), formatter: Table.api.formatter.image},
-                        {field: 'idcard_negative_image', title: __('Idcard_negative_image'), formatter: Table.api.formatter.image},
-                        {field: 'graduation_image', title: __('Graduation_image'), formatter: Table.api.formatter.image},
+                        {field: 'graduationdate', title: __('Graduationdate'),operate:false},
+                        {field: 'graduationmajor', title: __('Graduationmajor'),operate:false},
+                        {field: 'idcard_positive_image', title: __('Idcard_positive_image'), formatter: Table.api.formatter.image,operate:false},
+                        {field: 'idcard_negative_image', title: __('Idcard_negative_image'), formatter: Table.api.formatter.image,operate:false},
+                        {field: 'graduation_image', title: __('Graduation_image'), formatter: Table.api.formatter.image,operate:false},
                         {field: 'status', title: __('Status'), searchList: {"0":__('Status 0'),"1":__('Status 1'),"-1":__('Status -1')}, formatter: Table.api.formatter.status},
                         {field: 'applicationtime', title: __('Applicationtime'), operate:'RANGE', addclass:'datetimerange', formatter: Table.api.formatter.datetime},
-                        {field: 'updatetime', title: __('Updatetime'), operate:'RANGE', addclass:'datetimerange', formatter: Table.api.formatter.datetime},
-                        {field: 'result', title: __('Result')},
+                        {field: 'updatetime', title: __('Updatetime'), operate:'RANGE', addclass:'daterange', formatter: Table.api.formatter.datetime},
+                        {field: 'result', title: __('Result'),operate:false},
                         {field: 'operate', title: __('Operate'), table: table, events: Table.api.events.operate, formatter: Table.api.formatter.operate}
                     ]
                 ]
@@ -55,6 +58,9 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
             Table.api.bindevent(table);
         },
         add: function () {
+            $('#c-major_id').data("params", function (obj) {
+                return {custom: {id: $("#c-school_id").val()}};
+            });
             Controller.api.bindevent();
         },
         edit: function () {

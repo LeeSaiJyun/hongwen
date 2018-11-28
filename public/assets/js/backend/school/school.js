@@ -24,7 +24,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                 columns: [
                     [
                         {checkbox: true},
-                        {field: 'id', title: __('Id')},
+                        {field: 'id', title: __('Id'),operate:false},
                         {field: 'name', title: __('Name')},
                         {field: 'title_image', title: __('Title_image'), formatter: Table.api.formatter.image,operate: false},
                         {field: 'schoolcat.name', title: __('Cat.name'), addClass:"selectpage",extend:"data-source='school/cat/index' data-field='name'"},

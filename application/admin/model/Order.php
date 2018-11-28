@@ -49,5 +49,9 @@ class Order extends Model
         return $value && !is_numeric($value) ? strtotime($value) : $value;
     }
 
+    public function user()
+    {
+        return $this->hasOne('User', 'id', 'user_id', [], 'LEFT')->field('id,username');
+    }
 
 }

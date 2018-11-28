@@ -24,14 +24,14 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                 columns: [
                     [
                         {checkbox: true},
-                        {field: 'id', title: __('Id')},
+                        {field: 'id', title: __('Id'), operate: false},
                         {field: 'user_id', title: __('User_id')},
-                        {field: 'money', title: __('Money'), operate:'BETWEEN'},
-                        {field: 'balance', title: __('Balance'), operate:'BETWEEN'},
+                        {field: 'money', title: __('Money'), operate: 'BETWEEN'},
+                        {field: 'balance', title: __('Balance'), operate: 'BETWEEN'},
                         {field: 'bank_id', title: __('Bank_id')},
                         {field: 'order_id', title: __('Order_id')},
                         {field: 'withdrawtime', title: __('Withdrawtime'), operate:'RANGE', addclass:'datetimerange', formatter: Table.api.formatter.datetime},
-                        {field: 'paytime', title: __('Paytime'), operate:'RANGE', addclass:'datetimerange', formatter: Table.api.formatter.datetime},
+                        {field: 'paytime', title: __('Paytime'), operate: 'RANGE', addclass: 'datetimerange', formatter: Table.api.formatter.datetime},
                         {field: 'admin_id', title: __('Admin_id')},
                         {field: 'status', title: __('Status'), searchList: {"0":__('Status 0'),"1":__('Status 1'),"2":__('Status 2'),"-1":__('Status -1')}, formatter: Table.api.formatter.status},
                         {field: 'operate', title: __('Operate'), table: table, events: Table.api.events.operate, formatter: Table.api.formatter.operate}

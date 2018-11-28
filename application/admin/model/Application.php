@@ -8,14 +8,14 @@ class Application extends Model
 {
     // 表名
     protected $name = 'application';
-    
+
     // 自动写入时间戳字段
     protected $autoWriteTimestamp = 'int';
 
     // 定义时间戳字段名
     protected $createTime = false;
     protected $updateTime = 'updatetime';
-    
+
     // 追加属性
     protected $append = [
         'applicationdata_text',
@@ -23,27 +23,25 @@ class Application extends Model
         'status_text',
         'applicationtime_text'
     ];
-    
 
-    
     public function getApplicationdataList()
     {
-        return ['0' => __('Applicationdata 0'),'1' => __('Applicationdata 1')];
-    }     
+        return ['0' => __('Applicationdata 0'), '1' => __('Applicationdata 1')];
+    }
 
     public function getSexList()
     {
-        return ['0' => __('Sex 0'),'1' => __('Sex 1'),'2' => __('Sex 2')];
-    }     
+        return ['0' => __('Sex 0'), '1' => __('Sex 1'), '2' => __('Sex 2')];
+    }
 
     public function getStatusList()
     {
-        return ['0' => __('Status 0'),'1' => __('Status 1'),'-1' => __('Status -1')];
-    }     
+        return ['0' => __('Status 0'), '1' => __('Status 1'), '-1' => __('Status -1')];
+    }
 
 
     public function getApplicationdataTextAttr($value, $data)
-    {        
+    {
         $value = $value ? $value : (isset($data['applicationdata']) ? $data['applicationdata'] : '');
         $list = $this->getApplicationdataList();
         return isset($list[$value]) ? $list[$value] : '';
@@ -51,7 +49,7 @@ class Application extends Model
 
 
     public function getSexTextAttr($value, $data)
-    {        
+    {
         $value = $value ? $value : (isset($data['sex']) ? $data['sex'] : '');
         $list = $this->getSexList();
         return isset($list[$value]) ? $list[$value] : '';
@@ -59,7 +57,7 @@ class Application extends Model
 
 
     public function getStatusTextAttr($value, $data)
-    {        
+    {
         $value = $value ? $value : (isset($data['status']) ? $data['status'] : '');
         $list = $this->getStatusList();
         return isset($list[$value]) ? $list[$value] : '';
@@ -77,5 +75,21 @@ class Application extends Model
         return $value && !is_numeric($value) ? strtotime($value) : $value;
     }
 
+
+    public function user()
+    {
+        return $this->hasOne('User', 'id', 'user_id', [], 'LEFT')->field('id,username');
+    }
+
+
+    public function school()
+    {
+        return $this->hasOne('School', 'id', 'school_id', [], 'LEFT')->field('id,name');
+    }
+
+    public function major()
+    {
+        return $this->hasOne('Major', 'id', 'major_id', [], 'LEFT')->field('id,name');
+    }
 
 }

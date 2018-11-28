@@ -26,8 +26,20 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {checkbox: true},
                         {field: 'id', title: __('Id'),operate:false},
                         {field: 'school.name', title: __('School.name'),operate: 'LIKE'},
-                        {field: 'school.cat_id', title: __('School.cat_id'), addClass:"selectpage",extend:"data-source='school/cat/index' data-field='name'"},
-                        // {field: 'major_ids', title: __('Major_ids'),operate:false},
+                        {field: 'school.cat_id', title: __('School.cat_id'),visible:false, addClass:"selectpage",extend:"data-source='school/cat/index' data-field='name'"},
+                        {
+                            field: 'major_ids', title: __('Major_ids'),operate: 'FIND_IN_SET',
+                            formatter: Table.api.formatter.label,
+                            addClass:"selectpage",extend:"data-source='school/major/index' data-field='name'"
+                        },
+                        /*{
+                            field: 'major_ids', title: __('Major_ids'), operate: 'FIND_IN_SET',  formatter: function (value, row, index) {
+                                return Table.api.formatter.label( row.major_text, row, index);
+                            }
+                        },*/
+
+                        // {field: 'schoolcat.name', title: __('Cat.name'), addClass:"selectpage",extend:"data-source='school/cat/index' data-field='name'"},
+
                         {field: 'major_text', title: __('Major.name'), operate:false, formatter: Table.api.formatter.label},
                         // {field: 'school.id', title: __('School.id')},
                         {field: 'school.title_image', title: __('School.title_image'), operate:false, formatter: Table.api.formatter.image},

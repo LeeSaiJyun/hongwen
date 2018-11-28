@@ -2,9 +2,12 @@
 
 return [
     'User_id'  =>  '用户ID',
-    'Name'  =>  '姓名',
+    'Name'  =>  '真实姓名',
+    'User.username'  =>  '用户账号',
     'School_id'  =>  '学校ID',
+    'School.name'  =>  '报名学校',
     'Major_id'  =>  '专业ID',
+    'Major.name'  =>  '报名专业',
     'Applicationdata'  =>  '申请类型',
     'Applicationdata 0'  =>  '高升专',
     'Applicationdata 1'  =>  '专升本',
@@ -28,6 +31,6 @@ return [
     'Status 1'  =>  '已报名',
     'Status -1'  =>  '未通过',
     'Applicationtime'  =>  '申请时间',
-    'Updatetime'  =>  '报名时间,机构向学校提交信息时间',
+    'Updatetime'  =>  '报名时间',
     'Result'  =>  '未通过原因'
 ];

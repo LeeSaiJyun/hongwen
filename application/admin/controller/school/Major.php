@@ -3,6 +3,7 @@
 namespace app\admin\controller\school;
 
 use app\common\controller\Backend;
+use think\Db;
 
 /**
  * 专业信息
@@ -29,6 +30,27 @@ class Major extends Backend
      * 因此在当前控制器中可不用编写增删改查的代码,除非需要自己控制这部分逻辑
      * 需要将application/admin/library/traits/Backend.php中对应的方法复制到当前控制器,然后进行修改
      */
+
+    public function selectbyschool()
+    {
+        if ($this->request->isAjax()) {
+
+            $custom = (array)$this->request->request("custom/a");
+//        halt($custom);
+
+//        $list = \app\admin\model\Schoolmajor::where($where)->select();
+//
+//        $total = \app\admin\model\Schoolmajor::where($where)->count();
+            $school_id = intval($custom['id']);
+            $sql = "SELECT count(*) as count FROM `fa_major` where FIND_IN_SET( id, (SELECT major_ids from fa_school_major where id ={$school_id}) );";
+            $total = Db::query($sql);
+            $sql = "SELECT * FROM `fa_major` where FIND_IN_SET( id, (SELECT major_ids from fa_school_major where id ={$school_id}) );";
+            $list = Db::query($sql);
+
+//        SELECT * FROM `fa_major` where FIND_IN_SET( id, (SELECT major_ids from fa_school_major where id =1) );
+            return json(['list' => $list, 'total' => $total[0]['count']]);
+        }
+    }
     
 
 }

@@ -34,7 +34,6 @@ class Index extends Backend
 //            'dashboard' => 'hot',
             'auth/rule' => __('Menu'),
             'withdraw' => __('未完成'),
-            'application' => __('未完成'),
 
 
         ], $this->view->site['fixedpage']);

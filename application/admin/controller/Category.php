@@ -36,6 +36,10 @@ class Category extends Backend
         {
             $categorydata[$v['id']] = $v;
         }
+
+//        halt(collection($this->model->order('weigh desc,id desc')->select())->toArray());
+//        halt(CategoryModel::getTypeList());
+
         $this->view->assign("flagList", $this->model->getFlagList());
         $this->view->assign("typeList", CategoryModel::getTypeList());
         $this->view->assign("parentList", $categorydata);

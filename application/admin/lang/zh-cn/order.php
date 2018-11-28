@@ -2,6 +2,7 @@
 
 return [
     'User_id'  =>  '用户ID',
+    'User.username'  =>  '用户账号',
     'Tradeno'  =>  '流水号',
     'Orderno'  =>  '订单号',
     'Paymentdata'  =>  '支付类型',
