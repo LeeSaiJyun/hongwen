@@ -233,7 +233,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form', 'template'], function
         },
         api: {
             bindevent: function () {
-                Form.api.bindevent($("form[role=form]"));
+                Form.api.bindevent($("form[role=form]").serialize());
             },
             formatter: {//渲染的方法
                 url: function (value, row, index) {

@@ -111,4 +111,24 @@ class Announcement extends Backend
         return $this->view->fetch();
     }
 
+    public function change($ids = null)
+    {
+        $ids = intval($ids);
+        if ($ids){
+            $data  = $this->model->get($ids);
+            if($data->status === 0 ){
+                $this->model->isUpdate(true)->save(['status'  => 1 ], ['id' => $ids]);;
+                $this->success('当前公告已开启');
+            }elseif ($data->status === 1){
+                $this->model->isUpdate(true)->save(['status'  => 0 ], ['id' => $ids]);;
+                $this->success('当前公告已隐藏');
+            }else{
+                $this->error(__('Status error', ''));
+            };
+        }else{
+            $this->error(__('Parameter %s can not be empty', ''));
+        }
+
+
+    }
 }

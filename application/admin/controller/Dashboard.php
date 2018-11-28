@@ -57,8 +57,18 @@ class Dashboard extends Backend
         $sendList = $mobileList = [];
         for ($i = 0; $i < $num; $i++) {
             $day = date("Y-m-d", $seventtime + ($i * 86400));
-            $sendList[$day] = array_key_exists($day, $sendlist) ? $sendlist[$day] : 0;
-            $mobileList[$day] = array_key_exists($day, $mobilelist) ? $mobilelist[$day] : 0;
+            //防止数据库查询数据为空报错
+            if($sendlist){
+                $sendList[$day] = array_key_exists($day, $sendlist) ? $sendlist[$day] : 0;
+            }else{
+                $sendList[$day] = 0;
+            }
+
+            if($sendlist){
+                $mobileList[$day] = array_key_exists($day, $mobilelist) ? $mobilelist[$day] : 0;
+            }else{
+                $mobileList[$day] = 0;
+            }
 //            $createlist[$day] = Db::table('shebeimac')->where('time','between time',[$day,$nextday])->count();
 //            $paylist[$day] = Db::table('errorlog')->where('time','between time',[$day,$nextday])->fetchSql()->count();
         }

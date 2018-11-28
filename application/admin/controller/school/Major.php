@@ -19,6 +19,8 @@ class Major extends Backend
      */
     protected $model = null;
 
+    protected $noNeedRight = ['selectbyschool'];
+
     public function _initialize()
     {
         parent::_initialize();
@@ -35,20 +37,27 @@ class Major extends Backend
     {
         if ($this->request->isAjax()) {
 
-            $custom = (array)$this->request->request("custom/a");
-//        halt($custom);
+            $school_id = $this->request->request("school_id/d");
+            if(!$school_id){
+                if ($this->request->request('keyField')) {
+                    return $this->selectpage();
+                }
+            }else{
+                //        halt($school_id);
 
 //        $list = \app\admin\model\Schoolmajor::where($where)->select();
 //
 //        $total = \app\admin\model\Schoolmajor::where($where)->count();
-            $school_id = intval($custom['id']);
-            $sql = "SELECT count(*) as count FROM `fa_major` where FIND_IN_SET( id, (SELECT major_ids from fa_school_major where id ={$school_id}) );";
-            $total = Db::query($sql);
-            $sql = "SELECT * FROM `fa_major` where FIND_IN_SET( id, (SELECT major_ids from fa_school_major where id ={$school_id}) );";
-            $list = Db::query($sql);
+
+                $sql = "SELECT count(*) as count FROM `fa_major` where FIND_IN_SET( id, (SELECT major_ids from fa_school_major where id ={$school_id}) );";
+                $total = Db::query($sql);
+                $sql = "SELECT * FROM `fa_major` where FIND_IN_SET( id, (SELECT major_ids from fa_school_major where id ={$school_id}) );";
+                $list = Db::query($sql);
 
 //        SELECT * FROM `fa_major` where FIND_IN_SET( id, (SELECT major_ids from fa_school_major where id =1) );
-            return json(['list' => $list, 'total' => $total[0]['count']]);
+                return json(['list' => $list, 'total' => $total[0]['count']]);
+            }
+
         }
     }
     

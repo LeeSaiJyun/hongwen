@@ -20,6 +20,8 @@
                         <a href="javascript:;" class="btn btn-success btn-add {:$auth->check('withdraw/add')?'':'hide'}" title="{:__('Add')}" ><i class="fa fa-plus"></i> {:__('Add')}</a>
                         <a href="javascript:;" class="btn btn-success btn-edit btn-disabled disabled {:$auth->check('withdraw/edit')?'':'hide'}" title="{:__('Edit')}" ><i class="fa fa-pencil"></i> {:__('Edit')}</a>
                         <a href="javascript:;" class="btn btn-danger btn-del btn-disabled disabled {:$auth->check('withdraw/del')?'':'hide'}" title="{:__('Delete')}" ><i class="fa fa-trash"></i> {:__('Delete')}</a>
+                        <a href="javascript:;" class="btn btn-danger btn-del btn-disabled disabled {:$auth->check('withdraw/audit')?'':'hide'}" title="{:__('Audit')}" ><i class="fa fa-list"></i> {:__('Audit')}</a>
+
 
                         <div class="dropdown btn-group {:$auth->check('withdraw/multi')?'':'hide'}">
                             <a class="btn btn-primary btn-more dropdown-toggle btn-disabled disabled" data-toggle="dropdown"><i class="fa fa-cog"></i> {:__('More')}</a>
@@ -30,8 +32,9 @@
                         </div>
                     </div>
                     <table id="table" class="table table-striped table-bordered table-hover table-nowrap"
-                           data-operate-edit="{:$auth->check('withdraw/edit')}" 
-                           data-operate-del="{:$auth->check('withdraw/del')}" 
+                           data-operate-edit="{:$auth->check('withdraw/edit')}"
+                           data-operate-del="{:$auth->check('withdraw/del')}"
+                           data-operate-del="{:$auth->check('withdraw/audit')}"
                            width="100%">
                     </table>
                 </div>

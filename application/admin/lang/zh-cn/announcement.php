@@ -7,5 +7,5 @@ return [
     'Status 0'  =>  '隐藏',
     'Status 1'  =>  '正常显示',
     'Remark'  =>  '备注',
-    'Createtime'  =>  '创建时间,创建就是发布显示',
+    'Createtime'  =>  '创建时间',
 ];

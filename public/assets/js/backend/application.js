@@ -59,11 +59,14 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
         },
         add: function () {
             $('#c-major_id').data("params", function (obj) {
-                return {custom: {id: $("#c-school_id").val()}};
+                return {school_id: $("#c-school_id").val()};
             });
             Controller.api.bindevent();
         },
         edit: function () {
+            $('#c-major_id').data("params", function (obj) {
+                return {school_id: $("#c-school_id").val()};
+            });
             Controller.api.bindevent();
         },
         api: {
