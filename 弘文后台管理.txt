@@ -19,7 +19,7 @@
                                     $query->withField('id,mobile');
                                 }])
 
-	                    	php think crud -t user_address -c user/address -u 1     *******改了好多 不要重写******
+	                    	php think crud -t user_address -c user/address -u 1     *******改了好多 不要重写 ******
 	                    	php think crud -t user_message -c user/message -u 1
 
 
@@ -35,9 +35,9 @@
 	2.分校添加/修改/删除
 
 
-                                        五.系统设置
-                                            系统名称,系统logo,站点备案信息,返利比例修改,学费最低交费额度,报名费
-                                                                     ******* Finish ******
+                                                五.系统设置
+                                                    系统名称,系统logo,站点备案信息,返利比例修改,学费最低交费额度,报名费
+                                                                             ******* Finish ******
 
 
 六.提现管理          缺审核
@@ -72,24 +72,25 @@
 
 
 
-                                                            九.技术培训管理
-                                                                1.技术培训列表(添加,修改,删除)
-                                                                                                   php think crud -t technically --editorclass=content -f 1
-                                                                                                   修改编辑器  ==========    finish   ==========
+                                                    九.技术培训管理
+                                                        1.技术培训列表(添加,修改,删除)
+                                                                                           php think crud -t technically --editorclass=content -f 1
+                                                                                           修改编辑器editor  js   ==========    finish   ==========
 
 
 
 
 
 
-                                                            十.入户指南管理
-                                                                1.入户指南(修改)
-                                                                                                      ======== finish =======
+                                                    十.入户指南管理
+                                                        1.入户指南(修改)
+                                                                                              ======== finish =======
 
 
-                                                        十一.公告管理
-                                                            php think crud -t announcement  -f 1
-                                                            修改admin_id的关联  application\admin\controller\Announcement.php  最后修改的admin_id存入数据库
+                                                    十一.公告管理
+                                                        php think crud -t announcement  -f 1
+                                                        修改admin_id的关联  application\admin\controller\Announcement.php  最后修改的admin_id存入数据库
+                                                                                            ======== finish =======
 
 
 mysql信息
@@ -97,3 +98,4 @@ mysql信息
 账户:root
 密码:qweasd123!@#
 数据库名:honwen
+

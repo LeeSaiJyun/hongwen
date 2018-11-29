@@ -8,7 +8,7 @@ return [
     'Order_id'  =>  '订单ID',
     'Withdrawtime'  =>  '提现时间',
     'Paytime'  =>  '支付时间',
-    'Admin_id'  =>  '管理员ID',
+    'Admin.username'  =>  '管理员',
     'Status'  =>  '状态',
     'Status 0'  =>  '已申请',
     'Status 1'  =>  '已审核',

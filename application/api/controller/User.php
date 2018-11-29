@@ -160,7 +160,7 @@ class User extends Api
         $user = $this->auth->getUser();
         $username = $this->request->request('username');
         $nickname = $this->request->request('nickname');
-        $bio = $this->request->request('bio');
+//        $bio = $this->request->request('bio');
         $avatar = $this->request->request('avatar');
         $exists = \app\common\model\User::where('username', $username)->where('id', '<>', $this->auth->id)->find();
         if ($exists)
@@ -169,7 +169,7 @@ class User extends Api
         }
         $user->username = $username;
         $user->nickname = $nickname;
-        $user->bio = $bio;
+//        $user->bio = $bio;
         $user->avatar = $avatar;
         $user->save();
         $this->success();

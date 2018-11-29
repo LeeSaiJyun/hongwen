@@ -6,10 +6,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
             Table.api.init({
                 extend: {
                     index_url: 'withdraw/index',
-                    add_url: 'withdraw/add',
-                    edit_url: 'withdraw/edit',
-                    del_url: 'withdraw/del',
-                    audit_url: 'withdraw/audit',
+                    audit_url: 'withdraw/audit',//审核
                     multi_url: 'withdraw/multi',
                     table: 'withdraw',
                 }
@@ -33,7 +30,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {field: 'order_id', title: __('Order_id')},
                         {field: 'withdrawtime', title: __('Withdrawtime'), operate:'RANGE', addclass:'datetimerange', formatter: Table.api.formatter.datetime},
                         {field: 'paytime', title: __('Paytime'), operate: 'RANGE', addclass: 'datetimerange', formatter: Table.api.formatter.datetime},
-                        {field: 'admin_id', title: __('Admin_id')},
+                        {field: 'admin.username', title: __('Admin.username')},
                         {field: 'status', title: __('Status'), searchList: {"0":__('Status 0'),"1":__('Status 1'),"2":__('Status 2'),"-1":__('Status -1')}, formatter: Table.api.formatter.status},
                         {
                             field: 'operate',
@@ -46,24 +43,15 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                                     name: 'audit',
                                     title: __('审核'),
                                     classname: 'btn btn-xs btn-primary btn-dialog',
-                                    icon: 'fa fa-list',
+                                    icon: 'fa fa-money',
                                     url: 'withdraw/audit',
-                                },
-                                {
-                                    name: 'ajax',
-                                    title: __('发送Ajax'),
-                                    classname: 'btn btn-xs btn-success btn-magic btn-ajax',
-                                    icon: 'fa fa-magic',
-                                    url: 'withdraw/audit',
-                                    success: function (data, ret) {
-                                        // Layer.alert(ret.msg + ",返回数据：" + JSON.stringify(data));
-                                        //如果需要阻止成功提示，则必须使用return false;
-                                        //return false;
+                                    callback: function (data) {            //回调方法，用来响应 Fast.api.close()方法 **注意不能有success 是btn-ajax的回调，btn-dialog 用的callback回调，两者不能同存！！！！
+                                        $(".btn-refresh").trigger("click");//刷新当前页面的数据
+                                        console.error(data);//控制输出回调数据
                                     },
-                                    error: function (data, ret) {
-                                        console.log(data, ret);
-                                        Layer.alert(ret.msg);
-                                        return false;
+                                    hidden:function(data){   //控制按钮隐藏方法 判断表格数据是否满足要求，然后隐藏或显示
+                                        if(data.status !== 0)
+                                            return true;
                                     }
                                 },
                             ],
@@ -84,7 +72,30 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
             Controller.api.bindevent();
         },
         audit: function () {
-            Controller.api.bindevent();
+            //通过
+            $(document).on("click", ".btn-accept", function () {
+                var form = $("form[role=form]").serializeArray();
+                form.push({name: "audit_flag", value: "accept"});
+                Fast.api.ajax({
+                    data: form
+                }, function () {
+                    parent.window.$("#table").bootstrapTable('refresh');
+                    Fast.api.close();
+                });
+            });
+
+            //拒绝
+            $(document).on("click", ".btn-reject", function () {
+                    var form = $("form[role=form]").serializeArray();
+                    form.push({name: "audit_flag", value: "reject"});
+                    Fast.api.ajax({
+                        data: form
+                    }, function () {
+                        parent.window.$("#table").bootstrapTable('refresh');
+                        Fast.api.close();
+                    });
+                });
+
         },
         api: {
             bindevent: function () {

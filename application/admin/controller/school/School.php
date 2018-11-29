@@ -17,6 +17,7 @@ class School extends Backend
      * @var \app\admin\model\School
      */
     protected $model = null;
+    protected $searchFields = "name";
 
     public function _initialize()
     {

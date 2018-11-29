@@ -17,7 +17,7 @@ class Technically extends Backend
      * @var \app\admin\model\Technically
      */
     protected $model = null;
-
+    protected $searchFields = 'id,title';
     public function _initialize()
     {
         parent::_initialize();

@@ -27,7 +27,8 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {field: 'id', title: __('Id'),operate:false},
                         {field: 'name', title: __('Name')},
                         {field: 'title_image', title: __('Title_image'), formatter: Table.api.formatter.image,operate: false},
-                        {field: 'schoolcat.name', title: __('Cat.name'), addClass:"selectpage",extend:"data-source='school/cat/index' data-field='name'"},
+                        {field: 'schoolcat.id', title: __('Cat.Name'),visible:false, addClass:"selectpage",extend:"data-source='school/cat/index' data-field='name'"},
+                        {field: 'schoolcat.name', title: __('Cat.name'),operate:false,sortable:true},
                         {field: 'operate', title: __('Operate'), table: table, events: Table.api.events.operate, formatter: Table.api.formatter.operate}
                     ]
                 ]

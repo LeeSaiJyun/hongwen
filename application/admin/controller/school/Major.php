@@ -18,6 +18,7 @@ class Major extends Backend
      * @var \app\admin\model\Major
      */
     protected $model = null;
+    protected $searchFields = "name";
 
     protected $noNeedRight = ['selectbyschool'];
 

@@ -2,7 +2,7 @@
 
 return [
     'Title'  =>  '培训名称',
-    'Title_image'  =>  '标题图存储路径',
+    'Title_image'  =>  '标题图',
     'Content'  =>  '兼容html字符的富文本',
     'Is_del'  =>  '删除标记',
     'Is_del 0'  =>  '未删除',

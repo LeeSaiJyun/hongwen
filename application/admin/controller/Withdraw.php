@@ -31,6 +31,39 @@ class Withdraw extends Backend
      * 需要将application/admin/library/traits/Backend.php中对应的方法复制到当前控制器,然后进行修改
      */
 
+    public function index()
+    {
+        //当前是否为关联查询
+        $this->relationSearch = true;
+        //设置过滤方法
+        $this->request->filter(['strip_tags']);
+        if ($this->request->isAjax()) {
+            //如果发送的来源是Selectpage，则转发到Selectpage
+            if ($this->request->request('keyField')) {
+                return $this->selectpage();
+            }
+            list($where, $sort, $order, $offset, $limit) = $this->buildparams();
+            $total = $this->model
+                ->with('admin')
+                ->where($where)
+                ->order($sort, $order)
+                ->count();
+
+            $list = $this->model
+                ->with('admin')
+                ->where($where)
+                ->order($sort, $order)
+                ->limit($offset, $limit)
+                ->select();
+
+            $list = collection($list)->toArray();
+            $result = array("total" => $total, "rows" => $list);
+
+            return json($result);
+        }
+        return $this->view->fetch();
+    }
+
     //审核
     public function audit($ids = null)
     {
@@ -38,13 +71,24 @@ class Withdraw extends Backend
         if (!$row)
             $this->error(__('No Results were found'));
         if ($this->request->isAjax()) {
-            $this->success("Ajax请求成功", null, ['id' => $ids]);
+            $audit_flag = $this->request->post('audit_flag');
+            if(!$audit_flag){
+                $this->error(__('No audit flag'));
+            }elseif($audit_flag == 'accept'){
+                //todo  根据审核状态进行对应操作
+                $this->success("accept请求成功", null, ['id' => $ids]);
+            }elseif($audit_flag == 'reject'){
+                //todo  根据审核状态进行对应操作
+                $this->success("reject请求成功", null, ['id' => $ids]);
+            }
         }
         $this->view->assign("row", $row->toArray());
         return $this->view->fetch();
     }
 
+    public function add( $ids = null){
 
+    }
     public function del( $ids = null)
     {
 
