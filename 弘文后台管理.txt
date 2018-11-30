@@ -1,25 +1,25 @@
 弘文教育管理后台功能:
 
-一.管理员登陆(不需要权限管理)
-	1.管理员修改密码
-                             ******* Finish ******
+                                            一.管理员登陆(不需要权限管理)
+                                                1.管理员修改密码
+                                                                         ******* Finish ******
 
 
 
 二.学员管理
 	1.学员列表信息
-	                2.学员上下级查看    ****** wait to  ******
-                    3.学员信息修改
-                        a.学员学籍信息修改
-                        b.学员昵称,收货地址,手机号,银行卡信息修改
-                        c.学员余额修改
+    2.学员上下级查看    ****** wait to  ******
+    3.学员信息修改
+        a.学员学籍信息修改
+        b.学员昵称,收货地址,手机号,银行卡信息修改
+        c.学员余额修改
 	4.学员站内信发送,可以全体发,可以单独发,可以选中部分学员批量发
 	                    	php think crud -t user_bank -c user/bank -r user -k user_id -f 1
 	                    	->with(['user'=>function($query){
                                     $query->withField('id,mobile');
                                 }])
 
-	                    	php think crud -t user_address -c user/address -u 1     *******改了好多 不要重写 ******
+	                    	php think crud -t user_address -c user/address -u 1     *******改了好多 不要重写 *******
 	                    	php think crud -t user_message -c user/message -u 1
 
 
@@ -30,14 +30,19 @@
 	4.教材邮寄信息填写      address update
                                     ***** php think crud -t application  -u 1 *****
 
-四.分校管理                          fa_branch
-	1.分校列表
-	2.分校添加/修改/删除
+                                                四.分校管理                          fa_branch
+                                                    1.分校列表
+                                                    2.分校添加/修改/删除
+                                                                                        php think crud -t branch -u 1
 
+                                                预约管理                fa_reservation
+                                                    1.预约列表
+                                                    2.预约添加/修改/删除
+                                                                                        php think crud -t reservation -r user -k user_id -p id
 
-                                                五.系统设置
-                                                    系统名称,系统logo,站点备案信息,返利比例修改,学费最低交费额度,报名费
-                                                                             ******* Finish ******
+邮寄资料
+    1.
+
 
 
 六.提现管理          缺审核
@@ -69,28 +74,6 @@
 	                                    php think crud -t school_major -u 1
 
 
-
-
-
-                                                    九.技术培训管理
-                                                        1.技术培训列表(添加,修改,删除)
-                                                                                           php think crud -t technically --editorclass=content -f 1
-                                                                                           修改编辑器editor  js   ==========    finish   ==========
-
-
-
-
-
-
-                                                    十.入户指南管理
-                                                        1.入户指南(修改)
-                                                                                              ======== finish =======
-
-
-                                                    十一.公告管理
-                                                        php think crud -t announcement  -f 1
-                                                        修改admin_id的关联  application\admin\controller\Announcement.php  最后修改的admin_id存入数据库
-                                                                                            ======== finish =======
 
 
 mysql信息

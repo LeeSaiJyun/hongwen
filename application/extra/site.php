@@ -33,8 +33,9 @@ return array (
   'mail_smtp_pass' => 'password',
   'mail_verify_type' => '2',
   'mail_from' => '10000@qq.com',
-  'rebate_modify' => '5.2',
-  'minimum_fee' => '500',
+  'rebate_percent_1' => '5.2',
+  'rebate_percent_2' => '2',
   'registration_fee' => '1',
-  'guide_of_join' => '',
+  'guide_of_join' => '<p><br></p>',
+  'minimum_fee' => '500',
 );

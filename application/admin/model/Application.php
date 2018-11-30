@@ -81,7 +81,6 @@ class Application extends Model
         return $this->hasOne('User', 'id', 'user_id', [], 'LEFT')->field('id,username');
     }
 
-
     public function school()
     {
         return $this->hasOne('School', 'id', 'school_id', [], 'LEFT')->field('id,name');

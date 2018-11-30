@@ -26,7 +26,7 @@ class Dashboard extends Backend
         $num = 7;
         $seventtime = \fast\Date::unixtime('day', 1 + $num * -1);
         $sql = "select count(id) as total, FROM_UNIXTIME(createtime, '%Y-%m-%d') as time
-                    from fa_order where createtime>= '" . $seventtime . "' and createtime < '" . time() . "' group by time;  ";
+                    from fa_order where paytime>= '" . $seventtime . "' and paytime < '" . time() . "' group by time;  ";
         $dataList = Db::query($sql);
         $sendlist = array_reduce($dataList, function($v,$w) use ($dataList) {
             $v[$w["time"]]=$w["total"];
@@ -35,7 +35,7 @@ class Dashboard extends Backend
 
 
         $sql = "select count(id) as total, FROM_UNIXTIME(createtime, '%Y-%m-%d') as time
-                    from fa_order where createtime>= '" . $seventtime . "' and createtime < '" . time() . "' group by time;";
+                    from fa_order where paytime>= '" . $seventtime . "' and paytime < '" . time() . "' group by time;";
         $dataList = Db::query($sql);
         $mobilelist = array_reduce($dataList, function($v,$w) use ($dataList) {
             $v[$w["time"]]=$w["total"];
@@ -97,13 +97,9 @@ class Dashboard extends Backend
             'todayusersignup'  => $user_model->where(['status'=>'normal','jointime'=>['>=',$today_timestamp]])->count(),
             'todayorder'       => $order_model->where(['paymentdata'=>'normal','paytime'=>['>=',$today_timestamp]])->count(),
             'unsettleorder'    => 999999,
-            'sevendnu'         => '80%',
-            'sevendau'         => '32%',
 
             'paylist'          => $sendList,
             'createlist'       => $mobileList,
-            'addonversion'     => $addonVersion,
-            'uploadmode'       => $uploadmode
         ]);
 
         return $this->view->fetch();

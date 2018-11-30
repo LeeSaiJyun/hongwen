@@ -5,12 +5,12 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
             // 初始化表格参数配置
             Table.api.init({
                 extend: {
-                    index_url: 'user/address/index',
-                    add_url: 'user/address/add',
-                    edit_url: 'user/address/edit',
-                    del_url: 'user/address/del',
-                    multi_url: 'user/address/multi',
-                    table: 'user_address',
+                    index_url: 'branch/index',
+                    add_url: 'branch/add',
+                    edit_url: 'branch/edit',
+                    del_url: 'branch/del',
+                    multi_url: 'branch/multi',
+                    table: 'branch',
                 }
             });
 
@@ -21,18 +21,15 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                 url: $.fn.bootstrapTable.defaults.extend.index_url,
                 pk: 'id',
                 sortName: 'id',
-                commonSearch: false,
                 columns: [
                     [
                         {checkbox: true},
-                        {field: 'id', title: __('Id'),operate:false},
-                        {field: 'province.name', title: __('Province_id'),operate:false},
-                        {field: 'city.name', title: __('City_id'),operate:false},
-                        {field: 'area.name', title: __('Area_id'),operate:false},
-                        {field: 'name', title: __('Name'),operate:"LIKE"},
-                        {field: 'address', title: __('Address'),operate:"LIKE"},
-                        {field: 'telephone', title: __('Telephone'),operate:"LIKE"},
-                        {field: 'is_default', title: __('Is_default'),operate:false, searchList: {"0":__('Is_default 0'),"1":__('Is_default 1')}, formatter: Table.api.formatter.normal},
+                        {field: 'id', title: __('Id'), operate: false},
+                        {field: 'name', title: __('Name')},
+                        {field: 'tea_name', title: __('Tea_name'),operate: "LIKE"},
+                        {field: 'address', title: __('Address')},
+                        {field: 'telephone', title: __('Telephone')},
+                        {field: 'remark', title: __('Remark')},
                         {field: 'operate', title: __('Operate'), table: table, events: Table.api.events.operate, formatter: Table.api.formatter.operate}
                     ]
                 ]

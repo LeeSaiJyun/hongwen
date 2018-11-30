@@ -9,7 +9,7 @@ return [
     'Address'  =>  '地址',
     'Telephone'  =>  '电话',
     'User_id'  =>  '用户ID',
-    'Is_default'  =>  '删除标记',
-    'Is_default 0'  =>  '未删除',
-    'Is_default 1'  =>  '已删除'
+    'Is_default'  =>  '是否默认',
+    'Is_default 0'  =>  '否',
+    'Is_default 1'  =>  '是'
 ];

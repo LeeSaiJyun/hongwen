@@ -33,14 +33,12 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {field: 'avatar', title: __('Avatar'), formatter: Table.api.formatter.image, operate: false},
                         // {field: 'level', title: __('Level'), operate: 'BETWEEN', sortable: true},
                         {field: 'gender', title: __('Gender'),  searchList: {"1": __('Male'), "0": __('Female')}, formatter: Controller.api.formatter.gender },
-
                         // {field: 'score', title: __('Score'), operate: 'BETWEEN', sortable: true},
                         {field: 'successions', title: __('Successions'), visible: false, operate: 'BETWEEN', sortable: true},
                         {field: 'maxsuccessions', title: __('Maxsuccessions'), visible: false, operate: 'BETWEEN', sortable: true},
-                        {field: 'logintime', title: __('Logintime'), formatter: Table.api.formatter.datetime, operate: 'RANGE', addclass: 'datetimerange', sortable: true},
-                        {field: 'loginip', title: __('Loginip'), formatter: Table.api.formatter.search},
+                        // {field: 'loginip', title: __('Loginip'), formatter: Table.api.formatter.search},
                         {field: 'jointime', title: __('Jointime'), formatter: Table.api.formatter.datetime, operate: 'RANGE', addclass: 'datetimerange', sortable: true},
-                        {field: 'joinip', title: __('Joinip'), formatter: Table.api.formatter.search},
+                        // {field: 'joinip', title: __('Joinip'), formatter: Table.api.formatter.search},
                         {field: 'status', title: __('Status'), formatter: Table.api.formatter.status, searchList: {normal: __('Normal'), hidden: __('Hidden')}},
                         {
                             field: 'buttons',
@@ -56,10 +54,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                                     classname: 'btn btn-xs btn-primary btn-dialog',
                                     icon: 'fa fa-credit-card',
                                     url: 'user/bank/index?user_id={ids}',
-                                    visible: function (row) {
-                                        //返回true时按钮显示,返回false隐藏
-                                        return true;
-                                    }
+                                    visible: function (row) {return true;}//返回true时按钮显示,返回false隐藏
                                 },
                                 {
                                     name: 'address',
@@ -68,10 +63,6 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                                     classname: 'btn btn-xs btn-primary btn-dialog',
                                     icon: 'fa fa-map-marker',
                                     url: 'user/address/index?user_id={ids}',
-                                    visible: function (row) {
-                                        //返回true时按钮显示,返回false隐藏
-                                        return true;
-                                    }
                                 },
                             ],
                             formatter: Table.api.formatter.buttons
@@ -115,11 +106,10 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                     }else{
                         return value;
                     }
-
                 }
             }
-
         }
+
     };
     return Controller;
 });

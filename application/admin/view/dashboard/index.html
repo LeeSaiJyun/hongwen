@@ -127,7 +127,6 @@
         {:build_heading(null, false)}
         <ul class="nav nav-tabs">
             <li class="active"><a href="#one" data-toggle="tab">{:__('Dashboard')}</a></li>
-            <li><a href="#two" data-toggle="tab">{:__('Custom')}</a></li>
         </ul>
     </div>
     <div class="panel-body">
@@ -183,7 +182,7 @@
                                         </div>
                                     </div>
                                     <div class="col-xs-6 stat-col">
-                                        <div class="stat-icon"> <i class="fa fa-shopping-cart"></i> </div>
+                                        <div class="stat-icon"> <i class="fa fa-user"></i> </div>
                                         <div class="stat">
                                             <div class="value"> {$todayuserlogin} </div>
                                             <div class="name"> {:__('Today user login')} </div>
@@ -202,16 +201,7 @@
                                             <div class="progress-bar progress-bar-success" style="width: 25%"></div>
                                         </div>
                                     </div>
-                                    <div class="col-xs-6  stat-col">
-                                        <div class="stat-icon"> <i class="fa fa-users"></i> </div>
-                                        <div class="stat">
-                                            <div class="value"> {$unsettleorder} </div>
-                                            <div class="name"> {:__('Unsettle order')} </div>
-                                        </div>
-                                        <div class="progress">
-                                            <div class="progress-bar progress-bar-success" style="width: 25%"></div>
-                                        </div>
-                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -302,13 +292,7 @@
                 </div>-->
 
             </div>
-            <div class="tab-pane fade" id="two">
-                <div class="row">
-                    <div class="col-xs-12">
-                        {:__('Custom zone')}
-                    </div>
-                </div>
-            </div>
+
         </div>
     </div>
 </div>

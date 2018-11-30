@@ -2,9 +2,7 @@
 
 namespace app\admin\controller;
 
-use app\admin\model\School;
 use app\common\controller\Backend;
-use fast\Tree;
 
 /**
  * 报名申请
