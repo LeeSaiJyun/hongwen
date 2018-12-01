@@ -41,7 +41,10 @@
                                                                                         php think crud -t reservation -r user -k user_id -p id
 
 邮寄资料
+
     1.
+                            php think crud -t delivery_material -c deliverymaterial  -m deliveryMaterial -u 1 -r application -k application_id -p id    -f 1
+                            php think menu -c deliveryMaterial
 
 
 
@@ -74,6 +77,7 @@
 	                                    php think crud -t school_major -u 1
 
 
+php think crud -t grade -u 1 -f 1
 
 
 mysql信息
