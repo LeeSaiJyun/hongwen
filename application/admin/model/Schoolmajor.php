@@ -3,6 +3,7 @@
 namespace app\admin\model;
 
 use think\Model;
+use traits\model\SoftDelete;
 
 class Schoolmajor extends Model
 {
@@ -17,6 +18,8 @@ class Schoolmajor extends Model
     protected $updateTime = false;
 
 
+    use SoftDelete;
+    protected $deleteTime = 'delete_time';
 
 
 

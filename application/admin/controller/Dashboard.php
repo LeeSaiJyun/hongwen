@@ -25,8 +25,8 @@ class Dashboard extends Backend
         //数据图显示{$num}天前的数据
         $num = 7;
         $seventtime = \fast\Date::unixtime('day', 1 + $num * -1);
-        $sql = "select count(id) as total, FROM_UNIXTIME(createtime, '%Y-%m-%d') as time
-                    from fa_order where paytime>= '" . $seventtime . "' and paytime < '" . time() . "' group by time;  ";
+        $sql = "select count(id) as total, FROM_UNIXTIME(createtime, '%Y-%m-%d') as time from fa_order 
+                    where paytime>= '" . $seventtime . "' and paytime < '" . time() . "' group by time;  ";
         $dataList = Db::query($sql);
         $sendlist = array_reduce($dataList, function($v,$w) use ($dataList) {
             $v[$w["time"]]=$w["total"];
@@ -34,26 +34,13 @@ class Dashboard extends Backend
         });
 
 
-        $sql = "select count(id) as total, FROM_UNIXTIME(createtime, '%Y-%m-%d') as time
-                    from fa_order where paytime>= '" . $seventtime . "' and paytime < '" . time() . "' group by time;";
+        $sql = "select count(id) as total, FROM_UNIXTIME(createtime, '%Y-%m-%d') as time from fa_order 
+                    where paytime>= '" . $seventtime . "' and paytime < '" . time() . "' group by time;";
         $dataList = Db::query($sql);
         $mobilelist = array_reduce($dataList, function($v,$w) use ($dataList) {
             $v[$w["time"]]=$w["total"];
             return $v;
         });
-        /*$sql = "select date(createtime) as time,count(id) as total from (
-                    SELECT id,createtime FROM fa_push_log
-                    WHERE TO_DAYS(NOW()) - TO_DAYS(createtime) <= $num
-                )as test group by date(createtime);";
-        $dataList = Db::query($sql);
-        $sendlist = array_reduce($dataList, create_function('$v,$w', '$v[$w["time"]]=$w["total"];return $v;'));
-
-        $sql = "select date(time) as time,count(id) as total from (
-                    SELECT id,time FROM fa_mobile
-                    WHERE TO_DAYS(NOW()) - TO_DAYS(time) <= $num
-                )as test group by date(time);";
-        $dataList = Db::query($sql);
-        $mobilelist = array_reduce($dataList, create_function('$v,$w', '$v[$w["time"]]=$w["total"];return $v;'));*/
         $sendList = $mobileList = [];
         for ($i = 0; $i < $num; $i++) {
             $day = date("Y-m-d", $seventtime + ($i * 86400));
@@ -69,12 +56,7 @@ class Dashboard extends Backend
             }else{
                 $mobileList[$day] = 0;
             }
-//            $createlist[$day] = Db::table('shebeimac')->where('time','between time',[$day,$nextday])->count();
-//            $paylist[$day] = Db::table('errorlog')->where('time','between time',[$day,$nextday])->fetchSql()->count();
         }
-
-
-
 
         $hooks = config('addons.hooks');
         $uploadmode = isset($hooks['upload_config_init']) && $hooks['upload_config_init'] ? implode(',', $hooks['upload_config_init']) : 'local';

@@ -3,6 +3,7 @@
 namespace app\admin\model;
 
 use think\Model;
+use traits\model\SoftDelete;
 
 class School extends Model
 {
@@ -15,6 +16,9 @@ class School extends Model
     // 定义时间戳字段名
     protected $createTime = false;
     protected $updateTime = false;
+
+    use SoftDelete;
+    protected $deleteTime = 'delete_time';
     
     // 追加属性
     protected $append = [

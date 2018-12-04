@@ -41,6 +41,7 @@ class User extends Backend
                 return $this->selectpage();
             }
             list($where, $sort, $order, $offset, $limit) = $this->buildparams();
+
             $total = $this->model
                     ->with('group')
                     ->where($where)

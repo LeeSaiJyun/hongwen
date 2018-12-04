@@ -31,7 +31,6 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {field: 'address', title: __('Address')},
                         {field: 'telephone', title: __('Telephone')},
                         {field: 'remark', title: __('Remark')},
-                        {field: 'delivery_no', title: __('Delivery_no')},
                         {field: 'ex_order', title: __('Ex_order')},
                         {field: 'ex_company', title: __('Ex_company')},
                         {field: 'status', title: __('Status'), searchList: {"-1":__('Status -1'),"0":__('Status 0'),"1":__('Status 1')}, formatter: Table.api.formatter.status},

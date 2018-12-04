@@ -119,6 +119,58 @@ class Address extends Backend
         }
         return $this->view->fetch();
     }
+
+    /**
+     * 编辑
+     */
+    public function edit($ids = NULL)
+    {
+        $row = $this->model->get($ids);
+        if (!$row)
+            $this->error(__('No Results were found'));
+        $adminIds = $this->getDataLimitAdminIds();
+        if (is_array($adminIds)) {
+            if (!in_array($row[$this->dataLimitField], $adminIds)) {
+                $this->error(__('You have no permission'));
+            }
+        }
+        if ($this->request->isPost()) {
+            $params = $this->request->post("row/a");
+            //省市区
+            $province = $this->request->post('province');
+            $params['province_id'] = $province;
+
+            $city = $this->request->post('city');
+            $params['city_id'] = $city;
+
+            $area = $this->request->post('area');
+            $params['area_id'] = $area;
+
+            if ($params) {
+                try {
+                    //是否采用模型验证
+                    if ($this->modelValidate) {
+                        $name = str_replace("\\model\\", "\\validate\\", get_class($this->model));
+                        $validate = is_bool($this->modelValidate) ? ($this->modelSceneValidate ? $name . '.edit' : $name) : $this->modelValidate;
+                        $row->validate($validate);
+                    }
+                    $result = $row->allowField(true)->save($params);
+                    if ($result !== false) {
+                        $this->success();
+                    } else {
+                        $this->error($row->getError());
+                    }
+                } catch (\think\exception\PDOException $e) {
+                    $this->error($e->getMessage());
+                } catch (\think\Exception $e) {
+                    $this->error($e->getMessage());
+                }
+            }
+            $this->error(__('Parameter %s can not be empty', ''));
+        }
+        $this->view->assign("row", $row);
+        return $this->view->fetch();
+    }
     
 
 }

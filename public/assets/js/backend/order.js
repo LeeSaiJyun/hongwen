@@ -28,7 +28,6 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {field: 'id', title: __('Id'),operate:false},
                         {field: 'user_id', title: __('User_id'),visible:false,operate:false},
                         {field: 'user.username', title: __('User.username'),operate:false},
-                        {field: 'tradeno', title: __('Tradeno'),operate:'like'},
                         {field: 'orderno', title: __('Orderno'),operate:'like'},
                         {field: 'paymentdata', title: __('Paymentdata'), searchList: {"normal":__('Normal'),"hidden":__('Hidden')}, formatter: Table.api.formatter.normal},
                         {field: 'money', title: __('Money'), operate:'BETWEEN'},

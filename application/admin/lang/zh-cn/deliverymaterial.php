@@ -8,7 +8,6 @@ return [
     'Address'  =>  '地址',
     'Telephone'  =>  '电话',
     'Remark'  =>  '备注',
-    'Delivery_no'  =>  '运单号',
     'Ex_order'  =>  '快递单号',
     'Ex_company'  =>  '快递公司名称',
     'Status'  =>  '状态',
