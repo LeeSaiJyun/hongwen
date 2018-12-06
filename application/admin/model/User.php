@@ -70,4 +70,42 @@ class User extends Model
         return $this->belongsTo('UserGroup', 'group_id', 'id', [], 'LEFT')->setEagerlyType(0);
     }
 
+    /**
+     * 冻结资金修改
+     * @param int $id 金额
+     * @param int $money 金额
+     * @param bool $flag true:增加(用户提现) false:减少(打款)
+     * @author lee
+     */
+    public function frozenChange($id,$money,$inc = true)
+    {
+        $id = intval($id);
+        $money = intval($money);
+        if ($inc){
+            return $this->where(['id'=>$id,'frozen'=>['>=',$money]])->setInc('frozen', $money);;
+        }else{
+            return $this->where(['id'=>$id,'frozen'=>['>=',$money]])->setDec('frozen', $money);
+
+        }
+    }
+
+    /**
+     * 用户余额修改
+     * @param int $id 金额
+     * @param int $money 金额
+     * @param bool $inc true:增加 false:减少
+     * @author lee
+     */
+    public function balanceChange($id,$money,$inc = true)
+    {
+        $id = intval($id);
+        $money = intval($money);
+        if ($inc){
+            return $this->where(['id'=>$id,'balance'=>['>=',$money]])->setInc('balance', $money);;
+        }else{
+            return $this->where(['id'=>$id,'balance'=>['>=',$money]])->setDec('balance', $money);
+
+        }
+    }
+
 }

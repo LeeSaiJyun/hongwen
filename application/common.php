@@ -2,6 +2,8 @@
 
 // 公共助手函数
 
+use think\Request;
+
 if (!function_exists('__')) {
 
     /**
@@ -299,4 +301,52 @@ if (!function_exists('var_export_short')) {
         }
     }
 
+}
+
+
+/** ===============================================================
+ *                          接口方便使用方法
+ =================================================================*/
+
+/**
+ * 抛出异常
+ * @param $msg
+ * @throws \Exception
+ */
+function E($msg) {
+	throw new \Exception($msg);
+}
+
+/**
+ * 判断条件是否成立，则抛出异常
+ * @param $bol
+ * @param $msg
+ * @throws \Exception
+ */
+function F($bol, $msg) {
+	$bol && E($msg);
+}
+
+/**
+ * 获取请求参数
+ * @param string $arg
+ * @return mixed
+ */
+function P($arg=null) {
+	$s = Request::instance()->request();
+	if ($arg) return $s[$arg];
+	return $s;
+}
+
+/**
+ * 检测请求参数中对应的key是否存在，不存在就抛出value指定的异常信息
+ * @param array $arr
+ * @throws \Exception
+ */
+function checkParams(array $arr) {
+	$params = P();
+	foreach ($arr as $k => $v) {
+		F(!isset($params[$k]), $v . "不能为空");
+		F(strlen($params[$k]) < 1, $v . "不能为空");
+	}
 }

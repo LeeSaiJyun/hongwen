@@ -35,7 +35,7 @@ return array (
   'mail_from' => '10000@qq.com',
   'rebate_percent_1' => '5.2',
   'rebate_percent_2' => '2',
-  'registration_fee' => '1',
+  'registration_fee' => '98',
   'guide_of_join' => '<p><span style="color: rgb(51, 51, 51); background-color: rgb(249, 249, 249);">入户指南</span><span style="background-color: rgb(249, 249, 249); color: rgb(51, 51, 51);">入户指南</span><br></p>',
   'minimum_fee' => '500',
 );

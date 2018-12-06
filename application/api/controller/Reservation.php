@@ -21,7 +21,7 @@ class Reservation extends Api
     protected $model = null;
 
     protected $noNeedLogin = [''];
-    protected $noNeedRight = [''];
+    protected $noNeedRight = ['create'];
 
     public function _initialize()
     {
@@ -36,7 +36,7 @@ class Reservation extends Api
      * @param $telephone string 手机号
      * @param $appointedtime int 预约时间
      */
-    public function add(Request $request)
+    public function create(Request $request)
     {
         $data['name'] = $request->param('name');
         $data['telephone'] = $request->param('telephone');
@@ -47,6 +47,7 @@ class Reservation extends Api
 
         $validate = validate('Reservation');
 
+        //数据校验
         if(!$validate->check($data)){
             $this->error($validate->getError());
         }

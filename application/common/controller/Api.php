@@ -18,48 +18,28 @@ use think\Response;
 class Api
 {
 
-    /**
-     * @var Request Request 实例
-     */
+    /*** @var Request Request 实例*/
     protected $request;
 
-    /**
-     * @var bool 验证失败是否抛出异常
-     */
+    /*** @var bool 验证失败是否抛出异常*/
     protected $failException = false;
 
-    /**
-     * @var bool 是否批量验证
-     */
+    /*** @var bool 是否批量验证*/
     protected $batchValidate = false;
 
-    /**
-     * @var array 前置操作方法列表
-     */
+    /*** @var array 前置操作方法列表*/
     protected $beforeActionList = [];
 
-    /**
-     * 无需登录的方法,同时也就不需要鉴权了
-     * @var array
-     */
+    /*** 无需登录的方法,同时也就不需要鉴权了*/
     protected $noNeedLogin = [];
 
-    /**
-     * 无需鉴权的方法,但需要登录
-     * @var array
-     */
+    /*** 无需鉴权的方法,但需要登录*/
     protected $noNeedRight = [];
 
-    /**
-     * 权限Auth
-     * @var Auth 
-     */
+    /*** 权限Auth*/
     protected $auth = null;
 
-    /**
-     * 默认响应输出类型,支持json/xml
-     * @var string 
-     */
+    /*** 默认响应输出类型,支持json/xml */
     protected $responseType = 'json';
 
     /**

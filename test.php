@@ -1,3 +1,17 @@
-<?php
-$json = '[{"0":true,"id":2,"group_id":1,"username":"test222","nickname":"test2222","email":"admin2222@163.com","mobile":"13822222222","avatar":"/assets/img/avatar.png","level":2,"gender":0,"birthday":"2017-04-15","bio":"","score":0,"successions":1,"maxsuccessions":1,"prevtime":1516170492,"logintime":1542782123,"loginip":"127.0.0.1","loginfailure":0,"joinip":"127.0.0.1","jointime":1491461418,"createtime":0,"updatetime":1542872356,"token":"","status":"normal","verification":"","group":{"id":1,"name":"默认组","rules":"1,2,3,4,5,6,7,8,9,10,11,12","createtime":1515386468,"updatetime":1516168298,"status":"normal","status_text":"正常"},"ids":2},{"0":true,"id":1,"group_id":1,"username":"test","nickname":"test","email":"admin@163.com","mobile":"13888888888","avatar":"/assets/img/avatar.png","level":0,"gender":0,"birthday":"2017-04-15","bio":"","score":0,"successions":1,"maxsuccessions":1,"prevtime":1516170492,"logintime":1542782123,"loginip":"127.0.0.1","loginfailure":0,"joinip":"127.0.0.1","jointime":1491461418,"createtime":0,"updatetime":1542872356,"token":"","status":"normal","verification":"","group":{"id":1,"name":"默认组","rules":"1,2,3,4,5,6,7,8,9,10,11,12","createtime":1515386468,"updatetime":1516168298,"status":"normal","status_text":"正常"},"ids":1}]';
-var_dump(json_decode($json));
+
+`birthday` date NOT NULL COMMENT '生日',
+`age` tinyint(4) NOT NULL COMMENT '年龄',
+`sex` tinyint(1) NOT NULL DEFAULT '0' COMMENT '性别:0=男,1=女,2=未知',
+`ethnic` varchar(30) DEFAULT NULL COMMENT '民族',
+`graduation` varchar(100) DEFAULT NULL COMMENT '毕业学校',
+`certificate` char(200) DEFAULT NULL COMMENT '证书编号',
+`graduationdate` date DEFAULT NULL COMMENT '毕业时间',
+`graduationmajor` varchar(100) DEFAULT NULL COMMENT '毕业专业',
+`idcard_positive_image` char(200) DEFAULT NULL COMMENT '身份证正面',
+`idcard_negative_image` char(200) DEFAULT NULL COMMENT '身份证反面',
+`graduation_image` char(200) DEFAULT NULL COMMENT '毕业证书照',
+`status` tinyint(3) NOT NULL DEFAULT '0' COMMENT '状态:0=未报名,1=已报名,-1=未通过',
+`applicationtime` int(11) NOT NULL DEFAULT '0' COMMENT '申请时间',
+`result` varchar(255) DEFAULT NULL COMMENT '未通过原因',
+`updatetime` int(11) NOT NULL DEFAULT '0' COMMENT '报名时间,机构向学校提交信息时间',
+

@@ -3,6 +3,8 @@
 namespace app\api\controller;
 
 use app\common\controller\Api;
+use think\Db;
+use think\Request;
 
 /**
  * 首页接口

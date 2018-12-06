@@ -1,14 +1,14 @@
 <?php
 
-namespace app\admin\model;
+namespace app\api\model;
 
 use think\Model;
 use traits\model\SoftDelete;
 
-class Schoolcat extends Model
+class Major extends Model
 {
     // 表名
-    protected $name = 'school_cat';
+    protected $name = 'major';
     
     // 自动写入时间戳字段
     protected $autoWriteTimestamp = false;
@@ -20,17 +20,6 @@ class Schoolcat extends Model
     use SoftDelete;
     protected $deleteTime = 'delete_time';
     
-    // 追加属性
-    protected $append = [
-    ];
-    
-
-    
-
-
-
-
-
 
 
 }
