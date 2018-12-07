@@ -21,7 +21,7 @@ class WeChatMember {
 	 */
 	public static function checkToken($params) {
 		F(!$params["token"], "token丢失");
-		$data = Token::get(["token" => P("token")]);
+		$data = Token::get(["token" => $params["token"]]);
 		!$data && E("token 不存在");
 		$data["expiretime"] < time() && E("认证已过期");
 		return $data;

@@ -28,6 +28,7 @@ class ApiDoc extends ApiAbstractController {
 	public function getList() {
 		$match = null;
 		$result = [];
+		$token = isset(P()["token"]) ? P("token") : "YmM3YjYxY2ZjZTkzNTUyOTQxNjM2OTlmOWQ1YzI3NjU2MTIzOQ==";
 		foreach ($this->apiList as $k => $v) {
 			$rl = new ReflectionClass($v);
 			$methods = $rl->getMethods(ReflectionMethod::IS_PUBLIC);
@@ -38,6 +39,7 @@ class ApiDoc extends ApiAbstractController {
 				if (count($match[0]) > 0) {
 					$result[$apiUrlPrefix."/".$v2->getName()] = [];
 					$result[$apiUrlPrefix."/".$v2->getName()]["label"] = explode("@label ", $match[0][0])[1];
+					$result[$apiUrlPrefix."/".$v2->getName()]["testing"] = $_SERVER["REQUEST_SCHEME"]."://".$_SERVER["HTTP_HOST"].  $apiUrlPrefix."/".$v2->getName()."?token={$token}";
 					preg_match_all('/@param.*?/U', $doc, $match);
 					if (count($match[0]) > 0) {
 						$result[$apiUrlPrefix."/".$v2->getName()]["params"] = [];

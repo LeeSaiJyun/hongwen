@@ -68,7 +68,7 @@ abstract class ApiAbstractController extends Rest {
 		} catch (\Exception $e) {
 			return $this->error($e->getMessage());
 		}
-		return $this->success($data ? $data : "成功");
+		return $this->success(is_array($data) ? $data : "成功");
 	}
 
 	/**
@@ -85,7 +85,7 @@ abstract class ApiAbstractController extends Rest {
 			return $this->error($e->getMessage());
 		}
 		Db::commit();
-		return $this->success($data ? $data : "成功");
+		return $this->success(is_array($data) ? $data : "成功");
 	}
 
 }

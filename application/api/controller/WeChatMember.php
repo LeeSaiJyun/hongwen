@@ -91,7 +91,7 @@ class WeChatMember extends ApiAbstractController {
 	public function getMe() {
 		return $this->tryCatch(function(){
 			$tokenData = WeChatModel::checkToken(P());
-			return User::get(["id" => $tokenData["uid"]]);
+			return User::get(["id" => $tokenData["user_id"]]);
 		});
 	}
 

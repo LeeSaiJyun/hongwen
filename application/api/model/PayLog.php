@@ -33,12 +33,14 @@ class PayLog extends Model {
 	/**
 	 * 更新支付记录并且判断当前用户是否含有2级上级并且进行分佣操作
 	 * @param $payLogOrderNo
+	 * @param $money
 	 * @param $returnData
+	 * @param bool $isCommission
 	 * @return bool
 	 * @throws \think\exception\DbException
 	 */
-	public static function updatePayLogPayedAndCommission($payLogOrderNo, $returnData, $isCommission = true) {
-		$payLogData = self::get(["order_no" => $payLogOrderNo, "status" => -1]);
+	public static function updatePayLogPayedAndCommission($payLogOrderNo, $money, $returnData, $isCommission = true) {
+		$payLogData = self::get(["order_no" => $payLogOrderNo, "status" => -1, "money" => $money]);
 		!$payLogData && E("支付记录不存在或已经支付完成");
 		$member = User::get(["id" => $payLogData["uid"]]);
 		!$member && E("用户不存在");
@@ -51,26 +53,24 @@ class PayLog extends Model {
 				// 判断一级分佣是否存在
 				if ($first) {
 					$memberFirst = User::get(["id" => $member["pid"]]);
+					$currentBalance = round($memberFirst["balance"]+$payLogData["money"]*$first/100, 2);
 					Message::create([
 						"user_ids" => $member["pid"],
 						"createtime" => time(),
-						"message_content" => "「{$member['username']}」进行支付，返回佣金：￥".round($payLogData["money"]*$first/100, 2)."，当前余额：￥".round($memberFirst["balance"]+$payLogData["money"]*$first/100, 2),
+						"message_content" => "「{$member['username']}」进行支付，返回佣金：￥".round($payLogData["money"]*$first/100, 2)."，当前余额：￥".$currentBalance,
 					]);
-					User::update([
-						"balance" => round($memberFirst["balance"]+$payLogData["money"]*$first/100, 2),
-					], ["id" => $member["pid"]]);
+					User::update(["balance" => $currentBalance], ["id" => $member["pid"]]);
 				}
 				// 判断二级分佣是否存在和用户上级的上级是否存在
 				if ($second && count($pidArr) > 1) {
 					$memberSecond = User::get(["id" => $pidArr[count($pidArr)-2]]);
+					$currentBalance = round($memberFirst["balance"]+$payLogData["money"]*$second/100, 2);
 					Message::create([
 						"user_ids" => $memberSecond["id"],
 						"createtime" => time(),
-						"message_content" => "「{$member['username']}」进行支付，返回佣金：￥".round($payLogData["money"]*$first/100, 2)."，当前余额：￥".round($memberFirst["balance"]+$payLogData["money"]*$first/100, 2),
+						"message_content" => "「{$member['username']}」进行支付，返回佣金：￥".round($payLogData["money"]*$first/100, 2)."，当前余额：￥".$currentBalance,
 					]);
-					User::update([
-						"balance" => round($memberSecond["balance"]+$payLogData["money"]*$second/100, 2),
-					], ["id" => $memberSecond["id"]]);
+					User::update(["balance" => $currentBalance], ["id" => $memberSecond["id"]]);
 				}
 			}
 		}
