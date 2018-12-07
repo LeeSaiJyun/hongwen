@@ -12,6 +12,7 @@ return [
     'Attachment'                  => '附件配置',
     'Dictionary'                  => '字典配置',
     'User'                        => '会员配置',
+    'Guide'                       => '入户指南',
     'Example'                     => '示例分组',
     'Cost'                        => '费用配置',
     'Extend'                      => '扩展属性',

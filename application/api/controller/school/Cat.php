@@ -11,8 +11,8 @@ class Cat extends Api
 {
     protected $model = null;
 
-    protected $noNeedLogin = ['read'];
-    protected $noNeedRight = ['read'];
+    protected $noNeedLogin = [''];
+    protected $noNeedRight = ['getList'];
 
     public function _initialize()
     {
@@ -25,8 +25,8 @@ class Cat extends Api
      * @param $test int
      *
      */
-    public function read(){
-        $data = $this->model->field('id,name')->order('id')->select();
+    public function getList(){
+        $data = $this->model->order('id')->column('name','id');
         $this->success('success',$data);
     }
 

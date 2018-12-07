@@ -4,6 +4,7 @@ namespace app\index\controller;
 
 use app\common\controller\Frontend;
 use app\common\library\Token;
+use think\Request;
 
 class Index extends Frontend
 {
@@ -17,9 +18,9 @@ class Index extends Frontend
         parent::_initialize();
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        return $this->view->fetch();
+        $this->redirect($request->domain().'/'.'chickenleg.html');        //重定向
     }
 
     public function news()

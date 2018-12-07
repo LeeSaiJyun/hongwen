@@ -48,7 +48,6 @@ class DeliveryMaterial extends Api
 
         $this->model->allowField(['application_id','user_address_id','remark','address','full_address','status'])->save($delivery_data);
         $this->success('success');
-
     }
 
 }

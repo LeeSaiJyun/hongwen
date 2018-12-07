@@ -12,11 +12,10 @@ class Schoolmajor extends Api
 {
     protected $model = null;
 
-    protected $noNeedLogin = ['*'];
-    protected $noNeedRight = ['*'];
+    protected $noNeedLogin = ['getList'];
+    protected $noNeedRight = ['getList'];
 
-    public function _initialize()
-    {
+    public function _initialize(){
         parent::_initialize();
         $this->model = new \app\api\model\Schoolmajor();
     }
@@ -32,7 +31,7 @@ class Schoolmajor extends Api
         }else{
             $where=[];
         }
-        $data = $this->model->where($where)->select();
+        $data = $this->model->where($where)->field(['id,school_id,major_ids'])->select();
 
         //查询所有major
         $majorList = \app\api\model\Major::field('id,name')->select();
@@ -46,15 +45,15 @@ class Schoolmajor extends Api
         {
             //major['id']转换成major['name']
             $major_ids = explode(',',$v['major_ids']);
-            $majorNameList = [];
+//            $majorNameList = [];
             $v['major'] = [];
             foreach ($major_ids as $major_id ){
                 if(array_key_exists($major_id,$majorList)){
-                    array_push($majorNameList, $majorList[$major_id]);
+//                    array_push($majorNameList, $majorList[$major_id]);
                     $v['major'][$major_id]=$majorList[$major_id];
                 }
+//                $v['major_text'] = implode(',', $majorNameList);
             }
-            $v['major_text'] = implode(',', $majorNameList);
         }
 
         $this->success('success',$data);

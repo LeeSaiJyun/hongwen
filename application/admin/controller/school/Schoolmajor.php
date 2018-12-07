@@ -64,7 +64,7 @@ class Schoolmajor extends Backend
 
 
             //查询所有major
-            $majorList = \app\admin\model\Major::field('id,name')->select();
+            $majorList = \app\admin\model\Major::withTrashed()->field('id,name')->select();
             $majorList = collection($majorList)->toArray();
             //转换
             $majorList = array_column($majorList, 'name', 'id');

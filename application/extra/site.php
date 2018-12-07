@@ -23,7 +23,7 @@ return array (
   'configgroup' => 
   array (
     'basic' => 'Basic',
-    'user' => 'User',
+    'guide' => 'Guide',
     'cost' => 'Cost',
   ),
   'mail_type' => '1',

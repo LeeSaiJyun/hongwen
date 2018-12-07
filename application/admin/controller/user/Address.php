@@ -2,6 +2,7 @@
 
 namespace app\admin\controller\user;
 
+use app\admin\model\Area;
 use app\common\controller\Backend;
 
 /**
@@ -154,6 +155,15 @@ class Address extends Backend
                         $validate = is_bool($this->modelValidate) ? ($this->modelSceneValidate ? $name . '.edit' : $name) : $this->modelValidate;
                         $row->validate($validate);
                     }
+                    //构造full_address
+                    $full_area = Area::where('id',$area)->value('mergename');
+                    if($full_area){
+                        $full_area = explode(',',$full_area);
+                        array_shift($full_area);// 将[0]移出数组
+                        $full_area = implode('',$full_area);
+                        $params['full_address'] = $full_area . ' ' . $params['address'] ;
+                    }
+
                     $result = $row->allowField(true)->save($params);
                     if ($result !== false) {
                         $this->success();

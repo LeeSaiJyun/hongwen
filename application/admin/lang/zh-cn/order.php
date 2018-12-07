@@ -9,5 +9,7 @@ return [
     'Balance'  =>  '余额',
     'Paytime'  =>  '支付时间',
     'Status'  =>  '状态',
-    'Remark'  =>  '备注'
+    'Remark'  =>  '备注',
+    'Application'  =>  '报名费',
+    'Tuition' => '学费'
 ];

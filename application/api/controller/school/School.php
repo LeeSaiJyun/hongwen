@@ -18,8 +18,8 @@ class School extends Api
      */
     protected $model = null;
 
-    protected $noNeedLogin = ['read'];
-    protected $noNeedRight = ['read'];
+    protected $noNeedLogin = ['getList'];
+    protected $noNeedRight = ['getList'];
 
     public function _initialize()
     {
