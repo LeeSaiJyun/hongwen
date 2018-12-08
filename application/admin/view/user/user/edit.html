@@ -27,33 +27,33 @@
     <div class="form-group">
         <label for="c-balance" class="control-label col-xs-12 col-sm-2">{:__('Balance')}:</label>
         <div class="col-xs-12 col-sm-4">
-            <input id="c-balance" data-rule="" class="form-control" name="row[balance]" type="text" value="{$row.balance}">
+            <input id="c-balance" data-rule="" class="form-control" name="row[balance]" type="number" value="{$row.balance}">
         </div>
     </div>
     <div class="form-group">
         <label for="c-frozen" class="control-label col-xs-12 col-sm-2">{:__('Frozen')}:</label>
         <div class="col-xs-12 col-sm-4">
-            <input id="c-frozen" data-rule="" class="form-control" name="row[frozen]" type="text" value="{$row.frozen}">
+            <input id="c-frozen" data-rule="" class="form-control" name="row[frozen]" type="number" value="{$row.frozen}">
         </div>
     </div>
 
     <div class="form-group">
         <label for="c-graduaction" class="control-label col-xs-12 col-sm-2">{:__('Graduaction')}:</label>
         <div class="col-xs-12 col-sm-4">
-            <input id="c-graduaction" data-rule="required" class="form-control" name="row[graduaction]" type="text" value="{$row.graduaction}">
+            <input id="c-graduaction" class="form-control" name="row[graduaction]" type="text" value="{$row.graduaction}">
         </div>
     </div>
 
     <div class="form-group">
         <label for="c-graduaction_time" class="control-label col-xs-12 col-sm-2">{:__('Graduaction_time')}:</label>
         <div class="col-xs-12 col-sm-4">
-            <input id="c-graduaction_time" data-rule="" class="form-control datetimepicker" data-date-format="YYYY-MM" data-use-current="true" name="row[graduaction_time]" type="text" value="{$row.graduaction_time}">
+            <input id="c-graduaction_time" data-rule="" class="form-control datetimepicker" data-date-format="YYYY-MM-DD" data-use-current="true" name="row[graduaction_time]" type="text" value="{$row.graduaction_time}">
         </div>
     </div>
     <div class="form-group">
         <label for="c-graduaction_major" class="control-label col-xs-12 col-sm-2">{:__('Graduaction_major')}:</label>
         <div class="col-xs-12 col-sm-4">
-            <input id="c-graduaction_major" data-rule="required" class="form-control" name="row[graduaction_major]" type="text" value="{$row.graduaction_major}">
+            <input id="c-graduaction_major" class="form-control" name="row[graduaction_major]" type="text" value="{$row.graduaction_major}">
         </div>
     </div>
     <div class="form-group">

@@ -21,7 +21,7 @@ class Reservation extends Api
     protected $model = null;
 
     protected $noNeedLogin = [''];
-    protected $noNeedRight = ['create'];
+    protected $noNeedRight = '*';
 
     public function _initialize()
     {

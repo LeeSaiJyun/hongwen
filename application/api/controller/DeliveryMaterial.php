@@ -15,7 +15,7 @@ class DeliveryMaterial extends Api
     protected $model = null;
 
     protected $noNeedLogin = [''];
-    protected $noNeedRight = ['create'];
+    protected $noNeedRight = '*';
 
     public function _initialize(){
         parent::_initialize();

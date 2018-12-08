@@ -25,7 +25,6 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                     [
                         {checkbox: true},
                         {field: 'id', title: __('Id'), sortable: true},
-                        {field: 'group.name', title: __('Group'), operate: false},
                         // {field: 'username', title: __('Username'), operate: 'LIKE'},
                         {field: 'nickname', title: __('Nickname'), operate: 'LIKE'},
                         // {field: 'email', title: __('Email'), operate: 'LIKE'},
@@ -43,7 +42,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {field: 'balance', title: __('balance'), operate: 'BETWEEN', sortable: true},
                         {field: 'frozen', title: __('frozen'), operate: 'BETWEEN', sortable: true},
                         {field: 'graduaction', title: __('graduaction'), operate: false},
-                        {field: 'graduaction_time', title: __('graduaction_time'), formatter: Table.api.formatter.datetime, operate: 'RANGE', addclass: 'datetimerange', sortable: true},
+                        {field: 'graduaction_time', title: __('graduaction_time'), operate: 'RANGE', addclass: 'datetimerange', sortable: true,},
                         {field: 'graduaction_major', title: __('graduaction_major'), operate: false},
                         {field: 'graduaction_image', title: __('graduaction_image'), formatter: Table.api.formatter.image, operate: false},
                         {field: 'idcard_positive_image', title: __('idcard_positive_image'), formatter: Table.api.formatter.image, operate: false},
