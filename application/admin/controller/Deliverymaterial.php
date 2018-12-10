@@ -3,6 +3,7 @@
 namespace app\admin\controller;
 
 use app\common\controller\Backend;
+use think\Db;
 
 /**
  * 邮寄资料
@@ -17,6 +18,8 @@ class Deliverymaterial extends Backend
      * @var \app\admin\model\DeliveryMaterial
      */
     protected $model = null;
+
+    protected $searchFields = 'application.telephone';
 
     public function _initialize()
     {
@@ -50,20 +53,23 @@ class Deliverymaterial extends Backend
             }
             list($where, $sort, $order, $offset, $limit) = $this->buildparams();
             $total = $this->model
-                    ->where($where)
-                    ->order($sort, $order)
-                    ->count();
+                ->with(['application' => function ($query) {
+                    $query->withField('telephone');
+                }])
+                ->where($where)
+                ->count();
 
             $list = $this->model
-//                    ->with('application')
-                    ->where($where)
-                    ->order($sort, $order)
-                    ->limit($offset, $limit)
-                    ->select();
+                ->with(['application' => function ($query) {
+                    $query->withField('telephone');
+                }])
+                ->where($where)
+                ->order($sort, $order)
+                ->limit($offset, $limit)
+                ->select();
 
             foreach ($list as $row) {
-                
-                
+
             }
             $list = collection($list)->toArray();
             $result = array("total" => $total, "rows" => $list);

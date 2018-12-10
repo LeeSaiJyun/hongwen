@@ -11,8 +11,8 @@ class Cat extends Api
 {
     protected $model = null;
 
-    protected $noNeedLogin = [''];
-    protected $noNeedRight = ['getList'];
+    protected $noNeedLogin = ['getList'];
+    protected $noNeedRight = ['*'];
 
     public function _initialize()
     {

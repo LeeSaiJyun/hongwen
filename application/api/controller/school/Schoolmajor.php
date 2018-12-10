@@ -13,7 +13,7 @@ class Schoolmajor extends Api
     protected $model = null;
 
     protected $noNeedLogin = ['getList'];
-    protected $noNeedRight = ['getList'];
+    protected $noNeedRight = ['*'];
 
     public function _initialize(){
         parent::_initialize();

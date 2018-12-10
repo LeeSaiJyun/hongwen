@@ -28,20 +28,10 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {field: 'school.name', title: __('School.name'),operate: 'LIKE'},
                         {field: 'school.cat_id', title: __('School.cat_id'),visible:false, addClass:"selectpage",extend:"data-source='school/cat/index' data-field='name'"},
                         {
-                            field: 'major_ids', title: __('Major_ids'),operate: 'FIND_IN_SET',
-                            formatter: Table.api.formatter.label,
+                            field: 'major_ids', title: __('Major.name'),operate: 'FIND_IN_SET',
+                            formatter: Controller.api.formatter.label,
                             addClass:"selectpage",extend:"data-source='school/major/index' data-field='name'"
                         },
-                        /*{
-                            field: 'major_ids', title: __('Major_ids'), operate: 'FIND_IN_SET',  formatter: function (value, row, index) {
-                                return Table.api.formatter.label( row.major_text, row, index);
-                            }
-                        },*/
-
-                        // {field: 'schoolcat.name', title: __('Cat.name'), addClass:"selectpage",extend:"data-source='school/cat/index' data-field='name'"},
-
-                        {field: 'major_text', title: __('Major.name'), operate:false, formatter: Table.api.formatter.label},
-                        // {field: 'school.id', title: __('School.id')},
                         {field: 'school.title_image', title: __('School.title_image'), operate:false, formatter: Table.api.formatter.image},
                         {field: 'operate', title: __('Operate'), table: table, events: Table.api.events.operate, formatter: Table.api.formatter.operate}
                     ]
@@ -60,8 +50,22 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
         api: {
             bindevent: function () {
                 Form.api.bindevent($("form[role=form]"));
-            }
+            },
+            formatter: {
+                label: function (value, row, index) {
+                    var ids = value.split(",");
+                    var texts = row.major_text.split(",");
+
+                    var content = [ ];
+                    for (var i=0 ; i< ids.length ; i++){
+                        content.push('<a href="javascript:;" class="searchit" data-toggle="tooltip" title="" data-field="major_ids" data-value="'+ids[i]+'" data-original-title="点击搜索 ' + texts[i] + '"><span class="label label-primary">' + texts[i] + '</span></a>');
+                    }
+                    return content;
+                },
+            },
         }
+
+
     };
     return Controller;
 });

@@ -43,13 +43,14 @@ class DeliveryMaterial extends Model
 
 
 
-    /*public function application()
-    {
+    /*public function application(){
         return $this->belongsTo('Application', 'application_id', 'id', [], 'LEFT')->setEagerlyType(0);
     }*/
 
     public function application()
     {
-        return $this->hasOne('Application', 'id', 'application_id', [], 'LEFT')->field('id,name');
+//        return $this->hasOne('Application', 'id', 'application_id', [], 'LEFT')->field('id,telephone');
+        return $this->hasOne('Application', 'id', 'application_id', [], 'LEFT')->setEagerlyType(0);
     }
+
 }

@@ -25,7 +25,8 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                     [
                         {checkbox: true},
                         {field: 'id', title: __('Id')},
-                        {field: 'application_id', title: __('Application_id')},
+                        // {field: 'application_id', title: __('Application_id')},
+                        {field: 'application.telephone', title: __('Application.telephone'),operate:false},
                         {field: 'area', title: __('Area')},
                         {field: 'name', title: __('Name')},
                         {field: 'address', title: __('Address')},
@@ -36,7 +37,6 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {field: 'status', title: __('Status'), searchList: {"-1":__('Status -1'),"0":__('Status 0'),"1":__('Status 1')}, formatter: Table.api.formatter.status},
                         // {field: 'application.id', title: __('Application.id')},
                         // {field: 'application.user_id', title: __('Application.user_id')},
-                        // {field: 'application.name', title: __('Application.name')},
                         {field: 'operate', title: __('Operate'), table: table, events: Table.api.events.operate, formatter: Table.api.formatter.operate}
                     ]
                 ]

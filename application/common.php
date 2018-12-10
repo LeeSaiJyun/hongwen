@@ -350,3 +350,8 @@ function checkParams(array $arr) {
 		F(strlen($params[$k]) < 1, $v . "不能为空");
 	}
 }
+
+
+function create_orderno(){
+    return date('Ymd').substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);
+}
