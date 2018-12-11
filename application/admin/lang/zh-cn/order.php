@@ -9,7 +9,13 @@ return [
     'Balance'  =>  '余额',
     'Paytime'  =>  '支付时间',
     'Status'  =>  '状态',
+    'Status 0'  =>  '未支付',
+    'Status -1'  =>  '过期',
+    'Status 1'  =>  '已支付',
     'Remark'  =>  '备注',
     'Application'  =>  '报名费',
-    'Tuition' => '学费'
+    'Tuition' => '学费',
+    'Data.school' => '学校',
+    'Data.major' => '专业',
+    'Data.grade' => '年级'
 ];

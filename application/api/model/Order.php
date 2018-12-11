@@ -17,17 +17,46 @@ class Order extends Model
     protected $updateTime = 'updatetime';
 
 
-    /**
-     * 创建订单
-     *
-     * @param $user_id  int     用户ID
-     * @param $money    float   金额
-     * @param $paymentdata string  缴费类型:application=报名费  tuition=学费
-     */
-    public function createOrder($user_id,$money,$paymentdata){
+	/**
+	 * 创建订单
+	 * @param $user_id  int     用户ID
+	 * @param $money    float   金额
+	 * @param $paymentdata string  缴费类型:application=报名费  tuition=学费
+	 * @return array
+	 */
+	public function createOrder($user_id, $money, $paymentdata){
         $user_id = intval($user_id);
         $orderno = create_orderno();
-        $this->allowField(['user_id','money','paymentdata','orderno'])->save(['user_id' => $user_id, 'money' => $money, 'paymentdata' => $paymentdata,'orderno'=>$orderno]);
+        if($paymentdata === 'tuition '){
+            $m_user  = new \app\common\model\User;
+            $info = $m_user->getStudentInfo($user_id);
+            if($info){
+                $data = serialize($info);
+            }else{
+                $data = '';
+            }
+        }elseif($paymentdata==='application'){
+            $m_application = new Application();
+            $info = $m_application->getStudentInfo($user_id);
+            if($info){
+                $data = serialize($info);
+            }else{
+                $data = '';
+            }
+        }
+
+        $this->allowField(['data','user_id','money','paymentdata','orderno'])
+            ->save();
+        $sv = [
+            'user_id' => $user_id,
+            'data' => $data,
+            'money' => $money,
+            'paymentdata' => $paymentdata,
+            'orderno'=>$orderno
+        ];
+        $this->allowField(['user_id','money','paymentdata','orderno'])->save($sv);
+        return $sv;
+
     }
 
 

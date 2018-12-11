@@ -2,7 +2,9 @@
 
 namespace app\api\controller;
 
+use app\api\library\WxPay\WxPay;
 use app\common\controller\Api;
+use think\Db;
 use think\Request;
 
 /**
@@ -51,7 +53,7 @@ class Order extends Api
         }
 
         $result = $this->model->createOrder($data['user_id'],$data['money'],$data['paymentdata']);
-        $this->success($result);
+        $this->success('success',$result);
     }
 
     /**
@@ -82,6 +84,8 @@ class Order extends Api
         $data['paymentdata'] = 'tuition'; // application=>报名费,tuition=>学费
         $data['money'] = $request->param('money');
 
+
+
         //数据校验
         $validate = validate('Order');
         if(!$validate->check($data)){
@@ -89,8 +93,13 @@ class Order extends Api
         }
 
         $result = $this->model->createOrder($data['user_id'],$data['money'],$data['paymentdata']);
-        $this->success($result);
+	    // 加入微信统一下单
+	    $member = \app\admin\model\User::get(["id" => $data["user_id"]]);
+	    $this->success(WxPay::createWxPayUnifiedOrder($member["openid"], $result["orderno"], $result["money"]));
     }
 
+    public function createApplicationWxUnifiedOrder(Request $request) {
+
+    }
 
 }

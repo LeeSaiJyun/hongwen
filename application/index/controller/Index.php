@@ -22,11 +22,4 @@ class Index extends Frontend
     {
         $this->redirect($request->domain().'/'.'chickenleg.html');        //重定向
     }
-
-    public function news()
-    {
-        $newslist = [];
-        return jsonp(['newslist' => $newslist, 'new' => count($newslist), 'url' => 'https://www.fastadmin.net?ref=news']);
-    }
-
 }

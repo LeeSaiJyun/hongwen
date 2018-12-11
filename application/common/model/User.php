@@ -28,7 +28,9 @@ class User Extends Model
      */
     public function getUrlAttr($value, $data)
     {
-        return "/u/" . $data['id'];
+        if( array_key_exists('id',$data) ){
+            return "/u/" . $data['id'];
+        }
     }
 
     /**
@@ -75,43 +77,23 @@ class User Extends Model
     }
 
     /**
-     * 变更会员积分
-     * @param int $score    积分
-     * @param int $user_id  会员ID
-     * @param string $memo  备注
+     * 根据用户ID获取用户院校年级信息
+     * @param int $user_id
+     * @return array/null {"grade":"2014级","school":"东莞理工","major":"土木工程"}
+     * @throws
      */
-    public static function score($score, $user_id, $memo)
-    {
-        $user = self::get($user_id);
-        if ($user)
-        {
-            $before = $user->score;
-            $after = $user->score + $score;
-            $level = self::nextlevel($after);
-            //更新会员信息
-            $user->save(['score' => $after, 'level' => $level]);
-            //写入日志
-            ScoreLog::create(['user_id' => $user_id, 'score' => $score, 'before' => $before, 'after' => $after, 'memo' => $memo]);
+    public function getStudentInfo($user_id){
+        $ret = $this->field('	g.name as grade,s.name as school,m.name as major')->alias('u')
+            ->join('fa_grade g','u.grade_id = g.id','LEFT')
+            ->join('fa_school s','u.school_id = s.id','LEFT')
+            ->join('fa_major m','u.major_id = m.id','LEFT')
+            ->find(['u.status' => 'normal','u.id'=>$user_id]);
+        if($ret) {
+            $ret = $ret->toArray();
+            unset($ret['url']);
+            return $ret;
         }
-    }
-
-    /**
-     * 根据积分获取等级
-     * @param int $score 积分
-     * @return int
-     */
-    public static function nextlevel($score = 0)
-    {
-        $lv = array(1 => 0, 2 => 30, 3 => 100, 4 => 500, 5 => 1000, 6 => 2000, 7 => 3000, 8 => 5000, 9 => 8000, 10 => 10000);
-        $level = 1;
-        foreach ($lv as $key => $value)
-        {
-            if ($score >= $value)
-            {
-                $level = $key;
-            }
-        }
-        return $level;
+        return $ret;
     }
 
 }

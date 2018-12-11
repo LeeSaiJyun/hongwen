@@ -41,6 +41,7 @@ class Order extends Backend
             }
             list($where, $sort, $order, $offset, $limit) = $this->buildparams();
             $total = $this->model
+                ->with(['user'])
                 ->where($where)
                 ->order($sort, $order)
                 ->count();
@@ -53,6 +54,10 @@ class Order extends Backend
                 ->select();
 
             $list = collection($list)->toArray();
+            foreach ($list as &$row) {
+                $info = unserialize($row['data']);
+                $row['data'] =$info;
+            }
             $result = array("total" => $total, "rows" => $list);
 
             return json($result);
