@@ -118,4 +118,10 @@ class WeChatMember extends ApiAbstractController {
 		});
 	}
 
+	public function wxPayCallback() {
+		return $this->tryCatchTx(function(){
+
+		});
+	}
+
 }

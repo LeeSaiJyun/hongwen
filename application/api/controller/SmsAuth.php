@@ -13,12 +13,13 @@ use app\api\model\SmsAuth as SmsAuthModel;
 
 class SmsAuth extends ApiAbstractController {
 
-	const API_URL = "/config/smsAuth";
+	const API_URL = "/api/smsAuth";
 	private $timeLimit = 60;
 
 	/**
 	 * @label 获取所有短信认证码 - 仅供后台使用
 	 * @return \think\Response
+	 * @throws \think\exception\DbException
 	 */
 	public function getSmsList() {
 		$data = SmsAuthModel::all();

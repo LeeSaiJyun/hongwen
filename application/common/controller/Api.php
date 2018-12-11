@@ -17,7 +17,6 @@ use think\Response;
  */
 class Api
 {
-
     /*** @var Request Request 实例*/
     protected $request;
 

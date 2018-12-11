@@ -76,7 +76,11 @@ abstract class Driver
     protected function getEncryptedToken($token)
     {
         $config = \think\Config::get('token');
-        return hash_hmac($config['hashalgo'], $token, $config['key']);
+        if($config['hashalgo']===false){
+            return $token;
+        }else{
+            return hash_hmac($config['hashalgo'], $token, $config['key']);
+        }
     }
 
     /**

@@ -29,7 +29,7 @@ class Order extends Api
 
     /**
      * 订单
-     * @ApiMethod    API接口请求方法: POST
+     * @apiMethod    API接口请求方法: POST
      * @apiParam $money string 金额
      * @apiParam $type  string 类型
      */
@@ -54,6 +54,43 @@ class Order extends Api
         $this->success($result);
     }
 
+    /**
+     * 报名订单
+     */
+    public function createApplication(){
+        $data['user_id'] = $this->auth->id;
+        $data['paymentdata'] = 'application'; // application=>报名费,tuition=>学费
+        $data['money'] = \think\Config::get("site.registration_fee");//固定报名费用
+
+        //数据校验
+        $validate = validate('Order');
+        if(!$validate->check($data)){
+            $this->error($validate->getError());
+        }
+
+        $result = $this->model->createOrder($data['user_id'],$data['money'],$data['paymentdata']);
+        $this->success($result);
+    }
+
+    /**
+     * 学费订单
+     * @apiMethod    API接口请求方法: POST
+     * @apiParam $money string 金额
+     */
+    public function createTuition(Request $request){
+        $data['user_id'] = $this->auth->id;
+        $data['paymentdata'] = 'tuition'; // application=>报名费,tuition=>学费
+        $data['money'] = $request->param('money');
+
+        //数据校验
+        $validate = validate('Order');
+        if(!$validate->check($data)){
+            $this->error($validate->getError());
+        }
+
+        $result = $this->model->createOrder($data['user_id'],$data['money'],$data['paymentdata']);
+        $this->success($result);
+    }
 
 
 }

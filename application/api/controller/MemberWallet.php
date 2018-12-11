@@ -56,18 +56,20 @@ class MemberWallet extends ApiAbstractController {
 	 * @label 创建临时支付记录表 ===== 微信支付前调用此方法
 	 * @param money:金额
 	 * @param pay_type:支付类型（缴费，报名）
+	 * @param source_order_no:源订单号
 	 * @return \think\Response
 	 */
 	public function createPayLog() {
 		return $this->tryCatchTx(function (){
 			$tokenData = WeChatMember::checkToken(P());
-			checkParams(["money" => "金额", "pay_type" => "支付类型"]);
+			checkParams(["money" => "金额", "pay_type" => "支付类型", "source_order_no" => "源订单号"]);
 			$orderNo = PayLog::createOrderNo();
 			PayLog::create([
 				"uid" => $tokenData["user_id"],
 				"money" => abs(round(P("money"), 2)),
 				"create_time" => time(),
 				"order_no" => $orderNo,
+				"source_order_no" => P("source_order_no"),
 			]);
 			return $orderNo;
 		});
