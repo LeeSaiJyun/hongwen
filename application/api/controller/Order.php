@@ -14,6 +14,8 @@ use think\Request;
 class Order extends Api
 {
 
+	const  API_URL = "/api/order";
+
     /**
      * 模型对象
      * @var \think\Model
@@ -30,10 +32,9 @@ class Order extends Api
     }
 
     /**
-     * 订单
-     * @apiMethod    API接口请求方法: POST
-     * @apiParam $money string 金额
-     * @apiParam $type  string 类型
+     * @label 创建订单
+     * @param money:金额
+     * @param type:类型
      */
     public function create(Request $request){
         $data['user_id'] = $this->auth->id;
@@ -57,7 +58,7 @@ class Order extends Api
     }
 
     /**
-     * 报名订单
+     * @label 报名订单
      */
     public function createApplication(){
         $data['user_id'] = $this->auth->id;
@@ -75,9 +76,8 @@ class Order extends Api
     }
 
     /**
-     * 学费订单
-     * @apiMethod    API接口请求方法: POST
-     * @apiParam $money string 金额
+     * @label 学费订单
+     * @param money:金额
      */
     public function createTuition(Request $request){
         $data['user_id'] = $this->auth->id;

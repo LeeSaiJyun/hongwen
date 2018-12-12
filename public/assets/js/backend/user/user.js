@@ -24,7 +24,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                 columns: [
                     [
                         {checkbox: true},
-                        {field: 'id', title: __('Id'), sortable: true},
+                        {field: 'id', title: __('Id'),operate: false, sortable: true},
                         // {field: 'username', title: __('Username'), operate: 'LIKE'},
                         {field: 'nickname', title: __('Nickname'), operate: 'LIKE'},
                         // {field: 'email', title: __('Email'), operate: 'LIKE'},
@@ -32,15 +32,12 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {field: 'avatar', title: __('Avatar'), formatter: Table.api.formatter.image, operate: false},
                         // {field: 'level', title: __('Level'), operate: 'BETWEEN', sortable: true},
                         {field: 'gender', title: __('Gender'),  searchList: {"1": __('Male'), "0": __('Female')}, formatter: Controller.api.formatter.gender },
-                        // {field: 'score', title: __('Score'), operate: 'BETWEEN', sortable: true},
-                        {field: 'successions', title: __('Successions'), visible: false, operate: 'BETWEEN', sortable: true},
-                        {field: 'maxsuccessions', title: __('Maxsuccessions'), visible: false, operate: 'BETWEEN', sortable: true},
-                        // {field: 'loginip', title: __('Loginip'), formatter: Table.api.formatter.search},
-                        {field: 'jointime', title: __('Jointime'), formatter: Table.api.formatter.datetime, operate: 'RANGE', addclass: 'datetimerange', sortable: true},
-                        // {field: 'joinip', title: __('Joinip'), formatter: Table.api.formatter.search},
-                        {field: 'pid', title: __('pid')},
+                        {field: 'jointime', title: __('Jointime'), formatter: Table.api.formatter.datetime, operate: false
+                            , addclass: 'datetimerange', sortable: true},
+                        // {field: 'pid', title: __('pid')},
                         {field: 'balance', title: __('balance'), operate: 'BETWEEN', sortable: true},
                         {field: 'frozen', title: __('frozen'), operate: 'BETWEEN', sortable: true},
+                        {field: 'realname', title: __('realname'), operate: 'LIKE'},
                         {field: 'graduaction', title: __('graduaction'), operate: false},
                         {field: 'graduaction_time', title: __('graduaction_time'), operate: 'RANGE', addclass: 'datetimerange', sortable: true,},
                         {field: 'graduaction_major', title: __('graduaction_major'), operate: false},
@@ -48,9 +45,6 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {field: 'idcard_positive_image', title: __('idcard_positive_image'), formatter: Table.api.formatter.image, operate: false},
                         {field: 'idcard_negative_image', title: __('idcard_negative_image'), formatter: Table.api.formatter.image, operate: false},
                         {field: 'ethnic', title: __('ethnic'), operate: false},
-                        {field: 'openid', title: __('openid')},
-
-
                         {field: 'status', title: __('Status'), formatter: Table.api.formatter.status, searchList: {normal: __('Normal'), hidden: __('Hidden')}},
                         {
                             field: 'buttons',

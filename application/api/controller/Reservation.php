@@ -14,6 +14,8 @@ use think\Request;
 class Reservation extends Api
 {
 
+	const API_URL = "/api/reservation";
+
     /**
      * 模型对象
      * @var \think\Model
@@ -30,19 +32,16 @@ class Reservation extends Api
     }
 
     /**
-     * 预约
-     * @ApiMethod    API接口请求方法: POST
-     * @param $name string 姓名
-     * @param $telephone string 手机号
-     * @param $appointedtime int 预约时间
+     * @label 预约
+     * @param name:姓名
+     * @param telephone:手机号
+     * @param appointedtime:预约时间
      */
-    public function create(Request $request)
-    {
+    public function create(Request $request){
         $data['name'] = $request->param('name');
         $data['telephone'] = $request->param('telephone');
         $data['appointedtime'] = $request->param('appointedtime');
 
-        //todo    添加用户ID
         $data['user_id'] = $this->auth->id;
 
         $validate = validate('Reservation');

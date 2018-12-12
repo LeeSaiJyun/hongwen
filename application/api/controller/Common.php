@@ -13,6 +13,7 @@ use think\Config;
  */
 class Common extends Api
 {
+    const API_URL = "/api/common";
 
     protected $noNeedLogin = ['init'];
     protected $noNeedRight = '*';
@@ -47,9 +48,9 @@ class Common extends Api
     }
 
     /**
-     * 上传文件
-     * @ApiMethod (POST)
-     * @param File $file 文件流
+     * @label 上传文件
+     * @param File:文件流
+     * @param type:positive=身份证正面 negative = 反面 graduate = 毕业证书
      */
     public function upload()
     {
@@ -103,6 +104,21 @@ class Common extends Api
         $uploadDir = substr($savekey, 0, strripos($savekey, '/') + 1);
         $fileName = substr($savekey, strripos($savekey, '/') + 1);
         //
+        $is_rename = $this->request->param('type'); // positive negative
+        if($is_rename && $is_rename === 'positive'){  //身份证正面
+            if($this->auth->realname){
+                $fileName = $this->auth->realname.'1-'.substr($fileName,0,8);
+            }
+        }elseif($is_rename && $is_rename === 'negative'){  //身份证反面
+            if($this->auth->realname){
+                $fileName = $this->auth->realname.'2-'.substr($fileName,0,8);
+            }
+        }elseif($is_rename && $is_rename === 'graduate'){  //毕业证书
+            if($this->auth->realname){
+                $fileName = $this->auth->realname.'3-'.substr($fileName,0,8);
+            }
+        }
+
         $splInfo = $file->validate(['size' => $size])->move(ROOT_PATH . '/public' . $uploadDir, $fileName);
         if ($splInfo) {
             $imagewidth = $imageheight = 0;

@@ -19,6 +19,13 @@ class ApiDoc extends ApiAbstractController {
 		"\\app\\api\\controller\\MemberAddress",
 		"\\app\\api\\controller\\MemberBank",
 		"\\app\\api\\controller\\SmsAuth",
+		"\\app\\api\\controller\\Reservation",
+		"\\app\\api\\controller\\Application",
+		"\\app\\api\\controller\\DeliveryMaterial",
+		"\\app\\api\\controller\\Order",
+		"\\app\\api\\controller\\school\\Cat",
+		"\\app\\api\\controller\\school\\School",
+		"\\app\\api\\controller\\school\\Schoolmajor",
 	];
 
 	/**
@@ -38,13 +45,13 @@ class ApiDoc extends ApiAbstractController {
 				preg_match_all('/@label.*?/U', $doc, $match);
 				if (count($match[0]) > 0) {
 					$result[$apiUrlPrefix."/".$v2->getName()] = [];
-					$result[$apiUrlPrefix."/".$v2->getName()]["label"] = explode("@label ", $match[0][0])[1];
+					$result[$apiUrlPrefix."/".$v2->getName()]["label"] = trim(explode("@label ", $match[0][0])[1]);
 					$result[$apiUrlPrefix."/".$v2->getName()]["testing"] = $_SERVER["REQUEST_SCHEME"]."://".$_SERVER["HTTP_HOST"].  $apiUrlPrefix."/".$v2->getName()."?token={$token}";
 					preg_match_all('/@param.*?/U', $doc, $match);
 					if (count($match[0]) > 0) {
 						$result[$apiUrlPrefix."/".$v2->getName()]["params"] = [];
 						foreach ($match[0] as $k3 => $v3)
-							$result[$apiUrlPrefix."/".$v2->getName()]["params"][] = explode("@param ", $v3)[1];
+							$result[$apiUrlPrefix."/".$v2->getName()]["params"][] = trim(explode("@param ", $v3)[1]);
 					}
 				}
 			}

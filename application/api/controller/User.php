@@ -78,14 +78,13 @@ class User extends Api
     /**
      * 绑定资料(已绑定不能修改)
      *
-     * @apiParam $realname  string  真实姓名
-     * @apiParam $idcard    string  身份证
-     * @apiParam $grade_id  int     年级ID
-     * @apiParam $school_id int     报读院校ID
-     * @apiParam $major_id  int     报读专业ID
+     * @param realname:真实姓名
+     * @param idcard:身份证
+     * @param grade_id:年级ID
+     * @param school_id:报读院校ID
+     * @param major_id:报读专业IDp
      */
-    public function binding()
-    {
+    public function binding(){
         $user = $this->auth->getUser();
 
         $realname = $this->request->request('realname');
@@ -113,8 +112,8 @@ class User extends Api
     /**
      * 修改手机号
      * 
-     * @param string $email 手机号
-     * @param string $captcha 验证码
+     * @param email:手机号
+     * @param captcha:验证码
      */
     public function changemobile()
     {

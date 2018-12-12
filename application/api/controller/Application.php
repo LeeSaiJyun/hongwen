@@ -12,6 +12,8 @@ use think\Request;
 class Application extends Api
 {
 
+	const API_URL = "/api/application";
+
     protected $model = null;
 
     protected $noNeedLogin = [''];
@@ -25,11 +27,10 @@ class Application extends Api
     }
 
     /**
-     * 报名申请
-     * @ApiMethod    API接口请求方法: POST
-     * @param $name string 姓名
-     * @param $telephone string 手机号
-     * @param $appointedtime int 预约时间
+     * @label 报名申请
+     * @param name:姓名
+     * @param telephone:手机号
+     * @param appointedtime:预约时间
      */
     public function create(Request $request){
         $apply_data = $request->param();

@@ -10,6 +10,7 @@ use app\common\controller\Api;
 class Cat extends Api
 {
     protected $model = null;
+    const API_URL = "/api/school/cat";
 
     protected $noNeedLogin = ['getList'];
     protected $noNeedRight = ['*'];
@@ -21,9 +22,7 @@ class Cat extends Api
     }
 
     /**
-     * 院校类别信息
-     * @param $test int
-     *
+     * @label 院校类别信息
      */
     public function getList(){
         $data = $this->model->order('id')->column('name','id');

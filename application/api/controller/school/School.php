@@ -9,13 +9,9 @@ use think\Request;
 /**
  * 院校信息
  */
-class School extends Api
-{
+class School extends Api{
+    const API_URL = "/api/school/school";
 
-    /**
-     * 模型对象
-     * @var \think\Model
-     */
     protected $model = null;
 
     protected $noNeedLogin = ['getList'];
@@ -28,8 +24,8 @@ class School extends Api
     }
 
     /**
-     * 获取院校信息
-     * @param $pid int
+     * @label 获取院校信息
+     * @param cat_id:类别ID(不传就获取全部)
      */
     public function getList(Request $request){
         $cat_id = $request->get('cat_id/d');

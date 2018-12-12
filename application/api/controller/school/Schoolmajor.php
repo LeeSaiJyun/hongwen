@@ -8,8 +8,9 @@ use think\Request;
 /**
  * 院校专业关系管理
  */
-class Schoolmajor extends Api
-{
+class Schoolmajor extends Api{
+    const API_URL = "/api/school/schoolmajor";
+
     protected $model = null;
 
     protected $noNeedLogin = ['getList'];
@@ -21,8 +22,8 @@ class Schoolmajor extends Api
     }
 
     /**
-     * 获取指定院校的专业信息
-     * @param $cat_id int
+     * @label 获取院校的专业信息
+     * @param school_id:院校ID
      */
     public function getList(Request $request){
         $school_id = $request->get('school_id/d');

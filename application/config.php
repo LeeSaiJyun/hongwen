@@ -55,7 +55,7 @@ return [
     // | 模块设置
     // +----------------------------------------------------------------------
     // 默认模块名
-    'default_module'         => 'index',
+    'default_module'         => 'admin',
     // 禁止访问模块
     'deny_module_list'       => ['common'],
     // 默认控制器名
@@ -262,7 +262,7 @@ return [
         //登录验证码
         'login_captcha'       => false,
         //登录失败超过10则1天后重试
-        'login_failure_retry' => true,
+        'login_failure_retry' => false,
         //是否同一账号同一时间只能在一个地方登录
         'login_unique'        => false,
         //登录页默认背景图

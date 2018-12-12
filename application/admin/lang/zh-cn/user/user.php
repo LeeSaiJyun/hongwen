@@ -32,6 +32,7 @@ return [
     'pid'            => '上级ID',
     'balance'        => '余额',
     'frozen'         => '冻结金额',
+    'realname'       => '真实姓名',
     'graduaction'    => '毕业学校',
     'graduaction_time'     => '毕业时间',
     'graduaction_major'    => '毕业专业',
