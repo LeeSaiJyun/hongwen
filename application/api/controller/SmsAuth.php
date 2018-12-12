@@ -41,7 +41,7 @@ class SmsAuth extends ApiAbstractController {
 			]);
 			$model->clearExpiredSms();
 			$data = $model->where(["mobile" => P("mobile")])->find();
-			F($data && (strtotime($data["create_time"])+$this->timeLimit > time()), "发送验证码太频繁");
+			F($data && (strtotime($data["create_time"])+$this->timeLimit < time()), "发送验证码太频繁");
 			$model->sendMessage(P("mobile"));
 		});
 	}

@@ -49,17 +49,15 @@ class WeChatMember extends ApiAbstractController {
 				"salt" => $salt,
 				"password" => md5(rand(100000,999999).$salt),
 			];
-			$isBindMobile = false;
 			// 判断是否存在邀请码
-			if (P("pid")) {
+			if (isset(P()["pid"])) {
 				$parent = $userModel->where(["openid" => P("pid")])->find();
 				if ($parent) {
 					$add["pid"] = $parent["id"];
 					$add["pids"] = $parent["pids"].($parent["pids"] ? "," : "").$parent["id"];
 				}
 			}
-			$uid = $member ? $member["user_id"] : $userModel->insert($add, FALSE, TRUE);
-			($member && $member["mobile"]) && $isBindMobile = true;
+			$uid = $member ? $member["id"] : $userModel->insert($add, FALSE, TRUE);
 			$tokenLog = Token::get(["user_id" => $uid]);
 			$token = base64_encode(md5(time().$uid).rand(10000,99999));
 			if ($tokenLog) Token::update(["expiretime" => time() + 86400 * 10], ["user_id" => $uid]);
@@ -69,7 +67,6 @@ class WeChatMember extends ApiAbstractController {
 				"createtime" => time(),
 				"expiretime" => time() + 86400 * 10,
 			]);
-			!$isBindMobile && E("请绑定手机");
 			return $tokenLog ? $tokenLog["token"] : $token;
 		});
 	}

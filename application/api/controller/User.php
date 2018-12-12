@@ -13,8 +13,9 @@ use think\Validate;
  */
 class User extends Api
 {
+    const API_URL = "/api/user";
 
-    protected $noNeedLogin = [ 'login', 'mobilelogin', 'register', 'changemobile'];
+    protected $noNeedLogin = [ 'login', 'mobilelogin'];
     protected $noNeedRight = '*';
 
     public function _initialize()
@@ -23,79 +24,49 @@ class User extends Api
     }
 
     /**
-     * 会员中心
-     */
-    public function index()
-    {
-        $this->success('', ['welcome' => $this->auth->nickname]);
-    }
-
-    /**
-     * 会员登录
-     *
-     * @param string $account 账号
-     * @param string $password 密码
-     */
-    public function login()
-    {
-        $account = $this->request->request('account');
-        $password = $this->request->request('password');
-        if (!$account || !$password)
-        {
-            $this->error(__('Invalid parameters'));
-        }
-        $ret = $this->auth->login($account, $password);
-        if ($ret)
-        {
-            $data = ['userinfo' => $this->auth->getUserinfo()];
-            $this->success(__('Logged in successful'), $data);
-        }
-        else
-        {
-            $this->error($this->auth->getError());
-        }
-    }
-
-    /**
-     * 获取用户提现列表
+     * @label 获取用户提现列表
      */
     public function getWithdrawList() {
         $data =  Withdraw::all(["user_id" => $this->auth->id]);
-
         $this->success('success',$data);
     }
 
     /**
-     * 注销登录
-     */
-    public function logout()
-    {
-        $this->auth->logout();
-        $this->success(__('Logout successful'));
-    }
-
-
-    /**
-     * 绑定资料(已绑定不能修改)
-     *
+     * @label 绑定资料(已绑定不能修改)
      * @param realname:真实姓名
      * @param idcard:身份证
      * @param grade_id:年级ID
      * @param school_id:报读院校ID
-     * @param major_id:报读专业IDp
+     * @param major_id:报读专业ID
      */
-    public function binding(){
+    public function bindingdata(){
         $user = $this->auth->getUser();
+        if ( $user->realname || $user->idcard ){
+            $this->error('资料已经绑定，如要修改请联系管理员');
+        }
 
         $realname = $this->request->request('realname');
         $idcard   = $this->request->request('idcard');
-        $grade_id   = $this->request->request('grade_id');
-        $school_id   = $this->request->request('school_id');
-        $major_id   = $this->request->request('major_id');
+        $grade_id   = $this->request->request('grade_id/d');
+        $school_id   = $this->request->request('school_id/d');
+        $major_id   = $this->request->request('major_id/d');
 
-        if ( $user->realname || $user->idcard )
-        {
-            $this->error('资料已经存在');
+        $validate = new Validate([
+            'realname|姓名'  => 'require|max:25',
+            'idcard|身份证' => 'require',
+            'grade_id|年级' => 'require',
+            'school_id|报读院校' => 'require',
+            'major_id|报读专业' => 'require',
+        ]);
+        $data = [
+            'realname'  => $realname,
+            'idcard'  => $idcard,
+            'grade_id'  => $grade_id,
+            'school_id'  => $school_id,
+            'major_id'  => $major_id,
+        ];
+        if (!$validate->check($data)) {
+            $this->error($validate->getError());
         }
 
         $user->realname = $realname;
@@ -107,43 +78,77 @@ class User extends Api
         $this->success('success',[$user->realname,$user->idcard]);
     }
 
+    /**
+     * @label 绑定手机号
+     * @param telephone:手机号
+     * @param captcha:短信验证码
+     */
+    public function bindingtelephone(){
+        $user = $this->auth->getUser();
+
+        $telephone = $this->request->request('telephone');
+        $captcha = $this->request->request('captcha');
+        if (!$telephone){
+            $this->error('手机号不能为空');
+        }
+        if (!$captcha){
+            $this->error(__('验证码不能为空'));
+        }
+        if (!Validate::regex($telephone, "^1\d{10}$")){
+            $this->error(__('Mobile is incorrect'));
+        }
+        if (\app\common\model\User::where('mobile', $telephone)->where('id', '<>', $user->id)->find())
+        {
+            $this->error('手机号已存在');
+        }
+        try {
+            \app\api\model\SmsAuth::checkAuth($telephone, $captcha);
+        } catch (\Exception $e) {
+            $this->error($e->getMessage());
+        }
+        $user->mobile = $telephone;
+        $user->save();
+        $this->success();
+    }
+
 
 
     /**
-     * 修改手机号
-     * 
-     * @param email:手机号
+     * @label 修改手机号
+     * @param telephone:手机号
      * @param captcha:验证码
      */
     public function changemobile()
     {
         $user = $this->auth->getUser();
-        $mobile = $this->request->request('mobile');
+        $telephone = $this->request->request('telephone');
         $captcha = $this->request->request('captcha');
-        if (!$mobile || !$captcha)
-        {
-            $this->error(__('Invalid parameters'));
+        if (!$telephone){
+            $this->error('手机号不能为空');
         }
-        if (!Validate::regex($mobile, "^1\d{10}$"))
-        {
-            $this->error(__('Mobile is incorrect'));
+        if (!$captcha){
+            $this->error(__('验证码不能为空'));
         }
-        if (\app\common\model\User::where('mobile', $mobile)->where('id', '<>', $user->id)->find())
-        {
-            $this->error(__('Mobile already exists'));
+        if (!Validate::regex($telephone, "^1\d{10}$")){
+            $this->error(__('手机号不正确'));
         }
-        $result = Sms::check($mobile, $captcha, 'changemobile');
-        if (!$result)
+        if (\app\common\model\User::where('mobile', $telephone)->where('id', '<>', $user->id)->find())
         {
-            $this->error(__('Captcha is incorrect'));
+            $this->error('手机号已存在');
         }
+
+        try {
+            \app\api\model\SmsAuth::checkAuth($telephone, $captcha);
+        } catch (\Exception $e) {
+            $this->error($e->getMessage());
+        }
+
         $verification = $user->verification;
         $verification->mobile = 1;
         $user->verification = $verification;
-        $user->mobile = $mobile;
+        $user->mobile = $telephone;
         $user->save();
 
-        Sms::flush($mobile, 'changemobile');
         $this->success();
     }
 
