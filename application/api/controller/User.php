@@ -5,7 +5,10 @@ namespace app\api\controller;
 use app\admin\model\Withdraw;
 use app\common\controller\Api;
 use app\common\library\Sms;
+use Endroid\QrCode\QrCode;
 use fast\Random;
+use think\Request;
+use think\Response;
 use think\Validate;
 
 /**
@@ -15,7 +18,7 @@ class User extends Api
 {
     const API_URL = "/api/user";
 
-    protected $noNeedLogin = [ 'login', 'mobilelogin'];
+    protected $noNeedLogin = [ 'login','share', 'mobilelogin'];
     protected $noNeedRight = '*';
 
     public function _initialize()
@@ -152,5 +155,21 @@ class User extends Api
         $this->success();
     }
 
+    /**
+     * 获取分享二维码
+     * @return Response
+     */
+    public function share(){
+        $user = $this->auth->getUser();
+        $qrCode = new QrCode();
+        $qrCode->setText("pages/index/main?pid=".$user->openid)
+            ->setSize(256)
+            ->setPadding(12)
+            ->setImageType(QrCode::IMAGE_TYPE_PNG);
+//        $qrCode->setLogo(ROOT_PATH . 'public/assets/img/qrcode.png');
+        //也可以直接使用render方法输出结果
+//        $qrCode->render();
+        return new Response($qrCode->get(), 200, ['Content-Type' => $qrCode->getContentType()]);
+    }
 
 }
