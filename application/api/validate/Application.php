@@ -18,14 +18,15 @@ class Application extends Validate
         'telephone|手机号' => 'require|mobile',
         'idcard|身份证号' => 'require',
         'birthday|生日' => 'require|date',
-        'sex|性别' => 'require',
         'ethnic|民族' => 'require',
         'graduation|最高学历学校' => 'require',
         'certificate|证书编号' => 'require',
-        'graduationdate|毕业时间' => 'require',
+        'graduationdate|毕业时间' => 'require|date',
         'graduationmajor|毕业专业' => 'require',
-        'school_id' => 'require',
-        'major_id' => 'require',
+        'school_id|学校' => 'require',
+        'major_id|专业' => 'require',
+        'sex|性别' => 'require|in:0,1,2',
+
     ];
 
     /**
@@ -35,15 +36,7 @@ class Application extends Validate
         'telephone.mobile' => '请输入正确的手机号',
         'school_id.require' => '请选择报名学校',
         'major_id.require' => '请选择报名专业',
+        'sex.in' => '性别不正确',
     ];
-
-    /**
-     * 验证场景
-     */
-    protected $scene = [
-        'add'  => ['name','telephone','appointedtime'],
-        'edit' => ['name','telephone','appointedtime'],
-    ];
-
 
 }

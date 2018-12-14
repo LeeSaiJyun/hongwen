@@ -14,7 +14,7 @@ class WeChatMutually {
 	/**
 	 * post https请求
 	 * @param string $url 请求网址
-	 * @param array $data 提交数据
+	 * @param string $data 提交数据
 	 */
 	public function PostCurl($url,$data){
 		$ch=curl_init();//初始化
@@ -83,7 +83,7 @@ class WeChatMutually {
 	}
 	/**
 	 * 提取指xml节点的值
-	 * @param arry $array 数组
+	 * @param array $array 数组
 	 * @param string $strSign 节点名称
 	 */
 	public function XmlStr($array,$sign){

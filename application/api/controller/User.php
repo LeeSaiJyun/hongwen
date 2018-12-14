@@ -4,10 +4,7 @@ namespace app\api\controller;
 
 use app\admin\model\Withdraw;
 use app\common\controller\Api;
-use app\common\library\Sms;
 use Endroid\QrCode\QrCode;
-use fast\Random;
-use think\Request;
 use think\Response;
 use think\Validate;
 
@@ -30,7 +27,20 @@ class User extends Api
      * @label 获取用户提现列表
      */
     public function getWithdrawList() {
-        $data =  Withdraw::all(["user_id" => $this->auth->id]);
+        $data =  Withdraw::field('id,money,balance,bank_id,withdrawtime,paytime,status')
+            ->with(['banktext'])
+            ->where(["user_id" => $this->auth->id])
+            ->select();
+        foreach ($data as $row => $value){
+            if($value['withdrawtime'])
+                $value['withdrawtime'] = date('Y-m-d H:i:s',$value['withdrawtime']);
+            else
+                $value['withdrawtime'] = null;
+            if($value['paytime'])
+                $value['paytime'] = date('Y-m-d H:i:s',$value['paytime']);
+            else
+                $value['paytime'] = null;
+        }
         $this->success('success',$data);
     }
 

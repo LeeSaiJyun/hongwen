@@ -27,24 +27,20 @@ class Order extends Model
 	public function createOrder($user_id, $money, $paymentdata){
         $user_id = intval($user_id);
         $orderno = create_orderno();
-        if($paymentdata === 'tuition '){
+        $data = '';
+        if($paymentdata === 'tuition'){
             $m_user  = new \app\common\model\User;
             $info = $m_user->getStudentInfo($user_id);
             if($info){
                 $data = serialize($info);
-            }else{
-                $data = '';
             }
         }elseif($paymentdata==='application'){
             $m_application = new Application();
             $info = $m_application->getStudentInfo($user_id);
             if($info){
                 $data = serialize($info);
-            }else{
-                $data = '';
             }
         }
-
         $this->allowField(['data','user_id','money','paymentdata','orderno'])
             ->save();
         $sv = [

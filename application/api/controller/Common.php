@@ -47,10 +47,38 @@ class Common extends Api
         }
     }
 
+
+    /**
+     * @label 获取报名费和最新一条报名数据
+     */
+    public function getApplicationFee(){
+        $fee = \think\Config::get("site.registration_fee");     //报名费用
+        if($fee){
+            $this->success('success',['fee' =>  floatval($fee)]);
+        }else{
+            $this->error('报名费用错误');
+        }
+    }
+
+    /**
+     * @label 检查报名(已申请报名但支付)
+     */
+    public function checkApplication()
+    {
+        $user_id = $this->auth->id;
+        //查询未支付的报名
+        $app_data = \app\api\model\Application::field('id,money,pay_status')->where(['user_id' => $user_id,'pay_status' => '1','status'=>'0'])->order('id desc')->find();
+        if($app_data){
+            $this->success('success', $app_data);
+        }else{
+            $this->error('没有未支付报名');
+        }
+    }
+
     /**
      * @label 上传文件
      * @param File:文件流
-     * @param type:positive=身份证正面 negative = 反面 graduate = 毕业证书
+     * @param type:positive=身份证正面 negative=反面 graduate=毕业证书
      */
     public function upload()
     {

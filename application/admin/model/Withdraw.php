@@ -27,7 +27,7 @@ class Withdraw extends Model
     }
 
     public function getStatusTextAttr($value, $data)
-    {        
+    {
         $value = $value ? $value : (isset($data['status']) ? $data['status'] : '');
         $list = $this->getStatusList();
         return isset($list[$value]) ? $list[$value] : '';
@@ -49,6 +49,11 @@ class Withdraw extends Model
     public function userbank()
     {
         return $this->hasOne('Bank', 'id', 'bank_id', [], 'LEFT')->field('id,name,bankname,banklocation,bankcard');
+    }
+
+    public function banktext()
+    {
+        return $this->hasOne('Bank', 'id', 'bank_id', [], 'LEFT')->field('id,CONCAT(bankname,\'（\',right(bankcard, 4) ,\'） \',`name`) as text');
     }
 
 

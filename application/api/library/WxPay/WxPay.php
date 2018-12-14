@@ -194,7 +194,7 @@ class WxPay{
 		ksort($strDic);
 		//排列成键值对
 		$sortDic='';
-		while(list($key,$value)=each($strDic)){
+		foreach ($strDic as $key => $value) {
 			if($value==''){
 				continue;
 			}
@@ -209,9 +209,8 @@ class WxPay{
 	private function SortDicXml(array $strDic,$keySign){
 		ksort($strDic);
 		$tmp='';
-		while(list($key,$value)=each($strDic)){
+		foreach ($strDic as $key => $value)
 			$tmp.="<".$key.">".$value."</".$key.">";
-		}
 		$sortXml="<xml>".$tmp."<sign>".$keySign."</sign></xml>";
 		return $sortXml;
 	}
@@ -221,9 +220,8 @@ class WxPay{
 		ksort($qrDic);
 		//排列成键值对
 		$sortDic='';
-		while(list($key,$value)=each($qrDic)){
+		foreach ($qrDic as $key => $value)
 			$sortDic.=$key."=".$value."&";
-		}
 		return 'weixin://wxpay/bizpayurl?'.$sortDic.'sign='.$keySign;
 	}
 	//扫码模式一产品ID排序并返回url
@@ -269,16 +267,16 @@ class WxPay{
 		//提交预支付信息
 		$postxml=$wcMutually->PostCurl('https://api.mch.weixin.qq.com/pay/unifiedorder',$prexml);
 		//获取预支付结果
-		$payar=$wcMutually->XmlToArray($postxml);
-		if($wcMutually->XmlStr($payar,"return_code")=='FAIL'){
-			$msg=$wcMutually->XmlStr($payar,"return_msg");
+		$payer=$wcMutually->XmlToArray($postxml);
+		if($wcMutually->XmlStr($payer,"return_code")=='FAIL'){
+			$msg=$wcMutually->XmlStr($payer,"return_msg");
 			return json(['status'=>false,'msg'=>'调起微信支付失败','data'=>''],201);
 		}
 		//提取支付参数
-		$nonce_str=$wcMutually->XmlStr($payar,"nonce_str");
-		$prepay_id=$wcMutually->XmlStr($payar,"prepay_id");
-		session('WeChatPayOrderNo',$nativeor);
+		$nonce_str=$wcMutually->XmlStr($payer,"nonce_str");
+		$prepay_id=$wcMutually->XmlStr($payer,"prepay_id");
+		session('WeChatPayOrderNo',$orderNo);
 		//返回前台JS支付数据
-		return json(['status'=>true,'msg'=>'准备支付','data'=>$wcPay->CreateJSApi($nonce_str,$prepay_id)],201);
+		return ['status'=>true,'msg'=>'准备支付','data'=>$wxPay->CreateJSApi($nonce_str,$prepay_id)];
 	}
 }

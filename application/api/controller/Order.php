@@ -2,7 +2,7 @@
 
 namespace app\api\controller;
 
-use app\api\library\WxPay\WxPay;
+use app\api\library\WxPay\WxPayTrue;
 use app\common\controller\Api;
 use think\Db;
 use think\Request;
@@ -66,7 +66,7 @@ class Order extends Api
         $result = $this->model->createOrder($data['user_id'],$data['money'],$data['paymentdata']);
 	    // 加入微信统一下单
 	    $member = \app\admin\model\User::get(["id" => $data["user_id"]]);
-	    $this->success(WxPay::createWxPayUnifiedOrder($member["openid"], $result["orderno"], $result["money"]));
+	    $this->success(WxPayTrue::createWxPayUnifiedOrder($member["openid"], $result["orderno"], $result["money"]));
     }
 
     public function createApplicationWxUnifiedOrder(Request $request) {

@@ -50,7 +50,7 @@ class Reservation extends Api
         if(!$validate->check($data)){
             $this->error($validate->getError());
         }
-        $result = $this->model->allowField(['name','telephone','appointedtime'])->save($data);
+        $result = $this->model->allowField(['user_id','name','telephone','appointedtime'])->save($data);
         $this->success($result);
     }
 
