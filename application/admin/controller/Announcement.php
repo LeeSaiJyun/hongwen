@@ -24,7 +24,7 @@ class Announcement extends Backend
     {
         parent::_initialize();
         $this->model = new \app\admin\model\Announcement;
-        $this->view->assign("statusList", $this->model->getStatusList());
+		$this->view->assign("statusList", ['0' => __('Status 0'),'1' => __('Status 1')]);
     }
     
     /**

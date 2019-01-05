@@ -21,11 +21,11 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                 url: $.fn.bootstrapTable.defaults.extend.index_url,
                 pk: 'id',
                 sortName: 'id',
-                commonSearch: false,
                 columns: [
                     [
                         {checkbox: true},
                         {field: 'id', title: __('Id'),operate:false},
+                        {field: 'user_id', title: __('User_id'),visible: false},
                         {field: 'province.name', title: __('Province_id'),operate:false},
                         {field: 'city.name', title: __('City_id'),operate:false},
                         {field: 'area.name', title: __('Area_id'),operate:false},

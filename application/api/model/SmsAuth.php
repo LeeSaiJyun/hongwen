@@ -51,7 +51,7 @@ class SmsAuth extends Model {
 	public static function sendMessage($mobile) {
 		$code = rand(100000,999999);
 		// 发送阿里云短信
-		//\app\api\library\Aliyun\Sms::sendSms($mobile, $code);
+		\app\api\library\Aliyun\Sms::sendSms($mobile, $code);
 		// 插入到数据库中
 		self::create([
 			"mobile" => $mobile,

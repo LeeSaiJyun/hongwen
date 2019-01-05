@@ -10,7 +10,7 @@ class Order extends Model
     protected $name = 'order';
 
     // 自动写入时间戳字段
-    protected $autoWriteTimestamp = true;
+    protected $autoWriteTimestamp = 'int';
 
     // 定义时间戳字段名
     protected $createTime = 'createtime';
@@ -41,17 +41,18 @@ class Order extends Model
                 $data = serialize($info);
             }
         }
-        $this->allowField(['data','user_id','money','paymentdata','orderno'])
-            ->save();
-        $sv = [
+        $add = [
             'user_id' => $user_id,
             'data' => $data,
             'money' => $money,
             'paymentdata' => $paymentdata,
-            'orderno'=>$orderno
+            'orderno'=>$orderno,
+            "createtime" => time(),
+            "updatetime" => 0,
         ];
-        $this->allowField(['user_id','money','paymentdata','orderno'])->save($sv);
-        return $sv;
+        $orderID = $this->create($add, false, true);
+        $add["order_id"] = $orderID;
+        return $add;
 
     }
 

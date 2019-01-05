@@ -7,6 +7,7 @@ use app\common\model\Area;
 use app\common\model\Version;
 use fast\Random;
 use think\Config;
+use think\Db;
 
 /**
  * 公共接口
@@ -15,7 +16,7 @@ class Common extends Api
 {
     const API_URL = "/api/common";
 
-    protected $noNeedLogin = ['init'];
+    protected $noNeedLogin = ['init','getApplicationFee'];
     protected $noNeedRight = '*';
 
     public function _initialize()
@@ -52,8 +53,8 @@ class Common extends Api
      * @label 获取报名费和最新一条报名数据
      */
     public function getApplicationFee(){
-        $fee = \think\Config::get("site.registration_fee");     //报名费用
-        if($fee){
+		$fee = Db::name('config')->where('name', 'registration_fee')->value('value');
+		if($fee){
             $this->success('success',['fee' =>  floatval($fee)]);
         }else{
             $this->error('报名费用错误');

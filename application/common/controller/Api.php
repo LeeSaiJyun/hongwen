@@ -17,6 +17,7 @@ use think\Response;
  */
 class Api
 {
+
     /*** @var Request Request 实例*/
     protected $request;
 
@@ -174,6 +175,10 @@ class Api
      */
     protected function result($msg, $data = null, $code = 400, $type = null, array $header = [])
     {
+/*		$header['Access-Control-Allow-Origin']='*';
+		$header['Access-Control-Allow-Headers']='*';
+		$header['Access-Control-Allow-Methods']='*';*/
+
         $result = [
             'code' => $code,
             'response'  => $msg,

@@ -21,13 +21,15 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                 url: $.fn.bootstrapTable.defaults.extend.index_url,
                 pk: 'id',
                 sortName: 'id',
+                commonSearch: false,
                 columns: [
                     [
                         {checkbox: true},
                         {field: 'id', title: __('Id'),operate:false},
+                        {field: 'title', title: __('Title'),operate:false},
                         {field: 'admin_id', title: __('Admin_id'),visible:false,operate:false},
-                        {field: 'remark', title: __('Remark')},
-                        {field: 'status', title: __('Status'), searchList: {"0":__('Status 0'),"1":__('Status 1')}, formatter: Controller.api.formatter.custom},
+                        {field: 'remark', title: __('Remark'),operate:false},
+                        {field: 'status', title: __('Status'), searchList: {"0":__('Status 0'),"1":__('Status 1')}, formatter: Controller.api.formatter.custom ,sortable:true},
                         {field: 'createtime', title: __('Createtime'),operate:false, formatter: Table.api.formatter.datetime },
                         {field: 'operate', title: __('Operate'), table: table, events: Table.api.events.operate, formatter: Table.api.formatter.operate}
                     ]

@@ -11,7 +11,12 @@ namespace app\api\controller;
 
 use app\admin\model\User;
 use app\admin\model\user\Token;
+use app\api\library\WxPay\WxPayTrue;
 use app\api\model\WeChatMember as WeChatModel;
+use think\Config;
+use think\Db;
+use think\Exception;
+use think\Response;
 
 class WeChatMember extends ApiAbstractController {
 
@@ -48,6 +53,8 @@ class WeChatMember extends ApiAbstractController {
 				"avatar"   => P("avatarUrl"),
 				"salt"     => $salt,
 				"password" => md5(rand(100000, 999999) . $salt),
+				"createtime" => time(),
+				"jointime" => time(),
 			];
 			// 判断是否存在邀请码
 			if (isset(P()["pid"])) {
@@ -117,11 +124,11 @@ class WeChatMember extends ApiAbstractController {
 			$tokenData = WeChatModel::checkToken(P());
 			$model     = new User();
             $submember = $model->alias('u')
-                ->field('u.id,u.nickname,u.realname,u.mobile, g.name as grade,s.name as school,m.name as major')
+                ->field('u.id,u.nickname,u.realname,u.mobile,from_unixtime(u.jointime) as jointime, g.name as grade,s.name as school,m.name as major')
                 ->where(["pid" => $tokenData["user_id"]])
-                ->join('fa_grade g','u.grade_id = g.id','LEFT')
-                ->join('fa_school s','u.school_id = s.id','LEFT')
-                ->join('fa_major m','u.major_id = m.id','LEFT')
+                ->join('fa_grade g','u.grade_id = g.id','LEFT')    //年级
+                ->join('fa_school s','u.school_id = s.id','LEFT')  //学校
+                ->join('fa_major m','u.major_id = m.id','LEFT')    //专业
                 ->select();
 
             foreach ($submember as $row => &$item) {
@@ -132,10 +139,21 @@ class WeChatMember extends ApiAbstractController {
 		});
 	}
 
-	public function wxPayCallback() {
-		return $this->tryCatchTx(function () {
-
-		});
+	/**
+	 * @label 获取小程序码
+	 * @param openid
+	 * @return \think\Response
+	 * @throws \Exception
+	 */
+	public function getWXACode($openid =null) {
+		$url = "https://api.weixin.qq.com/wxa/getwxacodeunlimit";
+		$params = [
+			"scene" => input("openid"),
+			"width" => 280
+//			"page" => "page/index"
+		];
+		$qrcode =  $this->wxCURL($url,json_encode($params)) ;
+		return new Response( $qrcode, 200, ['Content-Type' => 'image/jpg']);
 	}
 
 }

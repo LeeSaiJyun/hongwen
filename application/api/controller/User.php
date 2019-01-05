@@ -5,6 +5,9 @@ namespace app\api\controller;
 use app\admin\model\Withdraw;
 use app\common\controller\Api;
 use Endroid\QrCode\QrCode;
+use fast\Random;
+use think\Config;
+use think\Request;
 use think\Response;
 use think\Validate;
 
@@ -15,7 +18,7 @@ class User extends Api
 {
     const API_URL = "/api/user";
 
-    protected $noNeedLogin = [ 'login','share', 'mobilelogin'];
+    protected $noNeedLogin = [ 'login', 'jscode2session', 'mobilelogin'];
     protected $noNeedRight = '*';
 
     public function _initialize()
@@ -108,10 +111,9 @@ class User extends Api
             $this->error(__('验证码不能为空'));
         }
         if (!Validate::regex($telephone, "^1\d{10}$")){
-            $this->error(__('Mobile is incorrect'));
+            $this->error('手机号不正确');
         }
-        if (\app\common\model\User::where('mobile', $telephone)->where('id', '<>', $user->id)->find())
-        {
+        if (\app\common\model\User::where('mobile', $telephone)->where('id', '<>', $user->id)->find()){
             $this->error('手机号已存在');
         }
         try {
@@ -145,8 +147,7 @@ class User extends Api
         if (!Validate::regex($telephone, "^1\d{10}$")){
             $this->error(__('手机号不正确'));
         }
-        if (\app\common\model\User::where('mobile', $telephone)->where('id', '<>', $user->id)->find())
-        {
+        if (\app\common\model\User::where('mobile', $telephone)->where('id', '<>', $user->id)->find()){
             $this->error('手机号已存在');
         }
 
@@ -166,8 +167,7 @@ class User extends Api
     }
 
     /**
-     * 获取分享二维码
-     * @return Response
+     * @label 获取分享二维码
      */
     public function share(){
         $user = $this->auth->getUser();
@@ -181,5 +181,76 @@ class User extends Api
 //        $qrCode->render();
         return new Response($qrCode->get(), 200, ['Content-Type' => $qrCode->getContentType()]);
     }
+
+    /**
+     * @label 重置密码
+     *
+     * @param newpassword:新密码
+     * @param captcha:验证码
+     */
+    public function resetpwd(Request $request){
+        $telephone = $this->auth->mobile;
+        $newpassword = $this->request->request("newpassword");
+        $captcha = $this->request->request("captcha");
+
+        $validate = Validate::make([
+            "newpassword|新密码" => "require|number|length:6,18",
+            "captcha|验证码" => "require",
+        ]);
+        if (!$validate->check($request->param())) {
+            $this->error($validate->getError());
+        }
+
+        //短信验证
+        try {
+            \app\api\model\SmsAuth::checkAuth($telephone, $captcha);
+        } catch (\Exception $e) {
+            $this->error($e->getMessage());
+        }
+
+        //修改密码
+        $salt = $this->auth->salt;
+        $newpassword = $this->auth->getEncryptPassword($newpassword, $salt);
+        $oldpassword = $this->auth->password;
+        if($newpassword == $oldpassword){
+            $this->error(__('新旧密码不能相同'));
+        }
+
+        $this->auth->getUser()->save(['password' => $newpassword]);
+        $this->success(__('Reset password successful'));
+
+        $this->error($this->auth->getError());
+
+    }
+
+	/**
+	 * @label 登录凭证
+	 * @param $code
+	 */
+	public function jscode2session($code=null) {
+		if(!$code){
+			$this->error("参数错误");
+		}
+		$appid = Config::get('wechat.sub_appid');
+		$appsecret = Config::get('wechat.sub_appsecret');
+
+		$url = "https://api.weixin.qq.com/sns/jscode2session?appid={$appid}&secret={$appsecret}&js_code={$code}&grant_type=authorization_code";
+		$output = CURL($url);
+		if($output){
+			$output = json_decode($output,true);
+		}else{
+			$this->error("请求微信错误");
+		}
+		if(array_key_exists('errcode',$output) && $output['errcode'] != 0 ){
+			if(array_key_exists('errmsg',$output)){
+				$this->error('微信响应错误',$output);
+			}else{
+				$this->error("请求微信错误");
+			}
+		}else{
+			$this->success('成功',$output);
+		}
+	}
+
 
 }

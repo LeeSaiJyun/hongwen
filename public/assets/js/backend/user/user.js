@@ -34,7 +34,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {field: 'gender', title: __('Gender'),  searchList: {"1": __('Male'), "0": __('Female')}, formatter: Controller.api.formatter.gender },
                         {field: 'jointime', title: __('Jointime'), formatter: Table.api.formatter.datetime, operate: false
                             , addclass: 'datetimerange', sortable: true},
-                        // {field: 'pid', title: __('pid')},
+                        {field: 'pid', title: __('pid'),visible:false},
                         {field: 'balance', title: __('balance'), operate: 'BETWEEN', sortable: true},
                         {field: 'frozen', title: __('frozen'), operate: 'BETWEEN', sortable: true},
                         {field: 'realname', title: __('realname'), operate: 'LIKE'},
@@ -69,6 +69,15 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                                     classname: 'btn btn-xs btn-primary btn-dialog',
                                     icon: 'fa fa-map-marker',
                                     url: 'user/address/index?user_id={ids}',
+                                },
+                                {
+                                    name: 'children_id',
+                                    text: __('下级'),
+                                    title: __('下级'),
+                                    classname: 'btn btn-xs btn-primary btn-dialog',
+                                    icon: 'fa fa-credit-card',
+                                    url: 'user/user/index?pid={ids}',
+                                    visible: function (row) {return true;}//返回true时按钮显示,返回false隐藏
                                 },
                             ],
                             formatter: Table.api.formatter.buttons,

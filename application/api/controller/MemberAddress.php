@@ -63,7 +63,11 @@ class MemberAddress extends ApiAbstractController {
 	public function getList() {
 		return $this->tryCatch(function () {
 			$tokenData = WeChatMember::checkToken(P());
-			return Address::all(["user_id" => $tokenData["user_id"]]);
+			$data = Address::all(["user_id" => $tokenData["user_id"]]);
+			if (count($data) > 0)
+				foreach ($data as $k => $v)
+					$data[$k]["telephone"] = mb_substr($v["telephone"], 0, 3,"utf-8")."*****".mb_substr($v["telephone"], -3, 3,"utf-8");
+			return $data;
 		});
 	}
 
@@ -98,17 +102,16 @@ class MemberAddress extends ApiAbstractController {
 			$tokenData = WeChatMember::checkToken(P());
 			checkParams([
 				"id"          => "地址ID",
-				"province_id" => "省份ID",
-				"city_id"     => "城市ID",
-				"area_id"     => "地区ID",
+				"province_id" => "省份名称",
+				"city_id"     => "城市名称",
+				"area_id"     => "地区名称",
 				"name"        => "收货人姓名",
 				"telephone"   => "收货人联系电话",
 				"address"     => "收货人详细地址",
 			]);
+			!is_numeric(P("telephone")) && E("这是手机号？");
 			$addressData = Address::get(["user_id" => $tokenData["user_id"], "id" => P("id")]);
 			!$addressData && E("收货地址不是你的");
-			$areaData = Area::get(["id" => P("area_id")]);
-			!$areaData && E("所选地区不存在");
 			Address::update([
 				"province_id" => P("province_id"),
 				"city_id" => P("city_id"),
@@ -116,7 +119,7 @@ class MemberAddress extends ApiAbstractController {
 				"name" => P("name"),
 				"telephone" => P("telephone"),
 				"address" => P("address"),
-				"full_address" => $areaData["mergename"].P("address"),
+				"full_address" => P("province_id").P("city_id").P("area_id").P("address"),
 			], ["id" => $addressData["id"]]);
 		});
 	}
@@ -135,15 +138,14 @@ class MemberAddress extends ApiAbstractController {
 		return $this->tryCatchTx(function () {
 			$tokenData = WeChatMember::checkToken(P());
 			checkParams([
-				"province_id" => "省份ID",
-				"city_id"     => "城市ID",
-				"area_id"     => "地区ID",
+				"province_id" => "省份名称",
+				"city_id"     => "城市名称",
+				"area_id"     => "地区名称",
 				"name"        => "收货人姓名",
 				"telephone"   => "收货人联系电话",
 				"address"     => "收货人详细地址",
 			]);
-			$areaData = Area::get(["id" => P("area_id")]);
-			!$areaData && E("所选地区不存在");
+			!is_numeric(P("telephone")) && E("这是手机号？");
 			Address::create([
 				"province_id" => P("province_id"),
 				"city_id" => P("city_id"),
@@ -151,7 +153,7 @@ class MemberAddress extends ApiAbstractController {
 				"name" => P("name"),
 				"telephone" => P("telephone"),
 				"address" => P("address"),
-				"full_address" => $areaData["mergename"].P("address"),
+				"full_address" => P("province_id").P("city_id").P("area_id").P("address"),
 				"user_id" => $tokenData["user_id"],
 			]);
 		});
@@ -167,7 +169,7 @@ class MemberAddress extends ApiAbstractController {
 			checkParams([
 				"id" => "地址ID",
 			]);
-			Area::destroy("id=".P("id")." and user_id={$tokenData['user_id']}");
+			Address::destroy(["id" => P("id"), "user_id" => $tokenData["user_id"]]);
 		});
 	}
 

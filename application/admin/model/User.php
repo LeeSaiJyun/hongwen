@@ -3,6 +3,7 @@
 namespace app\admin\model;
 
 use think\Model;
+use traits\model\SoftDelete;
 
 class User extends Model
 {
@@ -14,6 +15,9 @@ class User extends Model
     // 定义时间戳字段名
     protected $createTime = 'createtime';
     protected $updateTime = 'updatetime';
+
+	use SoftDelete;
+	protected $deleteTime = 'delete_time';
     /*// 追加属性
     protected $append = [
         'prevtime_text',
@@ -104,7 +108,6 @@ class User extends Model
             return $this->where(['id'=>$id,'balance'=>['>=',$money]])->setInc('balance', $money);;
         }else{
             return $this->where(['id'=>$id,'balance'=>['>=',$money]])->setDec('balance', $money);
-
         }
     }
 

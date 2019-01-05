@@ -22,10 +22,13 @@ class Application extends Validate
         'graduation|最高学历学校' => 'require',
         'certificate|证书编号' => 'require',
         'graduationdate|毕业时间' => 'require|date',
-        'graduationmajor|毕业专业' => 'require',
+//        'graduationmajor|毕业专业' => 'require',
         'school_id|学校' => 'require',
         'major_id|专业' => 'require',
         'sex|性别' => 'require|in:0,1,2',
+//        'graduaction_image|毕业证照' => 'require|in:0,1,2',
+//        'idcard_positive_image|身份证正反面' => 'require|in:0,1,2',
+//        'idcard_negative_image|身份证正反面' => 'require|in:0,1,2',
 
     ];
 

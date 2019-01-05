@@ -96,4 +96,30 @@ class User Extends Model
         return $ret;
     }
 
+    /**
+     * 余额转移到冻结
+     * @param $user_id 用户ID
+     * @param $money 需要冻结的金额
+     * @return mixed
+     */
+    public static function balanceToFrozen($user_id,$money){
+        return self::where('id',$user_id)
+            ->dec('balance',$money)
+            ->inc('frozen',$money)
+            ->update();
+    }
+
+    /**
+     * 解冻金额
+     * @param $user_id 用户ID
+     * @param $money 解冻金额
+     */
+    public static function frozenToBalance($user_id,$money){
+        return self::where('id',$user_id)
+            ->inc('balance',$money)
+            ->dec('frozen',$money)
+            ->update();
+    }
+
+
 }

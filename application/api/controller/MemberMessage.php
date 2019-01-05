@@ -23,8 +23,10 @@ class MemberMessage extends ApiAbstractController {
 			$tokeData = WeChatMember::checkToken(P());
 			$data = Message::all(["user_ids" => $tokeData["user_id"]]);
 			foreach ($data as $k => $v) {
-				$data[$k]["createtime"] = date("Y-m-d H:i:s", $v["createtime"]);
+				$timestamp = $v["createtime"];
+				$data[$k]["createtime"] = date("Y-m-d H:i:s", $timestamp);
 				$data[$k]["updatetime"] = date("Y-m-d H:i:s", $v["updatetime"]);
+				$data[$k]["date_label"] = date("m月d日", $timestamp);
 			}
 			return $data;
 		});

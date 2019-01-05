@@ -10,8 +10,8 @@ class Order extends Validate{
      * 验证规则
      */
     protected $rule = [
-        'money|金额' => 'require|number|>=:1',
-        'paymentdata|类型'  => 'require'
+		'money|金额' => 'require|float|>=:0.1',
+		'paymentdata|类型'  => 'require'
     ];
 
     /**

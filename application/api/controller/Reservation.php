@@ -22,7 +22,7 @@ class Reservation extends Api
      */
     protected $model = null;
 
-    protected $noNeedLogin = [''];
+    protected $noNeedLogin = ['create'];
     protected $noNeedRight = '*';
 
     public function _initialize()
@@ -42,7 +42,7 @@ class Reservation extends Api
         $data['telephone'] = $request->param('telephone');
         $data['appointedtime'] = $request->param('appointedtime');
 
-        $data['user_id'] = $this->auth->id;
+        $data['user_id'] = $this->auth->id?:0;
 
         $validate = validate('Reservation');
 

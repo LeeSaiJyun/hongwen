@@ -14,7 +14,7 @@ class WeChatMutually {
 	/**
 	 * post https请求
 	 * @param string $url 请求网址
-	 * @param string $data 提交数据
+	 * @param $data 提交数据
 	 */
 	public function PostCurl($url,$data){
 		$ch=curl_init();//初始化

@@ -51,7 +51,7 @@ class Schoolmajor extends Api{
             foreach ($major_ids as $major_id ){
                 if(array_key_exists($major_id,$majorList)){
 //                    array_push($majorNameList, $majorList[$major_id]);
-                    $v['major'][$major_id]=$majorList[$major_id];
+                    array_push($v['major'],['id'=>$major_id,'name'=>$majorList[$major_id]]);
                 }
 //                $v['major_text'] = implode(',', $majorNameList);
             }

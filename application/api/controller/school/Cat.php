@@ -25,7 +25,7 @@ class Cat extends Api
      * @label 院校类别信息
      */
     public function getList(){
-        $data = $this->model->order('id')->column('name','id');
+        $data = $this->model->order('id')->field('id,name')->select();
         $this->success('success',$data);
     }
 

@@ -14,13 +14,13 @@ class School extends Api{
 
     protected $model = null;
 
-    protected $noNeedLogin = ['getList'];
+    protected $noNeedLogin = ['getList','getDetail'];
     protected $noNeedRight = ['*'];
 
     public function _initialize()
     {
         parent::_initialize();
-        $this->model = new \app\api\model\School();
+        $this->model = new \app\admin\model\School();
     }
 
     /**
@@ -37,5 +37,19 @@ class School extends Api{
         $data = $this->model->field('id,cat_id,name,title_image,brief')->order('id')->where($where)->select();
         $this->success('success',$data);
     }
+
+	/**
+	 * @label 根据ID获取院校信息
+	 * @param cat_id:类别ID(不传就获取全部)
+	 */
+	public function getDetail() {
+		$id = input("id");
+		if(!$id){
+			$this->error('id不能为空');
+		}
+		$data = $this->model->field('id,cat_id,name,title_image,brief')->find($id);
+		$this->success('success',$data);
+    }
+
 
 }

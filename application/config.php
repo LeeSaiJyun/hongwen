@@ -276,4 +276,17 @@ return [
         //API接口地址
         'api_url'             => 'https://api.fastadmin.net',
     ],
+
+	//微信公众平台
+	'wechat' => [
+		'appid' =>	'wx20b7656e2486b6e3',
+		'sub_appid' =>	'wx80d1c1ee6d182609',
+		'sub_appsecret' =>	'f45cbdd53eb218d02b48f5c62448522b',
+		'mp_secret' =>	'58df62fa1d447ac39782f5388b8c6c0d',
+		'mch_id' =>	'1351283901',		//商户号
+		'sub_mch_id' =>	'1520342181',	//子商户号
+		'notify_url' =>	'https://xy.gdhwjyedu.com/api/order/createApplicationWxUnifiedOrder',//支付回调页面
+		'secretKey' =>	'GwJAXR1G0seGKVhgXVMMJJXInKnyIOkr',//支付密钥
+		'signType' =>	'MD5',
+	]
 ];
