@@ -16,7 +16,7 @@ class Common extends Api
 {
     const API_URL = "/api/common";
 
-    protected $noNeedLogin = ['init','getApplicationFee'];
+    protected $noNeedLogin = ['init'];
     protected $noNeedRight = '*';
 
     public function _initialize()

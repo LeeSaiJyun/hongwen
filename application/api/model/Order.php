@@ -10,7 +10,7 @@ class Order extends Model
     protected $name = 'order';
 
     // 自动写入时间戳字段
-    protected $autoWriteTimestamp = 'int';
+    protected $autoWriteTimestamp = true;
 
     // 定义时间戳字段名
     protected $createTime = 'createtime';
@@ -50,7 +50,7 @@ class Order extends Model
             "createtime" => time(),
             "updatetime" => 0,
         ];
-        $orderID = $this->create($add, false, true);
+        $orderID = $this->insert($add, false, true);
         $add["order_id"] = $orderID;
         return $add;
 

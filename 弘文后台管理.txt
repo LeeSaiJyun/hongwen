@@ -86,3 +86,10 @@ mysql信息
 密码:qweasd123!@#
 数据库名:honwen
 
+
+php think crud -t school_type -m school/type  -c school/type  -u 1
+php think crud -t school_major -m school/major -c school/major -u 1
+php think crud -t school_cat -m school/cat -c school/cat -u 1
+php think crud -t school -m school/school -c school/school --editorclass=brief -f 1
+php think crud -t school_cat_access -m school/catAccess -c school/catAccess --relation=school --relation=school_cat --relationmodel=school/School --relationmodel=school/Cat --relationforeignkey=school_id  --relationforeignkey=school_cat_id -u 1
+php think crud -t school_cat_access -m school/catAccess -c school/cataccess --relation=school_major --relation=school_cat --relationmodel=school/School --relationmodel=school/Cat --relationforeignkey=school_id  --relationforeignkey=school_cat_id --relationfields=name --relationfields=name -f 1

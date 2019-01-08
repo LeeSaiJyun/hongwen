@@ -5,12 +5,12 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
             // 初始化表格参数配置
             Table.api.init({
                 extend: {
-                    index_url: 'school/school/index',
-                    add_url: 'school/school/add',
-                    edit_url: 'school/school/edit',
-                    del_url: 'school/school/del',
-                    multi_url: 'school/school/multi',
-                    table: 'school',
+                    index_url: 'school/cataccess/index',
+                    add_url: 'school/cataccess/add',
+                    edit_url: 'school/cataccess/edit',
+                    del_url: 'school/cataccess/del',
+                    multi_url: 'school/cataccess/multi',
+                    table: 'school_cat_access',
                 }
             });
 
@@ -24,10 +24,9 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                 columns: [
                     [
                         {checkbox: true},
-                        {field: 'id', title: __('Id')},
-                        {field: 'title_image', title: __('Title_image'), formatter: Table.api.formatter.image},
-                        {field: 'name', title: __('Name')},
-                        {field: 'type_text', title: __('Name'), operate:false, formatter: Table.api.formatter.label},
+                        {field: 'id', title: __('Id'),operate:false},
+                        {field: 'cat.name', title: __('C.name')},
+                        {field: 'school.name', title: __('School.name')},
                         {field: 'operate', title: __('Operate'), table: table, events: Table.api.events.operate, formatter: Table.api.formatter.operate}
                     ]
                 ]

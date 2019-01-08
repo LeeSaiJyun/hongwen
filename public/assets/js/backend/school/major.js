@@ -10,7 +10,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                     edit_url: 'school/major/edit',
                     del_url: 'school/major/del',
                     multi_url: 'school/major/multi',
-                    table: 'major',
+                    table: 'school_major',
                 }
             });
 
@@ -21,12 +21,10 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                 url: $.fn.bootstrapTable.defaults.extend.index_url,
                 pk: 'id',
                 sortName: 'id',
-                commonSearch: false,
-
                 columns: [
                     [
                         {checkbox: true},
-                        {field: 'id', title: __('Id'),operate:false,sortable:true},
+                        {field: 'id', title: __('Id')},
                         {field: 'name', title: __('Name')},
                         {field: 'operate', title: __('Operate'), table: table, events: Table.api.events.operate, formatter: Table.api.formatter.operate}
                     ]

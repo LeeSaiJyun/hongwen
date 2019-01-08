@@ -3,7 +3,7 @@
 namespace app\admin\model;
 
 use think\Model;
-use traits\model\SoftDelete;
+//use traits\model\SoftDelete;
 
 class User extends Model
 {
@@ -16,8 +16,8 @@ class User extends Model
     protected $createTime = 'createtime';
     protected $updateTime = 'updatetime';
 
-	use SoftDelete;
-	protected $deleteTime = 'delete_time';
+	//use SoftDelete;
+	//protected $deleteTime = 'delete_time';
     /*// 追加属性
     protected $append = [
         'prevtime_text',

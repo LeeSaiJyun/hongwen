@@ -1,19 +1,16 @@
 <?php
 
-namespace app\api\validate;
+namespace app\admin\validate\school;
 
 use think\Validate;
 
-class Order extends Validate{
-
+class School extends Validate
+{
     /**
      * 验证规则
      */
     protected $rule = [
-		'money|金额' => 'require|float',
-		'paymentdata|类型'  => 'require'
     ];
-
     /**
      * 提示消息
      */
@@ -23,7 +20,8 @@ class Order extends Validate{
      * 验证场景
      */
     protected $scene = [
+        'add'  => [],
+        'edit' => [],
     ];
-
-
+    
 }
