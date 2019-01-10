@@ -10,7 +10,7 @@ class Major extends Model
     protected $name = 'school_major';
 
 	public function schoolCatAccess() {
-		return $this->belongsToMany('SchoolCatAccess','SchoolMajorAccess','school_cat_id');
+		return $this->belongsToMany('SchoolCatAccess','SchoolMajorAccess','school_cat_access_id');
 	}
 
 }

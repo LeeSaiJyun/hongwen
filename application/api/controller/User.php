@@ -51,9 +51,11 @@ class User extends Api
      * @label 绑定资料(已绑定不能修改)
      * @param realname:真实姓名
      * @param idcard:身份证
-     * @param grade_id:年级ID
-     * @param school_id:报读院校ID
-     * @param major_id:报读专业ID
+	 * @param grade_id:年级ID
+	 * @param type_id:类别
+     * @param school_id:学校
+     * @param cat_access_id:层次
+     * @param major_id:专业
      */
     public function bindingdata(){
         $user = $this->auth->getUser();
@@ -64,7 +66,9 @@ class User extends Api
         $realname = $this->request->request('realname');
         $idcard   = $this->request->request('idcard');
         $grade_id   = $this->request->request('grade_id/d');
+        $type_id   = $this->request->request('type_id/d');
         $school_id   = $this->request->request('school_id/d');
+        $cat_access_id   = $this->request->request('cat_access_id/d');
         $major_id   = $this->request->request('major_id/d');
 
         $validate = new Validate([
@@ -78,7 +82,9 @@ class User extends Api
             'realname'  => $realname,
             'idcard'  => $idcard,
             'grade_id'  => $grade_id,
+            'type_id'  => $type_id,
             'school_id'  => $school_id,
+            'cat_access_id'  => $cat_access_id,
             'major_id'  => $major_id,
         ];
         if (!$validate->check($data)) {
@@ -88,7 +94,9 @@ class User extends Api
         $user->realname = $realname;
         $user->idcard = $idcard;
         $user->grade_id = $grade_id;
+        $user->type_id = $type_id;
         $user->school_id = $school_id;
+        $user->cat_access_id = $cat_access_id;
         $user->major_id = $major_id;
         $user->save();
         $this->success('success',[$user->realname,$user->idcard]);

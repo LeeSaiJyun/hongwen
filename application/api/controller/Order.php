@@ -49,7 +49,9 @@ class Order extends Api
         }
 
         $result = $this->model->createOrder($data['user_id'],$data['money'],$data['paymentdata']);
-        $this->success($result);
+		// 加入微信统一下单
+		$member = \app\admin\model\User::get(["id" => $data["user_id"]]);
+		$this->success(WxPayTrue::createWxPayUnifiedOrder($member["openid"], $result["orderno"], $result["money"]));
     }
 
     /**

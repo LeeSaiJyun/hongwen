@@ -20,7 +20,7 @@ class School extends Api{
     public function _initialize()
     {
         parent::_initialize();
-        $this->model = new \app\admin\model\School();
+        $this->model = new \app\admin\model\school\School();
     }
 
     /**
@@ -28,14 +28,28 @@ class School extends Api{
      * @param cat_id:类别ID(不传就获取全部)
      */
     public function getList(Request $request){
-        $cat_id = $request->get('cat_id/d');
-        if($cat_id){
-            $where = ['cat_id' => $cat_id];
+        $type_id = $request->get('type_id/d');
+
+        $m_type = new \app\admin\model\school\Type;
+        if($type_id){
+			$data =$m_type
+				->with(['school'])
+				->order('id')
+				->where('id',$type_id)
+				->find();
+			if($data){
+				$this->success('success',$data['school']);
+			}else{
+				$this->error('类型数据不存在');
+			}
         }else{
-            $where=[];
+			$this->error('类型不存在');
+			$data = $this->model
+				->field('id,name,title_image,brief')
+				->order('id')
+				->select();
         }
-        $data = $this->model->field('id,cat_id,name,title_image,brief')->order('id')->where($where)->select();
-        $this->success('success',$data);
+        $this->success('success',[]);
     }
 
 	/**
@@ -47,7 +61,7 @@ class School extends Api{
 		if(!$id){
 			$this->error('id不能为空');
 		}
-		$data = $this->model->field('id,cat_id,name,title_image,brief')->find($id);
+		$data = $this->model->field('id,name,title_image,brief')->with(['type'])->find($id);
 		$this->success('success',$data);
     }
 

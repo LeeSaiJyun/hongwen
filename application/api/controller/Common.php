@@ -16,7 +16,7 @@ class Common extends Api
 {
     const API_URL = "/api/common";
 
-    protected $noNeedLogin = ['init'];
+    protected $noNeedLogin = ['init','getApplicationFee','getTuitionFee'];
     protected $noNeedRight = '*';
 
     public function _initialize()
@@ -50,16 +50,32 @@ class Common extends Api
 
 
     /**
-     * @label 获取报名费和最新一条报名数据
+     * @label 获取报名费
      */
     public function getApplicationFee(){
-		$fee = Db::name('config')->where('name', 'registration_fee')->value('value');
-		if($fee){
-            $this->success('success',['fee' =>  floatval($fee)]);
+		$money = Db::name('config')->where('name', 'registration_fee')->value('value');
+		$tips = Db::name('config')->where('name', 'registration_tips')->value('value');
+		$tips = str_replace('{{money}}', $money, $tips);// es
+		if($money){
+            $this->success('success',['fee' =>  floatval($money),'tips'=>$tips]);
         }else{
             $this->error('报名费用错误');
         }
     }
+
+	/**
+	 * @label 获取学费
+	 */
+	public function getTuitionFee(){
+		$money = Db::name('config')->where('name', 'minimum_fee')->value('value');
+		$tips = Db::name('config')->where('name', 'minimun_tips')->value('value');
+		$tips = str_replace('{{money}}', $money, $tips);// es
+		if($money){
+			$this->success('success',['fee' =>  floatval($money),'tips'=>$tips]);
+		}else{
+			$this->error('报名费用错误');
+		}
+	}
 
     /**
      * @label 检查报名(已申请报名但支付)

@@ -25,7 +25,7 @@ class ApiDoc extends ApiAbstractController {
 		"\\app\\api\\controller\\Order",
 		"\\app\\api\\controller\\school\\Cat",
 		"\\app\\api\\controller\\school\\School",
-		"\\app\\api\\controller\\school\\Schoolmajor",
+		"\\app\\api\\controller\\school\\Major",
 		"\\app\\api\\controller\\User",
 		"\\app\\api\\controller\\Withdraw",
 		"\\app\\api\\controller\\MemberMessage",

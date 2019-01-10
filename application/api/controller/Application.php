@@ -4,6 +4,7 @@ namespace app\api\controller;
 
 use app\common\controller\Api;
 use think\Request;
+use think\Validate;
 
 /**
  * 报名申请
@@ -39,7 +40,9 @@ class Application extends Api
      * @param certificate:证书编号
      * @param graduationdate:毕业时间 Y-m-d
      * @param graduationmajor:毕业专业
+     * @param type_id:类别
      * @param school_id:学校
+     * @param cat_access_id:层次
      * @param major_id:专业
      * @param graduation_image:毕业证照
      * @param idcard_positive_image:身份证正反面
@@ -50,8 +53,11 @@ class Application extends Api
 
         $apply_data['user_id'] = $this->auth->id?:0;
         $apply_data['pay_status'] = 1;//1:未支付
-        $apply_data['money'] = \think\Config::get("site.registration_fee");     //报名费用
 
+        $apply_data['money'] = \think\Config::get("site.registration_fee");     //报名费用
+		if(!Validate::is($apply_data['graduationdate'],'date')){
+			unset($apply_data['graduationdate']);
+		}
 
 		$validate = validate('Application');
 		if (!$validate->check($apply_data)) {
@@ -69,10 +75,17 @@ class Application extends Api
 		}
 		$apply_data['age'] = $age;
 
+		$apply_data['type_id'] = intval($apply_data['type_id']);
+		$apply_data['school_id'] = intval($apply_data['school_id']);
+		$apply_data['cat_access_id'] = intval($apply_data['cat_access_id']);
+		$apply_data['major_id'] = intval($apply_data['major_id']);
+
 		//查询是否存在当前学校专业的报名
-        $field = ['id', 'user_id', 'name', 'telephone', 'birthday', 'age', 'sex', 'ethnic', 'qualifications', 'graduation', 'certificate', 'school_id', 'major_id', 'graduationdate', 'graduationmajor', 'money'];
+		$field = ['id', 'user_id', 'name', 'telephone', 'birthday', 'age', 'sex', 'ethnic', 'qualifications', 'graduation', 'certificate', 'type_id', 'school_id', 'cat_access_id', 'major_id', 'graduationdate', 'graduationmajor', 'money'];
         $result = $this->model->field($field)->order('id desc')->where([
+            'type_id' => $apply_data['type_id'],
             'school_id' => $apply_data['school_id'],
+            'cat_access_id' => $apply_data['cat_access_id'],
             'major_id' => $apply_data['major_id'],
             'user_id' => $apply_data['user_id'],
         ])->find();

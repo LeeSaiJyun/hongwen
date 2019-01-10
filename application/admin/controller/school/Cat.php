@@ -19,6 +19,7 @@ class Cat extends Backend
      * @var \app\admin\model\school\Cat
      */
     protected $model = null;
+	protected $searchFields = 'name';
 
     public function _initialize()
     {
