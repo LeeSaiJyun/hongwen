@@ -6,35 +6,34 @@ use app\common\controller\Api;
 use think\Request;
 
 /**
- * 院校类别信息
+ * 院校专业关系管理
  */
-class Cat extends Api
-{
+class Major extends Api{
+    const API_URL = "/api/school/major";
+
     protected $model = null;
-    const API_URL = "/api/school/cat";
 
     protected $noNeedLogin = ['getList'];
     protected $noNeedRight = ['*'];
 
-    public function _initialize()
-    {
+    public function _initialize(){
         parent::_initialize();
-        $this->model = new \app\admin\model\school\Cat();
+        $this->model = new \app\admin\model\school\Major();
     }
 
 
-    public function getList(Request $request){
-		$school_id = $request->get('school_id/d');
+	public function getList(Request $request) {
+		$cat_access_id = $request->get('cat_access_id/d');
 
-		$m_school = new \app\admin\model\school\School();
-		if($school_id){
+		$m_school = new \app\admin\model\school\CatAccess();
+		if($cat_access_id){
 			$data = $m_school
-				->with(['cat'])
+				->with(['major'])
 				->order('id')
-				->where('id',$school_id)
+				->where('id',$cat_access_id)
 				->find();
 			if($data){
-				$this->success('success',$data['cat']);
+				$this->success('success',$data['major']);
 			}else{
 				$this->error('院校数据不存在');
 			}
@@ -47,6 +46,5 @@ class Cat extends Api
 		}
 		$this->success('success',[]);
     }
-
 
 }

@@ -17,12 +17,11 @@ class Type extends Backend
      * @var \app\admin\model\school\Type
      */
     protected $model = null;
+	protected $searchFields = 'type_name';
 
-    public function _initialize()
-    {
+    public function _initialize(){
         parent::_initialize();
         $this->model = new \app\admin\model\school\Type;
-
     }
     
     /**

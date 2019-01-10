@@ -18,4 +18,6 @@ class School extends Model {
 	public function cat() {
 		return $this->belongsToMany('cat','\app\admin\model\school\SchoolCatAccess','school_cat_id');
 	}
+
+
 }

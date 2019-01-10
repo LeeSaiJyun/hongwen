@@ -19,6 +19,7 @@ class Major extends Backend
      * @var \app\admin\model\school\Major
      */
     protected $model = null;
+	protected $searchFields = 'name';
 
     public function _initialize()
     {
@@ -58,7 +59,6 @@ class Major extends Backend
 				->with('school_cat_access')
 				->select();
 			$list = collection($list)->toArray();
-
 			$result = array("total" => $total, "rows" => $list);
 
 			return json($result);

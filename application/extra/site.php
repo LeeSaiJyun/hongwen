@@ -37,7 +37,9 @@ return array (
   'rebate_percent_2' => '2',
   'registration_fee' => '99',
   'guide_of_join' => '<p><span style="color: rgb(51, 51, 51); background-color: rgb(249, 249, 249);">入户指南</span><span style="background-color: rgb(249, 249, 249); color: rgb(51, 51, 51);">入户指南</span><br></p>',
+  'registration_tips' => '报名提醒！报名费{{money}}元',
   'minimum_fee' => '199',
+  'minimun_tips' => '缴费提醒！最低{{money}}元',
   'ACCESS_TOKEN' => '16_N3bHvfztcTKlDYZvTWHSOvnrREgazKP0qBi5sdu5bu5HFwlG6LJNMm_-VVlM9JCGPgMXixI1GCzKHCErXqYFtfj7TndiyOTb4GmNfERh1kTcR1wZGYbFYAlp8JsOCZeAEAVJG',
   'expires_in' => '1545290089',
 );

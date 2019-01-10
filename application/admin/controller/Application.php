@@ -46,7 +46,7 @@ class Application extends Backend
                 ->count();
 
             $list = $this->model
-                ->with(['user','school','major'])
+                ->with(['user','user','type','school','cat'])
                 ->where($where)
                 ->order($sort, $order)
                 ->limit($offset, $limit)
