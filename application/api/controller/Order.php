@@ -91,6 +91,7 @@ class Order extends Api
 			    $orderModel = new \app\api\model\Order();
 			    $order = $orderModel->where(["orderno" => $resultArr["out_trade_no"]])->find();
 			    ($money != $order["money"]) && E("金额不对");
+				("-1" != $order["status"]) && E("状态错误");
 			    $orderModel->save([
 				    "status" => "1",
 				    "paytime" => time(),
@@ -128,12 +129,9 @@ class Order extends Api
 			    }
 		    } catch(\Exception $e) {
 			    $this->error($e->getMessage());
-			    die;
 		    }
 		    $this->success("成功");
-		    die;
 	    }
-
     }
 
 	private function xmlToArray($xml) {
@@ -144,4 +142,13 @@ class Order extends Api
 		return $val;
 	}
 
+	public function getList() {
+		$data = $this->model->order('id desc')->where(['user_id'=>$this->auth->id,'status'=>1])->field('*')->select();
+		foreach ($data as &$row){
+			$row['data'] = unserialize($row['data']);
+			if($row['createtime'])
+				$row['createtime'] = date('Y-m-d H:i:s',$row['createtime']);
+		}
+		$this->success('success',$data);
+	}
 }

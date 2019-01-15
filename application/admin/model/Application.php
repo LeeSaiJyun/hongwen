@@ -78,6 +78,10 @@ class Application extends Model {
 		return $this->hasOne('\app\admin\model\school\Cat', 'id', 'cat_access_id', [], 'LEFT')->field('id,name');
 	}
 
+	public function cat_access() {
+		return $this->hasOne('\app\admin\model\school\CatAccess', 'id', 'cat_access_id', [], 'LEFT')->field('id,name');
+	}
+
 	public function major() {
 		return $this->hasOne('\app\admin\model\school\Major', 'id', 'major_id', [], 'LEFT')->field('id,name');
 	}

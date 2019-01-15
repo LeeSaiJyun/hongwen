@@ -3,7 +3,8 @@
 return [
     'User_id'  =>  '用户ID',
     'User.username'  =>  '用户账号',
-    'Orderno'  =>  '订单号',
+	'User.realname'  =>  '用户真实姓名',
+	'Orderno'  =>  '订单号',
     'Paymentdata'  =>  '支付类型',
     'Money'  =>  '金额',
     'Balance'  =>  '余额',

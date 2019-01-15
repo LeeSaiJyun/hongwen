@@ -24,18 +24,20 @@ class Application extends Model
      * @throws
      */
     public function getStudentInfo($user_id){
-        $ret = $this->field("s.name as school,m.name as major,null as grade")
-                ->alias('app')
-                ->join('fa_school s','app.school_id = s.id','LEFT')
-                ->join('fa_major m','app.major_id = m.id','LEFT')
-                ->order('app.id desc')
-                ->where(['user_id'=>$user_id,'status'=>0,'pay_status'=>0])
-                ->find();
+        $ret = $this->field('t.type_name as type,s.name as school,c.name as cat,m.name as major')
+			->alias('u')
+			->join('fa_school_type t','u.type_id = t.id','LEFT')		//类型
+			->join('fa_school s','u.school_id = s.id','LEFT')		//学校
+			->join('fa_school_cat_access c_acc','u.cat_access_id = c_acc.id','LEFT')  //cat_access
+			->join('fa_school_cat c','c_acc.school_cat_id = c.id','LEFT')	//层次
+			->join('fa_school_major m','u.major_id = m.id','LEFT')			//专业
+			->order('u.id desc')
+			->where(['user_id'=>$user_id,'status'=>0,'pay_status'=>0])
+			->find();
         if($ret) {
             $ret = $ret->toArray();
             return $ret;
         }
         return $ret;
-
     }
 }

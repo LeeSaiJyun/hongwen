@@ -170,6 +170,31 @@ class School extends Backend {
 		return $this->view->fetch();
 	}
 
-
+	/**
+	 * 删除
+	 */
+	public function del($ids = "")
+	{
+		if ($ids) {
+			$pk = $this->model->getPk();
+			$adminIds = $this->getDataLimitAdminIds();
+			if (is_array($adminIds)) {
+				$count = $this->model->where($this->dataLimitField, 'in', $adminIds);
+			}
+			$list = $this->model->where($pk, 'in', $ids)->select();
+			$m_SchoolAccess =new SchoolAccess();
+			$m_SchoolAccess->where('school_id', 'in', $ids)->delete();
+			$count = 0;
+			foreach ($list as $k => $v) {
+				$count += $v->delete();
+			}
+			if ($count) {
+				$this->success();
+			} else {
+				$this->error(__('No rows were deleted'));
+			}
+		}
+		$this->error(__('Parameter %s can not be empty', 'ids'));
+	}
 
 }

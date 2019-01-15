@@ -25,7 +25,6 @@ class Cat extends Backend
     {
         parent::_initialize();
         $this->model = new \app\admin\model\school\Cat;
-
     }
     
     /**
@@ -173,5 +172,32 @@ class Cat extends Backend
 		return $this->view->fetch();
 	}
 
+	/**
+	 * 删除
+	 */
+	public function del($ids = "")
+	{
+		if ($ids) {
+			$pk = $this->model->getPk();
+			$adminIds = $this->getDataLimitAdminIds();
+			if (is_array($adminIds)) {
+				$count = $this->model->where($this->dataLimitField, 'in', $adminIds);
+			}
+			$list = $this->model->where($pk, 'in', $ids)->select();
+			//删除中间表
+			$m_SchoolAccess =new SchoolCatAccess();
+			$m_SchoolAccess->where('school_cat_id', 'in', $ids)->delete();
+			$count = 0;
+			foreach ($list as $k => $v) {
+				$count += $v->delete();
+			}
+			if ($count) {
+				$this->success();
+			} else {
+				$this->error(__('No rows were deleted'));
+			}
+		}
+		$this->error(__('Parameter %s can not be empty', 'ids'));
+	}
 
 }

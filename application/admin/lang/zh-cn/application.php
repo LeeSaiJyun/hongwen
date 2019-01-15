@@ -4,6 +4,7 @@ return [
     'User_id'  =>  '用户ID',
     'Name'  =>  '真实姓名',
     'User.username'  =>  '用户账号',
+    'User.realname'  =>  '用户真实姓名',
     'School_id'  =>  '学校ID',
     'School.name'  =>  '院校',
     'Major_id'  =>  '专业ID',

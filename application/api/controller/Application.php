@@ -47,6 +47,7 @@ class Application extends Api
      * @param graduation_image:毕业证照
      * @param idcard_positive_image:身份证正反面
      * @param idcard_negative_image:身份证正反面
+     * @param personal_image:个人照片
      */
     public function create(Request $request){
         $apply_data = $request->param();
@@ -93,10 +94,14 @@ class Application extends Api
             $this->error('报名已存在',$result);
         }
 
-        array_push($field,'idcard', 'updatetime','pay_status','graduation_image','idcard_positive_image','idcard_negative_image');
+        array_push($field,'idcard', 'updatetime','pay_status','graduation_image','personal_image','idcard_positive_image','idcard_negative_image');
         $this->model->allowField($field)->save($apply_data);
         $this->success('报名成功',['application_id'=>$this->model->id]);
     }
 
+	public function getOne() {
+		$data = $this->model->where('user_id',$this->auth->id)->order('id desc')->field('*')->find();
+		$this->success('success',$data);
+    }
 
 }

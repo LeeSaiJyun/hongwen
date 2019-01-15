@@ -27,7 +27,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {checkbox: true},
                         {field: 'id', title: __('Id'),operate:false},
                         // {field: 'user_id', title: __('User_id'),visible:false,operate:false},
-                        {field: 'user.username', title: __('User.username'),operate:false},
+                        {field: 'user.realname', title: __('User.username'),operate:false},
                         {field: 'data.school', title: __('Data.school'),operate:false },
                         {field: 'data.major', title: __('Data.major'),operate:false },
                         {field: 'data.grade', title: __('Data.grade'),operate:false },

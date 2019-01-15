@@ -119,20 +119,24 @@ class WeChatMember extends ApiAbstractController {
 	 * @label 获取用户所属下级用户列表
 	 * @return \think\Response
 	 */
-	public function getSubMemberList() {
+		public function getSubMemberList() {
 		return $this->tryCatch(function () {
 			$tokenData = WeChatModel::checkToken(P());
 			$model     = new User();
             $submember = $model->alias('u')
-                ->field('u.id,u.nickname,u.realname,u.mobile,from_unixtime(u.jointime) as jointime, g.name as grade,s.name as school,m.name as major')
+                ->field('u.id,u.nickname,u.realname,u.mobile,from_unixtime(u.jointime) as jointime, 
+                g.name as grade,t.type_name as type,s.name as school,c.name as cat,m.name as major')
                 ->where(["pid" => $tokenData["user_id"]])
-                ->join('fa_grade g','u.grade_id = g.id','LEFT')    //年级
-                ->join('fa_school s','u.school_id = s.id','LEFT')  //学校
-                ->join('fa_major m','u.major_id = m.id','LEFT')    //专业
+                ->join('fa_grade g','u.grade_id = g.id','LEFT')			//年级
+                ->join('fa_school_type t','u.type_id = t.id','LEFT')		//类型
+                ->join('fa_school s','u.school_id = s.id','LEFT')		//学校
+                ->join('fa_school_cat_access c_acc','u.cat_access_id = c_acc.id','LEFT')  //cat_access
+				->join('fa_school_cat c','c_acc.school_cat_id = c.id','LEFT')	//层次
+                ->join('fa_school_major m','u.major_id = m.id','LEFT')			//专业
                 ->select();
 
             foreach ($submember as $row => &$item) {
-                $applicationtime = \app\api\model\Application::where(['user_id' => $item['id']])->value('applicationtime');
+                $applicationtime = \app\api\model\Application::where(['user_id' => $item['id']])->order("id desc")->value('applicationtime');
                 $item['applicationtime'] =  $applicationtime?date('Y-m-d H:i:s',$applicationtime):null;
             }
             return $submember;

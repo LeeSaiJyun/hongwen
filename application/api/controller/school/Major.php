@@ -35,7 +35,7 @@ class Major extends Api{
 			if($data){
 				$this->success('success',$data['major']);
 			}else{
-				$this->error('院校数据不存在');
+				$this->success('success',[]);
 			}
 		}else{
 			$this->error('院校不存在');

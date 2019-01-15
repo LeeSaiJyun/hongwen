@@ -51,7 +51,7 @@ class Order extends Model
 
     public function user()
     {
-        return $this->hasOne('User', 'id', 'user_id', [], 'LEFT')->field('id,username');
+        return $this->hasOne('User', 'id', 'user_id', [], 'LEFT')->field('id,realname');
     }
 
 }

@@ -83,12 +83,16 @@ class User Extends Model
      * @throws
      */
     public function getStudentInfo($user_id){
-        $ret = $this->field('	g.name as grade,s.name as school,m.name as major')->alias('u')
-            ->join('fa_grade g','u.grade_id = g.id','LEFT')
-            ->join('fa_school s','u.school_id = s.id','LEFT')
-            ->join('fa_major m','u.major_id = m.id','LEFT')
+        $ret = $this->alias('u')
+			->field('t.type_name as type,s.name as school,c.name as cat,m.name as major')
+			->join('fa_school_type t','u.type_id = t.id','LEFT')		//类型
+			->join('fa_school s','u.school_id = s.id','LEFT')		//学校
+			->join('fa_school_cat_access c_acc','u.cat_access_id = c_acc.id','LEFT')  //cat_access
+			->join('fa_school_cat c','c_acc.school_cat_id = c.id','LEFT')	//层次
+			->join('fa_school_major m','u.major_id = m.id','LEFT')			//专业
+			->order('u.id desc')
             ->find(['u.status' => 'normal','u.id'=>$user_id]);
-        if($ret) {
+		if($ret) {
             $ret = $ret->toArray();
             unset($ret['url']);
             return $ret;

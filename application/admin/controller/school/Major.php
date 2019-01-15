@@ -19,7 +19,7 @@ class Major extends Backend
      * @var \app\admin\model\school\Major
      */
     protected $model = null;
-	protected $searchFields = 'name';
+	protected $searchFields = 'm.name';
 
     public function _initialize()
     {
@@ -39,6 +39,12 @@ class Major extends Backend
 	 */
 	public function index()
 	{
+		/*Db::listen(function($sql,$time,$explain){
+			// 记录SQL
+			echo $sql. ' ['.$time.'s]';
+			// 查看性能分析结果
+			dump($explain);
+		});*/
 		//设置过滤方法
 		$this->request->filter(['strip_tags']);
 		if ($this->request->isAjax()) {
@@ -48,19 +54,28 @@ class Major extends Backend
 			}
 			list($where, $sort, $order, $offset, $limit) = $this->buildparams();
 			$total = $this->model
-				->where($where)
-				->order($sort, $order)
-				->count();
-
-			$list = $this->model
+				->alias('m')
+				->field("m.id,m.name")
 				->where($where)
 				->order($sort, $order)
 				->limit($offset, $limit)
-				->with('school_cat_access')
+				->count();
+
+			$list = $this->model
+				->alias('m')
+				->field("m.id,m.name,GROUP_CONCAT(CONCAT(s.name,'-',c.name)) as school_cat_access_name")
+				->where($where)
+				->join('fa_school_major_access m_acc','m.id=m_acc.school_major_id','left')
+				->join('fa_school_cat_access c_acc','c_acc.id=m_acc.school_cat_access_id','left')
+				->join('fa_school_cat c','c_acc.school_cat_id=c.id','left')
+				->join('fa_school s','c_acc.school_id=s.id','left')
+				->group('m.id')
+				->order($sort, $order)
+				->limit($offset, $limit)
 				->select();
+
 			$list = collection($list)->toArray();
 			$result = array("total" => $total, "rows" => $list);
-
 			return json($result);
 		}
 		return $this->view->fetch();
@@ -90,7 +105,7 @@ class Major extends Backend
 						//添加中间表数据
 						$type = explode(',',$this->request->post('school_cat'));
 						foreach ($type as $value){
-							$dataset[] = ['school_major_id' => $result, 'school_cat_id' => $value];
+							$dataset[] = ['school_major_id' => $result, 'school_cat_access_id' => $value];
 						}
 						$m_SchoolMajorAccess =new SchoolMajorAccess();
 						$m_SchoolMajorAccess->saveAll($dataset);
@@ -141,7 +156,7 @@ class Major extends Backend
 						//添加中间表数据
 						$type = explode(',',$this->request->post('school_cat'));
 						foreach ($type as $value){
-							$dataset[] = ['school_major_id' => $ids, 'school_cat_id' => $value];
+							$dataset[] = ['school_major_id' => $ids, 'school_cat_access_id' => $value];
 						}
 						$m_SchoolAccess->where('school_major_id', $ids)->delete();
 						$m_SchoolAccess->saveAll($dataset);
@@ -158,10 +173,37 @@ class Major extends Backend
 			}
 			$this->error(__('Parameter %s can not be empty', ''));
 		}
-		$typedata = $m_SchoolAccess::where('school_major_id',$ids)->value('GROUP_CONCAT(school_cat_id) as ids');
-
+		$typedata = $m_SchoolAccess::where('school_major_id',$ids)->value('GROUP_CONCAT(school_cat_access_id) as ids');
 		$this->view->assign('Majordata', $typedata);
 		$this->view->assign("row", $row);
 		return $this->view->fetch();
+	}
+
+	/**
+	 * 删除
+	 */
+	public function del($ids = "")
+	{
+		if ($ids) {
+			$pk = $this->model->getPk();
+			$adminIds = $this->getDataLimitAdminIds();
+			if (is_array($adminIds)) {
+				$count = $this->model->where($this->dataLimitField, 'in', $adminIds);
+			}
+			$list = $this->model->where($pk, 'in', $ids)->select();
+			//删除中间表
+			$m_SchoolMajorAccess =new SchoolMajorAccess();
+			$m_SchoolMajorAccess->where('school_major_id', 'in', $ids)->delete();
+			$count = 0;
+			foreach ($list as $k => $v) {
+				$count += $v->delete();
+			}
+			if ($count) {
+				$this->success();
+			} else {
+				$this->error(__('No rows were deleted'));
+			}
+		}
+		$this->error(__('Parameter %s can not be empty', 'ids'));
 	}
 }

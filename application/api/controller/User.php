@@ -21,8 +21,7 @@ class User extends Api
     protected $noNeedLogin = [ 'login', 'jscode2session', 'mobilelogin'];
     protected $noNeedRight = '*';
 
-    public function _initialize()
-    {
+    public function _initialize(){
         parent::_initialize();
     }
 
@@ -75,8 +74,7 @@ class User extends Api
             'realname|姓名'  => 'require|max:25',
             'idcard|身份证' => 'require',
             'grade_id|年级' => 'require',
-            'school_id|报读院校' => 'require',
-            'major_id|报读专业' => 'require',
+            'type_id|类别' => 'require',
         ]);
         $data = [
             'realname'  => $realname,
@@ -101,6 +99,16 @@ class User extends Api
         $user->save();
         $this->success('success',[$user->realname,$user->idcard]);
     }
+
+	public function getData() {
+		$data = db('user')
+			->alias('u')
+			->field('u.realname,u.idcard,u.grade_id,a.type_id,a.school_id,a.cat_access_id,a.major_id')
+			->join('fa_application a','u.id=a.user_id','left')
+			->order('a.id desc')
+			->find($this->auth->id);
+		$this->success('success',$data);
+	}
 
     /**
      * @label 绑定手机号
